@@ -19,17 +19,20 @@
             <div>
                 <x-label for="email" :value="__('Email')" />
 
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
+                <x-input placeholder='votre adresse mail' id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
             </div>
 
             <!-- Password -->
             <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
+                <x-label for="password" :value="__('Mot de passe')" />
 
-                <x-input id="password" class="block mt-1 w-full"
+                <div class="relative eye-input">
+                    <x-input placeholder='votre mot de passe' id="password" class="block mt-1 w-full"
                                 type="password"
                                 name="password"
                                 required autocomplete="current-password" />
+                    <i class="fa-solid absolute top-1/2 -translate-y-1/2 opacity-50 cursor-pointer right-2 fa-eye"></i>
+                </div>
             </div>
 
             <!-- Remember Me -->

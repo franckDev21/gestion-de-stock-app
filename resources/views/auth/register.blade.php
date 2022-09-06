@@ -13,45 +13,62 @@
             @csrf
 
             <!-- Name -->
-            <div>
-                <x-label for="name" :value="__('Name')" />
-
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
+            <div class="mb-1">
+                <x-label for="name" :value="__('Nom de l\'utilisateur')" />
+                <div class="flex">
+                    <x-input placeholder='Entrer son nom' id="lastname" class="block mt-1 w-1/2 mr-2" type="text" name="lastname" :value="old('lastname')" required autofocus />
+                    <x-input placeholder='Entrer son prénom' id="firstname" class="block mt-1 w-1/2 ml-2" type="text" name="firstname" :value="old('firstname')" required />
+                </div>
             </div>
 
+            <span class="w-full h-[1px] bg-gray-50 inline-block my-0.5"></span>
             <!-- Email Address -->
-            <div class="mt-4">
-                <x-label for="email" :value="__('Email')" />
+            <div class="">
+                <x-label for="email" :value="__('Email de l\'utilisateur ')" />
 
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
+                <x-input id="email" placeholder="Entrer l'addresse mail de l'utilisateur"  class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
             </div>
-
+            
+            <span class="w-full h-[1px] bg-gray-50 inline-block my-0.5"></span>
             <!-- Password -->
-            <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
+            <div class="">
+                <x-label for="password" :value="__('Mot de passe de l\'utilisateur')" />
 
-                <x-input id="password" class="block mt-1 w-full"
+                <div class="relative eye-input">
+                    <x-input placeholder="Mot de passe" id="password" class="block mt-1 w-full"
                                 type="password"
                                 name="password"
                                 required autocomplete="new-password" />
+                    <i class="fa-solid absolute top-1/2 -translate-y-1/2 opacity-50 cursor-pointer right-2 fa-eye"></i>
+                </div>
             </div>
-
+            
+            <span class="w-full h-[1px] bg-gray-50 inline-block my-0.5"></span>
             <!-- Confirm Password -->
-            <div class="mt-4">
-                <x-label for="password_confirmation" :value="__('Confirm Password')" />
+            <div class="">
+                <x-label for="password_confirmation" :value="__('Confirmer le mot de passe')" />
 
-                <x-input id="password_confirmation" class="block mt-1 w-full"
+                <div class="relative eye-input">
+                    <x-input placeholder="Confirmation du mot de passe" id="password_confirmation" class="block mt-1 w-full"
                                 type="password"
                                 name="password_confirmation" required />
+                    <i class="fa-solid absolute top-1/2 -translate-y-1/2 opacity-50 cursor-pointer right-2 fa-eye"></i>
+                </div>
             </div>
 
-            <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
-                </a>
+            <span class="w-full h-[1px] bg-gray-50 inline-block my-0.5"></span>
+            <div class="flex items-center justify-start cursor-pointer">
+                <input type="checkbox" name="active" id="active" class="accent-primary rounded text-primary w-6 h-6 mr-2">
+                <label for="active">Voulez vous directement activer l'utilisateur ?</label>
+            </div>
 
-                <x-button class="ml-4">
-                    {{ __('Register') }}
+            <div class="flex items-center justify-center mt-5">
+                {{-- <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
+                    {{ __('Already registered?') }}
+                </a> --}}
+
+                <x-button class="w-full text-center flex justify-center items-center">
+                    {{ __('Enregistrer l\'utilisateur ') }}
                 </x-button>
             </div>
         </form>
