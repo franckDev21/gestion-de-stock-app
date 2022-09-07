@@ -49,6 +49,26 @@ class UserController extends Controller
         
     }
 
+    public function profilPassword(Request $request){
+        
+        $user = User::findOrFail(auth()->user()->id);
+
+        $request->validate([
+            'password'  => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+        
+        if(!Hash::check(request('password-old'),$user->password)){
+            return back()->withErrors('Mot de passe incorect');
+        }else{
+            $user->update([
+                'password' => Hash::make($request->password)
+            ]);
+
+            return back()->with('message',"Votre mot de passe a bien été nis à jour !");
+        }
+
+    }
+
     public function photo(Request $request){
         $request->validate([
             'photo' => 'required'
@@ -93,6 +113,8 @@ class UserController extends Controller
         
         $active = $request->active ? true : false;
 
+        $password = $request->password;
+
         $user = User::create([
             'firstname' => $request->firstname,
             'lastname'  => $request->lastname,
@@ -101,6 +123,9 @@ class UserController extends Controller
             'email'     => $request->email,
             'password'  => Hash::make($request->password),
         ]);
+
+        // on envoi un mail l'utilisateur
+
 
         return to_route('users.index')->with('message',"Votre utilisateur $user->lastname $user->firstname àété créer avec succès !");
     

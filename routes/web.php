@@ -29,6 +29,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('mon-profil/photo',[UserController::class,'photo'])->name('profil.photo');
     Route::get('mon-profil',[UserController::class,'profil'])->name('profil.index');
     Route::patch('mon-profil/{user}',[UserController::class,'profilUpdate'])->name('profil.update');
+    Route::post('mon-profil/password',[UserController::class,'profilPassword'])->name('profil.update-password');
 
 });
 
