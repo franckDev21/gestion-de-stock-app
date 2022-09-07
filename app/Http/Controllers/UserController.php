@@ -194,7 +194,7 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         if($user->delete()){
-            back()->with("message","L'utilisateur $user->firstnane $user->lastname à été supprimer avec succes !");
+            return to_route('clients.index')->with("message","L'utilisateur $user->firstnane $user->lastname à été supprimer avec succes !");
         }
         return back();
     }

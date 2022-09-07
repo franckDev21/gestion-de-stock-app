@@ -7,7 +7,7 @@
             <span class="h-4 w-0.5 bg-gray-600 mx-2"></span>
 
             <h2 class="font-semibold text-xl text-primary leading-tight">
-                {{ __('Edition de l\'utilisateur') }} <span class="text-secondary">{{ $user->firstname }}
+                {{ __('Informations de l\'utilisateur') }} <span class="text-secondary">{{ $user->firstname }}
                     {{ $user->lastname }}</span>
             </h2>
         </div>
