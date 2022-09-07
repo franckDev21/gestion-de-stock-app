@@ -26,7 +26,7 @@
             <div class="mb-1 flex justify-between">
                 <div class="w-40 flex justify-center items-center h-40 bg-gray-100 relative">
                     @if ($user->photo)
-                        <img class="absolute" src="{{ asset("img/users/$user->photo") }}" alt="image">
+                        <img class="absolute object-cover w-full h-full" src="{{ asset("storage/$user->photo") }}" alt="image">
                     @else
                         <i class="fa-solid text-8xl text-gray-400 absolute fa-user"></i>
                     @endif

@@ -30,11 +30,11 @@
                     <x-slot name="trigger">
                         <button class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
                             <div class="flex items-center">
-                                <div class="bg-gray-200 h-8 w-18 flex items-center justify-center rounded-full mr-3">
+                                <div class="bg-gray-200 h-8 w-8 flex items-center justify-center rounded-full mr-3">
                                     @if (Auth::user()->photo)
                                         <img class=" h-8 rounded-full w-8 flex-none" src="{{ asset("storage/".Auth::user()->photo) }}" alt="image">
                                     @else
-                                        <i class="fa-solid text-sm text-gray-400  fa-user"></i>
+                                        <i class="fa-solid flex-none  text-sm text-gray-400  fa-user"></i>
                                     @endif
                                     </div>
                                 {{ Auth::user()->lastname.' '.Auth::user()->firstname }}

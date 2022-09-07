@@ -63,7 +63,7 @@
                                     <div class="flex items-center">
                                         <div class="mr-2 h-10 w-10 flex justify-center items-center bg-gray-100 rounded-full">
                                             @if ($user->photo)
-                                                <img class=" h-10 w-10" src="{{ asset("img/users/$user->photo") }}" alt="image">
+                                                <img class=" h-10 w-10 rounded-full" src="{{ asset("storage/$user->photo") }}" alt="image">
                                             @else
                                                 <i class="fa-solid text-2xl text-gray-400  fa-user"></i>
                                             @endif

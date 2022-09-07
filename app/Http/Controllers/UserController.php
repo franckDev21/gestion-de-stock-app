@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\CreateUserMailNotif;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rules;
 
 class UserController extends Controller
@@ -113,7 +115,6 @@ class UserController extends Controller
         
         $active = $request->active ? true : false;
 
-        $password = $request->password;
 
         $user = User::create([
             'firstname' => $request->firstname,
@@ -124,7 +125,14 @@ class UserController extends Controller
             'password'  => Hash::make($request->password),
         ]);
 
+        $userInfo = (object)[
+            'password' => $request->password,
+            'user'     => $user
+        ];
+
         // on envoi un mail l'utilisateur
+        Mail::to($user->email)
+            ->send(new CreateUserMailNotif($userInfo));
 
 
         return to_route('users.index')->with('message',"Votre utilisateur $user->lastname $user->firstname àété créer avec succès !");
