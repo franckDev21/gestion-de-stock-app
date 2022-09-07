@@ -48,6 +48,7 @@
                     <thead>
                         <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                             <th class="py-3 px-6 text-left">Nom & prenom</th>
+                            <th class="py-3 px-6 text-left">Date d'ajout</th>
                             <th class="py-3 px-6 text-left">role</th>
                             <th class="py-3 px-6 text-center">Téléphone</th>
                             <th class="py-3 px-6 text-center">Status</th>
@@ -60,15 +61,22 @@
                             <tr class="border-b border-gray-200 hover:bg-gray-100">
                                 <td class="py-3 px-6 text-left whitespace-nowrap">
                                     <div class="flex items-center">
-                                        <div class="mr-2">
-                                            <img class="w-10 h-10 rounded-full"
-                                                src="https://randomuser.me/api/portraits/men/1.jpg" />
+                                        <div class="mr-2 h-10 w-10 flex justify-center items-center bg-gray-100 rounded-full">
+                                            @if ($user->photo)
+                                                <img class=" h-10 w-10" src="{{ asset("img/users/$user->photo") }}" alt="image">
+                                            @else
+                                                <i class="fa-solid text-2xl text-gray-400  fa-user"></i>
+                                            @endif
                                         </div>
                                         <div class="flex items-start flex-col justify-start">
                                             <span class="font-bold">{{ $user->lastname }} {{ $user->firstname }}</span>
                                             <span>{{ $user->email }}</span>
                                         </div>
                                     </div>
+                                </td>
+
+                                <td class="py-3 px-6 text-left">
+                                    <span>{{ $user->created_at->format('d M Y') }}</span>
                                 </td>
 
                                 <td class="py-3 px-6 text-left">
@@ -98,7 +106,7 @@
 
                                 <td class="py-3 px-6 text-center">
                                     <div class="flex item-center justify-center">
-                                        <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
+                                        <a href="{{ route('users.show',$user->id) }}" class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                 stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -106,7 +114,7 @@
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                     d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                             </svg>
-                                        </div>
+                                        </a>
                                         <a href="{{ route('users.edit',$user->id) }}" class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                 stroke="currentColor">

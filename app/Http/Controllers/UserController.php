@@ -25,6 +25,46 @@ class UserController extends Controller
         return view('users.index',compact('users'));
     }
 
+    public function profil(){
+        $user = auth()->user();
+        return view('users.profil.index',compact('user'));
+    }
+
+    public function profilUpdate(Request $request, User $user){
+        if(auth()->user()->id !== $user->id){
+            abort(500,'SERVER ERROR');
+            exit;
+        }
+
+        $data = $request->validate([
+            'firstname' => ['required', 'string', 'max:255'],
+            'lastname'  => ['required', 'string', 'max:255'],
+            'tel'       => ['required'],
+            'email'     => ['required', 'string', 'email', 'max:255'],
+        ]);
+
+        $user->update($data);
+
+        return to_route('profil.index')->with('message',"Vos informations on été bien mises à jour !");
+        
+    }
+
+    public function photo(Request $request){
+        $request->validate([
+            'photo' => 'required'
+        ]);
+
+        $filename = time().'.'.$request->photo->extension();
+
+        $path = $request->photo->storeAs('img/users',$filename,'public');
+
+        (User::findOrFail(auth()->user()->id))->update([
+            'photo' => $path
+        ]);
+
+        return back()->with("message","Votre photo de profil à été modifier avec succes !");
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -46,7 +86,7 @@ class UserController extends Controller
         $request->validate([
             'firstname' => ['required', 'string', 'max:255'],
             'lastname'  => ['required', 'string', 'max:255'],
-            'tel'       => ['required', 'numeric'],
+            'tel'       => ['required'],
             'email'     => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password'  => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
@@ -100,7 +140,7 @@ class UserController extends Controller
         $request->validate([
             'firstname' => ['required', 'string', 'max:255'],
             'lastname'  => ['required', 'string', 'max:255'],
-            'tel'       => ['required', 'numeric'],
+            'tel'       => ['required'],
             'email'     => ['required', 'string', 'email', 'max:255'],
         ]);
 

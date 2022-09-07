@@ -12,7 +12,12 @@
       </div>
   </x-slot>
 
-  <div class="max-w-4xl px-6 py-4 mt-4 bg-white mx-auto  rounded-md">
+  <div class="max-w-4xl px-6 py-4 mt-4 bg-white mx-auto  rounded-md pt-14 relative">
+
+    <a href="{{ route('users.show',$user) }}" title="Voir l'utilisateur" class=" absolute top-2 right-6 cursor-pointer hover:bg-opacity-100 hover:text-white text-primary w-8 h-8 ml-3 flex-none flex justify-center items-center rounded-full bg-primary bg-opacity-30" >
+        <i class="fa-solid text-sm fa-eye "></i>
+    </a>
+
       <form method="POST" action="{{ route('users.update',$user->id) }}">
           @csrf
           @method('PATCH')

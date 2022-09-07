@@ -25,6 +25,11 @@ Route::middleware(['auth'])->group(function(){
     Route::get('users/print',[UserController::class,'printUsers'])->name('printUsers');
     Route::post('users/toggle-active/{user}',[UserController::class,'toggleActive']);
     Route::resource('users',UserController::class);
+
+    Route::post('mon-profil/photo',[UserController::class,'photo'])->name('profil.photo');
+    Route::get('mon-profil',[UserController::class,'profil'])->name('profil.index');
+    Route::patch('mon-profil/{user}',[UserController::class,'profilUpdate'])->name('profil.update');
+
 });
 
 

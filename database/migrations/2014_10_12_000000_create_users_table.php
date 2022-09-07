@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('firstname');
             $table->string('lastname');
+            $table->string('poste')->default('sécretaire');
             $table->string('photo')->nullable();
             $table->string('tel')->nullable();
             $table->string('email')->unique();
