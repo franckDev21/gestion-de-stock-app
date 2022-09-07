@@ -7,17 +7,27 @@
         </x-slot>
 
         <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+        {{-- <x-auth-validation-errors class="mb-4" :errors="$errors" /> --}}
 
         <form method="POST" action="{{ route('register') }}">
             @csrf
 
             <!-- Name -->
             <div class="mb-1">
-                <x-label for="name" :value="__('Nom de l\'utilisateur')" />
+                <x-label for="lastname" :value="__('Nom de l\'utilisateur')" />
                 <div class="flex">
-                    <x-input placeholder='Entrer son nom' id="lastname" class="block mt-1 w-1/2 mr-2" type="text" name="lastname" :value="old('lastname')" required autofocus />
-                    <x-input placeholder='Entrer son prénom' id="firstname" class="block mt-1 w-1/2 ml-2" type="text" name="firstname" :value="old('firstname')" required />
+                    <div class="mt-1 w-1/2 mr-1 ">
+                        <x-input placeholder='Entrer son nom' id="lastname" class="w-full" type="text" name="lastname" :value="old('lastname')" required autofocus />
+                        @error('lastname')
+                        <span class="text-sm text-red-400 block">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="mt-1 w-1/2 ml-1">
+                        <x-input placeholder='Entrer son prénom' id="firstname" class="w-full" type="text" name="firstname" :value="old('firstname')" required />
+                        @error('firstname')
+                        <span class="text-sm text-red-400 block">{{ $message }}</span>
+                        @enderror
+                    </div>
                 </div>
             </div>
 
@@ -27,6 +37,20 @@
                 <x-label for="email" :value="__('Email de l\'utilisateur ')" />
 
                 <x-input id="email" placeholder="Entrer l'addresse mail de l'utilisateur"  class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
+                @error('email')
+                    <span class="text-sm text-red-400 block">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <span class="w-full h-[1px] bg-gray-50 inline-block my-0.5"></span>
+            <!-- Email Address -->
+            <div class="">
+                <x-label for="tel" :value="__('Téléphone ')" class="inline" /> <span class="italic text-sm text-gray-400">( facutatif )</span>
+
+                <x-input id="tel" placeholder="Entrer numéro de téléphone de l'utilisateur"  class="block mt-1 w-full" type="tel" name="tel" :value="old('tel')" required />
+                @error('tel')
+                    <span class="text-sm text-red-400 block">{{ $message }}</span>
+                @enderror
             </div>
             
             <span class="w-full h-[1px] bg-gray-50 inline-block my-0.5"></span>
@@ -41,6 +65,9 @@
                                 required autocomplete="new-password" />
                     <i class="fa-solid absolute top-1/2 -translate-y-1/2 opacity-50 cursor-pointer right-2 fa-eye"></i>
                 </div>
+                @error('password')
+                    <span class="text-sm text-red-400 block">{{ $message }}</span>
+                @enderror
             </div>
             
             <span class="w-full h-[1px] bg-gray-50 inline-block my-0.5"></span>

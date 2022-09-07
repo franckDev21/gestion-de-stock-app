@@ -33,22 +33,31 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
+
+        dd($request->all());
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'firstname' => ['required', 'string', 'max:255'],
+            'lastname'  => ['required', 'string', 'max:255'],
+            'tel'       => ['required', 'numeric'],
+            'email'     => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password'  => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
+        
+        $active = $request->active ? true : false;
 
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'firstname' => $request->firstname,
+            'lastname'  => $request->lastname,
+            'tel'       => $request->tel,
+            'active'    => $active,
+            'email'     => $request->email,
+            'password'  => Hash::make($request->password),
         ]);
 
-        event(new Registered($user));
+        // event(new Registered($user));
 
-        Auth::login($user);
+        // Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        return to_route('users.index')->with('message',"Votre utilisateur $user->lastname $user->firstname àété créer avec succès !");
     }
 }
