@@ -51,8 +51,8 @@
                         <th class="py-3 px-6 text-left">Nom & prenom</th>
                         <th class="py-3 px-6 text-left">Date d'ajout</th>
                         <th class="py-3 px-6 text-left">Nombres de commande</th>
-                        <th class="py-3 px-6 text-center">Téléphone</th>
-                        <th class="py-3 px-6 text-center">Actions</th>
+                        <th class="py-3 px-6 text-left">Téléphone</th>
+                        <th class="py-3 px-6 text-left">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="text-gray-600 text-sm font-light">
@@ -77,7 +77,7 @@
                                 <span>20 Commandes</span>
                             </td>
 
-                            <td class="py-3 px-14 text-center">
+                            <td class="py-3 px-6 text-left">
                                 @if ($user->tel)
                                     <span>{{ $user->tel }}</span>
                                 @else
@@ -85,7 +85,7 @@
                                 @endif
                             </td>
 
-                            <td class="py-3 px-6 text-center">
+                            <td class="py-3 px-6 text-left">
                                 <div class="flex item-center justify-center">
                                     <a href="{{ route('clients.show',$user->id) }}" class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"

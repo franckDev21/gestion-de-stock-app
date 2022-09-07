@@ -28,6 +28,15 @@
                 </div>
             </a>
 
+            <a href="{{ route('users.index') }}" class="p-4 rounded-md bg-white flex items-start text-gray-500">
+                <i class="fa-solid fa-sack-dollar text-yellow-900 text-4xl mr-4"></i>
+                <div>
+                    <span class="text-2xl text-primary font-bold">1.000.000 FCFA</span>
+                    <span class="w-full h-[1px] bg-gray-400 bg-opacity-40 block"></span>
+                    <h2 class="font-bold text-yellow-900">Gestion de la caisse</h2>
+                </div>
+            </a>
+
             <div class="p-4 rounded-md bg-white flex items-start text-gray-500">
                 <i class="fa-solid text-yellow-900 fa-box-open text-4xl mr-4"></i>
                 <div>

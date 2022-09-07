@@ -50,10 +50,10 @@
                             <th class="py-3 px-6 text-left">Nom & prenom</th>
                             <th class="py-3 px-6 text-left">Date d'ajout</th>
                             <th class="py-3 px-6 text-left">role</th>
-                            <th class="py-3 px-6 text-center">Téléphone</th>
-                            <th class="py-3 px-6 text-center">Status</th>
-                            <th class="py-3 px-6 text-center">Activer/Desactiver</th>
-                            <th class="py-3 px-6 text-center">Actions</th>
+                            <th class="py-3 px-6 text-left">Téléphone</th>
+                            <th class="py-3 px-6 text-left">Status</th>
+                            <th class="py-3 px-6 text-left">Activer/Desactiver</th>
+                            <th class="py-3 px-6 text-left">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="text-gray-600 text-sm font-light">
