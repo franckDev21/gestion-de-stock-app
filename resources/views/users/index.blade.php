@@ -7,7 +7,7 @@
             <form class="w-2/3 flex" method="GET">
                 <div class="relative w-[90%]">
                     <x-input class="w-full" placeholder='Réchercher un utilisateur ...' type="text" name="search"
-                        :value="old('search')" required autofocus />
+                        :value="request('search')" required autofocus />
                     <i class="fa-solid fa-magnifying-glass absolute top-1/2 -translate-y-1/2 right-4 text-gray-500"></i>
                 </div>
                 <x-button class="ml-3">
@@ -41,8 +41,11 @@
         </div>
         <div class="bg-white shadow-md rounded-md overflow-hidden mt-2 mb-6">
             @unless(count($users) !== 0)
-                <div class="p-10 rounded-md bg-white text-5xl text-center font-bold text-primary opacity-80"> Aucun
-                    utilisateur </div>
+                <div class="p-10 rounded-md bg-white text-3xl text-center font-bold text-primary opacity-80"> 
+                    <i class="fa-solid fa-folder-open text-gray-400 text-8xl mb-3"></i> <br>
+                    Aucun utilisateur ne correspond votre rechercher <br>
+                    <span class="text-secondary my-2 inline-block">" {{ request('search') }} "</span>
+                </div>
             @else
                 <table class="min-w-max w-full table-auto">
                     <thead>
@@ -69,7 +72,7 @@
                                             @endif
                                         </div>
                                         <div class="flex items-start flex-col justify-start">
-                                            <span class="font-bold">{{ $user->lastname }} {{ $user->firstname }}</span>
+                                            <span class="font-bold">{{ ucfirst($user->lastname) }} {{ ucfirst($user->firstname) }}</span>
                                             <span>{{ $user->email }}</span>
                                         </div>
                                     </div>

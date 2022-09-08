@@ -103,6 +103,8 @@ class ClientController extends Controller
             'tel' => $request->tel,
             'email' => $request->email,
             'address' => $request->email,
+            'firstname' => strtolower($request->email),
+            'lastname' => strtolower($request->email),
         ]));
 
         return to_route('clients.index')->with('message',"Votre client $client->lastname $client->firstname a été mise à jour avec succès !");

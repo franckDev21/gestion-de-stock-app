@@ -117,8 +117,8 @@ class UserController extends Controller
 
 
         $user = User::create([
-            'firstname' => $request->firstname,
-            'lastname'  => $request->lastname,
+            'firstname' => strtolower($request->firstname),
+            'lastname'  => strtolower($request->lastname),
             'tel'       => $request->tel,
             'active'    => $active,
             'email'     => $request->email,

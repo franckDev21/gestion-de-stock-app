@@ -17,7 +17,7 @@ class FournisseurFactory extends Factory
     public function definition()
     {
         return [
-            'nom' => fake()->name(),
+            'nom' => fake()->word(),
             'email' => fake()->email(),
             'address' => fake()->address(),
             'tel' => fake()->phoneNumber()

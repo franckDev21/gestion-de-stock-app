@@ -50,10 +50,10 @@ class User extends Authenticatable
     public function scopeFilter($query,$filters){
         if($filters['search'] ?? false){
             $query
-                ->where('firstname','like','%'.$filters['search'].'%')
-                ->orWhere('lastname','like','%'.$filters['search'].'%')
-                ->orWhere('email','like','%'.$filters['search'].'%')
-                ->orWhere('tel','like','%'.$filters['search'].'%');
+                ->where('firstname','like','%'.strtolower($filters['search']).'%')
+                ->orWhere('lastname','like','%'.strtolower($filters['search']).'%')
+                ->orWhere('email','like','%'.strtolower($filters['search']).'%')
+                ->orWhere('tel','like','%'.strtolower($filters['search']).'%');
         }
 
     }

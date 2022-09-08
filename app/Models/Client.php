@@ -27,7 +27,6 @@ class Client extends Model
                 ->orWhere('email','like','%'.$filters['search'].'%')
                 ->orWhere('tel','like','%'.$filters['search'].'%');
         }
-
     }
     
 }

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('prix_unitaire');
             $table->string('image')->nullable();
             $table->string('nom');
+            $table->string('type_approvionement')->default('carton');
             $table->foreignId('fournisseur_id')->constrained()->onDelete('cascade');
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
 

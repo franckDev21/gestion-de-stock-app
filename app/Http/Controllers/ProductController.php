@@ -14,7 +14,12 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::orderBy('updated_at', 'DESC')
+            ->orderBy('created_at', 'DESC')
+            ->filter(request(['tag','search']))
+            ->paginate(5);
+            
+        return view('products.index',compact('products'));
     }
 
     /**
@@ -24,7 +29,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('products.create');
     }
 
     /**
@@ -35,7 +40,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
     }
 
     /**
@@ -46,7 +51,8 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        dd($product);
+        return view('products.show',$product);
     }
 
     /**
@@ -57,7 +63,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        return view('products',$product);
     }
 
     /**
@@ -69,7 +75,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        return back()->with('message',"le produit $product->nom a été mise à jour avec succès !");
     }
 
     /**
@@ -80,6 +86,10 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $name = $product->nom;
+        if($product->delete()){
+            return to_route('products.index')->with('message',"le produit $name a été supprimer avec succès !");
+        }
+        return back()->withErrors('message');
     }
 }
