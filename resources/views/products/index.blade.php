@@ -32,12 +32,12 @@
                 <i class="fa-solid fa-user-plus mr-3"></i> Ajouter un nouveau produit
             </a>
 
-            @if (request('search'))
+            {{-- @if (request('search')) --}}
                 <a href="{{ route('products.index') }}"
                     class="px-6 py-1 shadow-md rounded-md bg-white bg-opacity-80 border-4 border-white ">
                     <i class="fa-solid fa-arrows-rotate"></i> Réactualiser
                 </a>
-            @endif
+            {{-- @endif --}}
 
         </div>
         <div class="bg-white shadow-md rounded-md overflow-hidden mt-2 mb-6">
@@ -71,7 +71,7 @@
                                             class="mr-2 h-14 w-14 flex justify-center items-center ">
                                             @if ($product->image)
                                                 <img class=" h-14 w-14 "
-                                                    src="{{ asset("storage/$product->photo") }}" alt="image">
+                                                    src="{{ asset("storage/$product->image") }}" alt="image">
                                             @else
                                                 <i class="fa-solid text-2xl text-gray-400  fa-box-open "></i>
                                             @endif
@@ -92,7 +92,7 @@
 
                                 <td class="py-1 px-4 text-left">
                                     <span
-                                        class="{{ $product->is_stock ? 'bg-green-100 text-green-700':'' }} py-1 px-3 rounded-full text-xs">{{ $product->is_stock ? 'Oui encore en stock' : 'Non , stock écoulé' }}</span>
+                                        class="{{ $product->is_stock ? 'bg-green-100 text-green-700':'bg-red-100 text-red-600' }} py-1 px-3 rounded-full text-xs">{{ $product->is_stock ? 'Oui encore en stock' : 'Non , stock vide' }}</span>
                                 </td>
 
                                 <td class="py-3 px-4 text-left">

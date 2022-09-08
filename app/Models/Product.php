@@ -17,7 +17,8 @@ class Product extends Model
         'nom',
         'fournisseur_id',
         'category_id',
-        'is_stock'
+        'is_stock',
+        'description'
     ];
 
     public function scopeFilter($query,$filters){

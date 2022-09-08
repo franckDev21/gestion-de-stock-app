@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
 
-            $table->integer('qte_en_stock');
+            $table->integer('qte_en_stock')->default(0);
             $table->integer('qte_stock_alert');
             $table->integer('prix_unitaire');
             $table->string('image')->nullable();
