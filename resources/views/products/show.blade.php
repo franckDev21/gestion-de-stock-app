@@ -11,11 +11,11 @@
         </div>
 
         <div>
-            <a href="{{ route('printUsers') }}"
-              class="px-6 py-1 mr-3 shadow-md rounded-md bg-yellow-700 border-4 hover:bg-yellow-800 transition border-yellow-800 text-white">
-              + Ajouter une sortie
+            <a data-modal-toggle="popup-output" href="#"
+              class="px-6 py-1 mr-3 shadow-md rounded-md bg-red-500 border-4 hover:bg-red-600 transition border-red-600 text-white">
+              -  Ajouter une sortie
             </a>
-            <a href="{{ route('printUsers') }}"
+            <a data-modal-toggle="popup-input" href="#"
                 class="px-6 py-1 mr-3 shadow-md rounded-md bg-green-500 border-4 hover:bg-green-600 transition border-green-600 text-white">
                 + Ajouter une entrée
             </a>
@@ -79,5 +79,8 @@
         </div>
     </div>
   </div>
+
+  <x-add-input-product  :product="$product" id="popup-input" />
+  <x-add-output-product :product="$product" id="popup-output" />
 
 </x-app-layout>

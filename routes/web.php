@@ -31,8 +31,11 @@ Route::middleware(['auth'])->group(function(){
     Route::post('mon-profil/password',[UserController::class,'profilPassword'])->name('profil.update-password');
 
     // products
+    Route::get('products/print',[ProductController::class,'printProducts'])->name('printProducts');
     Route::resource('products',ProductController::class);
-
+    Route::post('products/{product}/input',[ProductController::class,'addInput'])->name('products.addInput');
+    Route::post('products/{product}/output',[ProductController::class,'addOutput'])->name('products.addOutput');
+    
     # admin routes
     Route::middleware('role:ADMIN')->group(function() {
         // users

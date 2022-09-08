@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Approvisionnement;
 use App\Models\Category;
 use App\Models\Fournisseur;
+use App\Models\HistoriqueProduct;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
@@ -23,6 +26,71 @@ class ProductController extends Controller
             ->filter(request(['tag','search']))
             ->paginate(5);
         return view('products.index',compact('products'));
+    }
+
+    public function addInput(Request $request, Product $product){
+        $request->validate([
+            'qte'   => 'required',
+            'prix'  => 'required'
+        ]);
+
+        // increment qte product
+        $product->update([
+            'qte_en_stock' => ((int)$product->qte_en_stock += (int)$request->qte),
+            'is_stock'     => ((int)$product->qte_en_stock += (int)$request->qte) > 0
+        ]);
+
+        // new approvisionnement
+        Approvisionnement::create([
+            'product_id' => $product->id,
+            'prix_achat' => $request->prix,
+            'quantite'   => $request->qte,
+            'user_id'    => $request->user()->id,
+        ]);
+
+        // new historic
+        HistoriqueProduct::create([
+            'quantite'  => $request->qte,
+            'type'      => 'ENTRÉE',
+            'motif'     => 'Approvisionnement',
+            'product_id'=> $product->id,
+            'user_id'   => $request->user()->id
+        ]);
+
+        return back()->with("message",'Votre approvisionnement a été ajouter avec succès !');
+    }
+
+    public function addOutput(Request $request, Product $product){
+        $request->validate([
+            'qte'   => 'required',
+            'modif'   => 'required',
+        ]);
+
+       if( ((int)$product->qte_en_stock - (int)$request->qte) >= 0 ){
+            $newQteProduct = (int)$product->qte_en_stock -= (int)$request->qte;
+            // increment qte product
+            $product->update([
+                'qte_en_stock' => $newQteProduct,
+                'is_stock'     => $newQteProduct > 0
+            ]);
+
+            if($newQteProduct > 0){
+                // notification alert stock
+            }
+
+            // new historic
+            HistoriqueProduct::create([
+                'quantite'  => $request->qte,
+                'type'      => 'SORTIE',
+                'motif'     => $request->modif,
+                'product_id'=> $product->id,
+                'user_id'   => $request->user()->id
+            ]);
+
+            return back()->with("message",'Le produit a été rétiré avec succès !');
+       }else{
+            return back()->with("error","La quantité en stock du $product->nom est insuffisant !");
+       }
     }
 
     /**
@@ -162,4 +230,19 @@ class ProductController extends Controller
         }
         return back()->withErrors('message');
     }
+
+
+    public function printProducts(){
+        $pdf = App::make('dompdf.wrapper');
+        
+        $products = Product::all();
+
+        $pdf->loadView('pdf.products', compact(
+            'products'
+        ));
+
+        return $pdf->stream();
+    }
+
+
 }
