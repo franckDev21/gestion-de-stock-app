@@ -25,6 +25,8 @@ class ProductFactory extends Factory
             'nom' => fake()->word,
             'fournisseur_id' => Fournisseur::inRandomOrder()->first()->id,
             'category_id' => Category::inRandomOrder()->first()->id,
+            'unite_mesure' => 'KG',
+            'nbre_par_carton' => [null,rand(1,10)][rand(0,1)]
         ];
     }
 }

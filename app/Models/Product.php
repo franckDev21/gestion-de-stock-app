@@ -18,7 +18,13 @@ class Product extends Model
         'fournisseur_id',
         'category_id',
         'is_stock',
-        'description'
+        'description',
+        'type_approvionement',
+        'unite_mesure',
+        'nbre_par_carton',
+        'reste_unites',
+        'poids',
+        'qte_en_littre'
     ];
 
     public function scopeFilter($query,$filters){

@@ -17,10 +17,12 @@
                 </svg>
                 <span class="sr-only">Close modal</span>
             </button>
+
+            <h1 class="text-2xl mb-2 mt-6 px-6 pt-6 pb-3 text-white border-b border-opacity-20 font-bold">Ajouter une Entrée</h1>
             
-            <div class="p-6">
+            <div class="pb-6 mt-4 px-6">
                <div class="mt-3 mb-6">
-                  <x-label for="qte" :value="__('Quantité')" class="inline-block text-white mb-1 text-lg" /> <span class="text-xs italic text-gray-400">(En carton ou packet)</span>
+                  <x-label for="qte" :value="__('Quantité')" class="inline-block text-white mb-1 text-lg" /> <span class="text-xs italic text-gray-400">(En {{ $product->type_approvionement }}) </span>
                   <x-input placeholder='Entrer la quantité a ajouter' id="qte" class="w-full placeholder:italic" min='1' max='100' type="number"
                     name="qte" :value="old('qte',$product->qte)" required autofocus />
                </div>

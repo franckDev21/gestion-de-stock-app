@@ -28,27 +28,77 @@
           </label>
           <input hidden class="hidden" type="file" accept="image/*" name="image" id="photo">
           <div class="w-2/3 ml-2">
-            <x-label for="nom" :value="__('Description du produit')" class="inline-block" /> <span class="text-gray-400 text-xs italic inline-block ml-1">(Facultatif)</span>
-            <textarea name="description" placeholder="Entrer la description du produit ici … " class="w-full placeholder:italic rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="" cols="30" rows="6"></textarea>
-        </div>
+            <div>
+              <x-label for="nom" :value="__('Description du produit')" class="inline-block" /> <span class="text-gray-400 text-xs italic inline-block ml-1">(Facultatif)</span>
+              <textarea name="description" placeholder="Entrer la description du produit ici … " class="w-full placeholder:italic rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="" cols="30" rows="3"></textarea>
+            </div>
+            <div class="flex pb-3 ">
+              <div class="mt-1 w-1/2 mr-1 ">
+                  <x-label for="nom" :value="__('Nom du produit')" class="inline-block" />
+                  <x-input placeholder='Entrer le nom du produit' id="nom" class="w-full placeholder:italic" type="text"
+                      name="nom" :value="old('nom')" required autofocus />
+                  @error('nom')
+                      <span class="text-sm text-red-400 block">{{ $message }}</span>
+                  @enderror
+              </div>
+              <div class="mt-1 w-1/2 ml-1">
+                  <x-label for="prix_unitaire" :value="__('Prix unitaire')" class="inline-block" /> <span class="text-gray-400 text-xs italic inline-block mx-1">(En FCFA)</span>
+                  <x-input placeholder='le produit coûte combien ?' id="prix_unitaire" class="w-full placeholder:italic" type="number"
+                      name="prix_unitaire" required :value="old('prix_unitaire')" />
+                  @error('prix_unitaire')
+                      <span class="text-sm text-red-400 block">{{ $message }}</span>
+                  @enderror
+              </div>
+            </div>
+          </div>
         </div>
         <div class="mt-2">
           <div class="flex pb-3 ">
-            <div class="mt-1 w-1/2 mr-1 ">
-                <x-label for="nom" :value="__('Nom du produit')" class="inline-block" />
-                <x-input placeholder='Entrer le nom du produit' id="nom" class="w-full placeholder:italic" type="text"
-                    name="nom" :value="old('nom')" required autofocus />
-                @error('nom')
-                    <span class="text-sm text-red-400 block">{{ $message }}</span>
-                @enderror
+            <div class="mt-1 w-1/2  mr-1 ">
+              <x-label for="unite" :value="__('Unité de mesure du produit')" class="inline-block" />
+                  <select name="unite_mesure" required class="w-full placeholder:italic rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="unite">
+                    <option value="">--- Choisissez une unité ---</option>
+                    <option value="KG">Kilogramme</option>
+                    <option value="G">Gramme</option>
+                    <option value="L">Littre</option>
+                  </select>
+              @error('unite_mesure')
+                  <span class="text-sm text-red-400 block">{{ $message }}</span>
+              @enderror
             </div>
-            <div class="mt-1 w-1/2 ml-1">
-                <x-label for="prix_unitaire" :value="__('Prix unitaire')" class="inline-block" /> <span class="text-gray-400 text-xs italic inline-block mx-1">(En FCFA)</span>
-                <x-input placeholder='le produit coûte combien ?' id="prix_unitaire" class="w-full placeholder:italic" type="number"
-                    name="prix_unitaire" :value="old('prix_unitaire')" required />
-                @error('prix_unitaire')
-                    <span class="text-sm text-red-400 block">{{ $message }}</span>
-                @enderror
+            <div class="mt-1 w-1/2 ml-1" id="choix-1"> 
+              <div class=" flex">
+                <div class="w-1/2 mr-1">
+                  <x-label for="nbre_par_carton" :value="__('Nombre par carton')" class="inline-block nbre-par-carton" />
+                  <x-input placeholder="Combien par carton ?" id="nbre_par_carton" class="w-full placeholder:italic nbre-par-carton" min='1' type="number"
+                      name="nbre_par_carton" :value="old('nbre_par_carton')" />
+
+                  <label id="desactive-label" for="desactive" class="inline-flex cursor-pointer items-center justify-center mt-1">
+                    <span>Désactiver le champ ? </span> <input class="text-lg w-6 h-6 text-primary ring-0 border-2 focus:ring-0 focus:outline-none  inline-block ml-3" type="checkbox" name="desactive" id="desactive">
+                  </label>
+
+                  @error('nbre_par_carton')
+                      <span class="text-sm text-red-400 block">{{ $message }}</span>
+                  @enderror
+                </div>
+                <div class="w-1/2 ml-1">
+                  <x-label for="poids" :value="__('Poids')" class="inline-block" />
+                  <x-input placeholder="poid en Kg ou g" id="poids" class="w-full placeholder:italic" min='1' type="number"
+                      name="poids" :value="old('poids')" />
+
+                  @error('poids')
+                      <span class="text-sm text-red-400 block">{{ $message }}</span>
+                  @enderror
+                </div>
+              </div>
+            </div>
+            <div class="mt-1 w-1/2 ml-1 invisible" id="choix-2">
+              <x-label for="qte_en_littre" :value="__('Quantité en Littre')" class="inline-block" />
+              <x-input placeholder="Combien de littre par produit ?" id="qte_en_littre" class="w-full placeholder:italic" type="number"
+                  name="qte_en_littre" :value="old('qte_en_littre')"   />
+              @error('qte_en_littre')
+                  <span class="text-sm text-red-400 block">{{ $message }}</span>
+              @enderror
             </div>
           </div>
 
@@ -85,13 +135,13 @@
                 @enderror
             </div>
             <div class="mt-1 w-1/2 ml-1">
-                <x-label for="type_approvionement" :value="__('Choisissez votre fournisseur')" class="inline-block" />
+                <x-label for="fournisseur_id" :value="__('Choisissez votre fournisseur')" class="inline-block" />
                 <select name="fournisseur_id" required class="w-full placeholder:italic rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="">
                   @foreach ($fournisseurs as $item )
                       <option value="{{ $item->id }}">{{ $item->nom }}</option>
                   @endforeach
                 </select>
-                @error('type_approvionement')
+                @error('fournisseur_id')
                     <span class="text-sm text-red-400 block">{{ $message }}</span>
                 @enderror
             </div>
@@ -117,6 +167,35 @@
           let url  = URL.createObjectURL(file)
           document.getElementById('image').src = url
         })
+    </script>
+
+    <script defer>
+      const choix_1 = document.getElementById('choix-1')
+      const choix_2 = document.getElementById('choix-2')
+
+      document.getElementById('desactive').addEventListener('change', _ => {
+        document.querySelectorAll('.nbre-par-carton').forEach(element => {
+          element.classList.toggle('disabled')
+        })
+      })
+      
+      document.getElementById('unite').addEventListener('change',e =>{
+        if(e.target.value === 'G' || e.target.value === 'KG'){
+          if(choix_1.classList.contains('invisible')){
+            choix_1.classList.remove('invisible')
+          }
+          if(!choix_2.classList.contains('invisible')){
+            choix_2.classList.add('invisible')
+          }
+        }else{
+          if(choix_2.classList.contains('invisible')){
+            choix_2.classList.remove('invisible')
+          }
+          if(!choix_1.classList.contains('invisible')){
+            choix_1.classList.add('invisible')
+          }
+        }
+      })
     </script>
   </x-slot>
 

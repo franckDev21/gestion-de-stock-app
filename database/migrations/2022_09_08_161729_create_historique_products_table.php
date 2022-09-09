@@ -19,6 +19,8 @@ return new class extends Migration
             $table->integer('quantite');
             $table->enum('type',['ENTRÉE','SORTIE']);
             $table->text('motif');
+            $table->text('old_state_stock')->nullable();
+            $table->boolean('is_unite')->default(false);
             $table->foreignId('product_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
 

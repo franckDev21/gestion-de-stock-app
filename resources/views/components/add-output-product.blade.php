@@ -5,7 +5,7 @@
     style="z-index: 1000">
     @csrf
     @method('POST')
-    <div class="relative p-4 w-full max-w-md h-full md:h-auto">
+    <div class="relative p-4 w-full max-w-lg h-full md:h-auto">
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
             <button type="button"
                 class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
@@ -18,13 +18,23 @@
                 </svg>
                 <span class="sr-only">Close modal</span>
             </button>
+
+            <h1 class="text-2xl mb-2 mt-6 px-6 pt-6 pb-3 text-white border-b border-opacity-20 font-bold">Ajouter une Sortie</h1>
             
-            <div class="p-6">
+            <div class="pb-6 mt-4 px-6">
                <div class="mt-3 mb-6">
-                  <x-label for="qte" :value="__('Quantité')" class="inline-block text-white mb-1 text-lg" /> <span class="text-xs italic text-gray-400">(En carton ou packet)</span>
-                  <x-input placeholder='Entrer la quantité a ajouter' id="qte" class="w-full placeholder:italic" min='1' max='100' type="number"
+                  <x-label for="qte" :value="__('Quantité')" class="inline-block text-white mb-1 text-lg" /> <span class="text-xs italic text-gray-400"></span>
+                  <x-input placeholder='Entrer la quantité a rétiré' id="qte" class="w-full placeholder:italic" min='1' max='100' type="number"
                     name="qte" :value="old('qte')" required autofocus />
                </div>
+
+               <div class="mt-3 mb-6">
+                    <x-label for="type" :value="__('Type de retrait')" class="inline-block text-white mb-1 text-lg" />
+                    <select name="type" id="type" class="rounded-md w-full shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        <option value="UNITE">Unité</option>
+                        <option value="CARTON">{{ $product->type_approvionement }}</option>
+                    </select>
+                </div>
 
                <div class="mt-3 mb-6">
                     <x-label for="motif" :value="__('Motif')" class="inline-block text-white mb-1 text-lg" />

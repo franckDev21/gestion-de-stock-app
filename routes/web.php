@@ -31,6 +31,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('mon-profil/password',[UserController::class,'profilPassword'])->name('profil.update-password');
 
     // products
+    Route::get('products/history',[ProductController::class,'historiques'])->name('history.index');
     Route::get('products/print',[ProductController::class,'printProducts'])->name('printProducts');
     Route::resource('products',ProductController::class);
     Route::post('products/{product}/input',[ProductController::class,'addInput'])->name('products.addInput');

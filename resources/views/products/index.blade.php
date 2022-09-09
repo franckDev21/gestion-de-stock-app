@@ -19,7 +19,7 @@
 
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 pb-4">
         <div class="flex items-center justify-start  mt-6">
-            <a href="{{ route('printUsers') }}"
+            <a href="{{ route('history.index') }}"
                 class="mr-4 px-6 py-1 shadow-md rounded-md bg-yellow-500 border-4 hover:bg-yellow-600 transition border-yellow-600 text-white">
                 <i class="fa-solid fa-right-left rotate-90 mr-3"></i> Hostorique d'entrée  / sortie
             </a>
@@ -41,15 +41,21 @@
             @unless(count($products) !== 0)
             <div class="p-10 rounded-md bg-white text-3xl text-center font-bold text-primary opacity-80"> 
                 <i class="fa-solid  fa-box-open text-gray-400 text-8xl mb-3"></i> <br>
-                Aucun produit ne correspond votre rechercher <br>
-                <span class="text-secondary my-2 inline-block">" {{ request('search') }} "</span>
+                
+                @if (request('search'))
+                    Aucun resultat ne correspond votre rechercher <br>
+                    <span class="text-secondary my-2 inline-block">" {{ request('search') }} "</span>
+                @else
+                    Aucun produit
+                @endif
+                
             </div>
             @else
-                <table class="min-w-max w-full table-auto">
+                <table class="min-w-full w-full table-auto">
                     <thead>
                         <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                             <th class="py-3 px-4 text-left">Nom du produit</th>
-                            <th class="py-3 px-4 text-left">Date de création</th>
+                            <th class="py-3 px-4 text-left">Date</th>
                             <th class="py-3 px-4 text-left">Quantité</th>
                             <th class="py-3 px-4 text-left">Encore en stock</th>
                             <th class="py-3 px-4 text-left">prix unitaire</th>
@@ -75,6 +81,7 @@
                                         </div>
                                         <div class="flex items-start flex-col justify-start">
                                             <span class="font-bold">{{ ucfirst($product->nom) }}</span>
+                                            @if($product->nbre_par_carton) {{ $product->nbre_par_carton }} Par {{ $product->type_approvionement }} @endif
                                         </div>
                                     </div>
                                 </td>
@@ -109,7 +116,7 @@
                                     {{ $product->qte_stock_alert }} {{ ucfirst($product->type_approvionement) }}{{ $product->qte_en_stock > 1 ? 's':'' }}
                                 </td>
 
-                                <td class="py-3 px-4 text-left">
+                                <td class="py-3 text-left">
                                     <div class="flex item-center justify-center">
                                         <a href="{{ route('products.show', $product->id) }}"
                                             class="w-8 h-8 rounded bg-secondary mr-1 transform text-white flex justify-center items-center hover:scale-110">

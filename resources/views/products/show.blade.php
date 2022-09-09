@@ -42,7 +42,7 @@
             </div>
 
             <div class="flex justify-start text-gray-600 text-lg mt-3">
-              <span class="inline-flex items-center"> <span class="font-bold mr-2">Stock d'alerte : </span> <span class="bg-red-100 text-red-600' py-1 px-3 rounded-full text-xs">{{ $product->qte_stock_alert }} Carton(s)</span></span>
+              <span class="inline-flex items-center"> <span class="font-bold mr-2">Stock d'alerte : </span> <span class="bg-red-100 text-red-600' py-1 px-3 rounded-full text-xs">{{ $product->qte_stock_alert }} {{ $product->type_approvionement }}(s)</span></span>
             </div>
 
           </div>
@@ -59,8 +59,44 @@
 
             <div class="flex justify-start text-gray-600 text-2xl mt-3">
               <span class="inline-block">Quantité en stock : </span>
-              <span class="inline-block ml-3 font-semibold text-primary">{{ $product->qte_en_stock }} Carton(s) </span>
+              <span class="inline-block ml-3 font-semibold text-primary">{{ $product->qte_en_stock }} {{ $product->type_approvionement }}(s) {{ $product->nbre_par_carton ? 'de '.$product->nbre_par_carton : null }}  </span>
             </div>
+
+            @if($product->nbre_par_carton)
+              <div class="flex justify-start text-gray-600 text-2xl mt-3">
+                <span class="inline-block">Nombre unité restante  ({{ $product->unite_mesure }}) :  </span>
+                <span class="inline-block ml-3 font-semibold text-primary">{{ $product->reste_unites ?? 0 }} </span>
+              </div>
+
+              <div class="flex justify-start text-gray-600 text-2xl mt-3">
+                <span class="inline-block">Nombre par  {{ $product->type_approvionement }} :  </span>
+                <span class="inline-block ml-3 font-semibold text-primary">{{ $product->nbre_par_carton }} </span>
+              </div>
+            @else
+              <div class="flex justify-start text-gray-600 text-2xl mt-3">
+                <span class="inline-block">Nombre unité restante  ({{ $product->unite_mesure }}) :  </span>
+                <span class="inline-block ml-3 font-semibold text-primary">{{ $product->reste_unites ?? 0 }} </span>
+              </div>
+
+              @if ($product->qte_en_littre)
+                <div class="flex justify-start text-gray-600 text-2xl mt-3">
+                  <span class="inline-block">Poids du  {{ $product->type_approvionement }} :  </span>
+                  <span class="inline-block ml-3 font-semibold text-primary">{{ $product->qte_en_littre ?? 0 }} {{ $product->unite_mesure }}</span>
+                </div>
+              @endif
+
+              @if (!$product->qte_en_littre && $product->poids)
+                <div class="flex justify-start text-gray-600 text-2xl mt-3">
+                  <span class="inline-block">Poids du  {{ $product->type_approvionement }} :  </span>
+                  <span class="inline-block ml-3 font-semibold text-primary">{{ $product->poids ?? 0 }} {{ $product->unite_mesure }}</span>
+                </div>
+              @endif
+            
+              <div class="flex justify-start text-gray-600 text-2xl mt-3">
+                <span class="inline-block">Unité de mésure  :  </span>
+                <span class="inline-block ml-3 font-semibold text-primary">{{ $product->unite_mesure }} </span>
+              </div>
+            @endif
 
             <div class="flex justify-start text-gray-600 text-2xl mt-3">
               <span class="inline-block">Prix unitaire : </span>

@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.disabled{
+  opacity: .5;
+  pointer-events: none;
+  user-select: none;
+}
+
+.invisible{
+  pointer-events: none;
+  user-select: none;
+  opacity: 0;
+  display: none;
+}

@@ -41,25 +41,54 @@
           </label>
           <input hidden class="hidden" type="file" accept="image/*" name="image" id="photo">
           <div class="w-2/3 ml-2">
-            <x-label for="nom" :value="__('Description du produit')" class="inline-block" /> <span class="text-gray-400 text-xs italic inline-block ml-1">(Facultatif)</span>
-            <textarea name="description" placeholder="Entrer la description du produit ici … " class="w-full placeholder:italic rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="" cols="30" rows="6">{{ old('description',$product->description) }}</textarea>
-        </div>
+            <div>
+              <x-label for="nom" :value="__('Description du produit')" class="inline-block" /> <span class="text-gray-400 text-xs italic inline-block ml-1">(Facultatif)</span>
+              <textarea name="description" placeholder="Entrer la description du produit ici … " class="w-full placeholder:italic rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="" cols="30" rows="3">{{ old('description',$product->description) }}</textarea>
+            </div>
+            <div class="flex pb-3 ">
+              <div class="mt-1 w-1/2 mr-1 ">
+                  <x-label for="nom" :value="__('Nom du produit')" class="inline-block" />
+                  <x-input placeholder='Entrer le nom du produit' id="nom" class="w-full placeholder:italic" type="text"
+                      name="nom" :value="old('nom',$product->nom)" required autofocus />
+                  @error('nom')
+                      <span class="text-sm text-red-400 block">{{ $message }}</span>
+                  @enderror
+              </div>
+              <div class="mt-1 w-1/2 ml-1">
+                  <x-label for="prix_unitaire" :value="__('Prix unitaire')" class="inline-block" /> <span class="text-gray-400 text-xs italic inline-block mx-1">(En FCFA)</span>
+                  <x-input placeholder='le produit coûte combien ?' id="prix_unitaire" class="w-full placeholder:italic" type="number"
+                      name="prix_unitaire" :value="old('prix_unitaire',$product->prix_unitaire)" required />
+                  @error('prix_unitaire')
+                      <span class="text-sm text-red-400 block">{{ $message }}</span>
+                  @enderror
+              </div>
+            </div>
+          </div>
         </div>
         <div class="mt-2">
           <div class="flex pb-3 ">
             <div class="mt-1 w-1/2 mr-1 ">
-                <x-label for="nom" :value="__('Nom du produit')" class="inline-block" />
-                <x-input placeholder='Entrer le nom du produit' id="nom" class="w-full placeholder:italic" type="text"
-                    name="nom" :value="old('nom',$product->nom)" required autofocus />
+                <x-label for="nbre_par_carton" :value="__('Nombre par carton (fut , packet, seau )')" class="inline-block nbr-par-carton {{ !$product->nbre_par_carton ? 'disabled':'' }}" />
+                <x-input placeholder="Combien d'élément par carton (fut, packet, seau) ?" id="nbre_par_carton" class="w-full placeholder:italic nbr-par-carton {{ !$product->nbre_par_carton ? 'disabled':'' }}" min='1' type="number"
+                    name="nbre_par_carton" :value="old('nbre_par_carton',$product->nbre_par_carton)" autofocus />
+
+                <label id="desactive-label" for="desactive" class="inline-flex cursor-pointer items-center justify-center mt-3">
+                  <span>Désactiver le champ ? </span> <input @checked(old('desactive',!$product->nbre_par_carton)) class="text-lg w-6 h-6 text-primary ring-0 border-2 focus:ring-0 focus:outline-none  inline-block ml-3" type="checkbox" name="desactive" id="desactive">
+                </label>
+
                 @error('nom')
                     <span class="text-sm text-red-400 block">{{ $message }}</span>
                 @enderror
             </div>
             <div class="mt-1 w-1/2 ml-1">
-                <x-label for="prix_unitaire" :value="__('Prix unitaire')" class="inline-block" /> <span class="text-gray-400 text-xs italic inline-block mx-1">(En FCFA)</span>
-                <x-input placeholder='le produit coûte combien ?' id="prix_unitaire" class="w-full placeholder:italic" type="number"
-                    name="prix_unitaire" :value="old('prix_unitaire',$product->prix_unitaire)" required />
-                @error('prix_unitaire')
+                <x-label for="unite" :value="__('Unité de mesure du produit')" class="inline-block" />
+                    <select name="unite_mesure" required class="w-full placeholder:italic rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="unite">
+                      <option value="">--- Choisissez une unité ---</option>
+                      <option @selected($product->unite_mesure === 'KG') value="KG">Kilogramme</option>
+                      <option @selected($product->unite_mesure === 'G')  value="G">Gramme</option>
+                      <option @selected($product->unite_mesure === 'L')  value="L">Littre</option>
+                    </select>
+                @error('unite_mesure')
                     <span class="text-sm text-red-400 block">{{ $message }}</span>
                 @enderror
             </div>
@@ -98,13 +127,13 @@
                 @enderror
             </div>
             <div class="mt-1 w-1/2 ml-1">
-                <x-label for="type_approvionement" :value="__('Choisissez votre fournisseur')" class="inline-block" />
+                <x-label for="fournisseur_id" :value="__('Choisissez votre fournisseur')" class="inline-block" />
                 <select name="fournisseur_id" required class="w-full placeholder:italic rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="">
                   @foreach ($fournisseurs as $item )
                       <option @selected($item->id === old('fournisseur_id',$product->fournisseur_id))  value="{{ $item->id }}">{{ $item->nom }}</option>
                   @endforeach
                 </select>
-                @error('type_approvionement')
+                @error('fournisseur_id')
                     <span class="text-sm text-red-400 block">{{ $message }}</span>
                 @enderror
             </div>
@@ -131,6 +160,42 @@
           document.getElementById('image').src = url
         })
     </script>
+
+    <script defer>
+      document.getElementById('desactive').addEventListener('change', _ => {
+        document.querySelectorAll('.nbr-par-carton').forEach(element => {
+          element.classList.toggle('disabled')
+          if(element.classList.contains('disabled')){
+            if(element.name){
+              element.required = false
+            }
+          }else{
+            if(element.name){
+              element.required = true
+            }
+          }
+        })
+      })
+
+      document.getElementById('unite').addEventListener('change',e =>{
+        if(e.target.value === 'L'){
+          document.querySelectorAll('.nbr-par-carton').forEach(element => {
+            if(!element.classList.contains('disabled')){
+              element.classList.add('disabled')
+              document.getElementById('desactive').checked = true
+            }
+          })
+        }else{
+          document.querySelectorAll('.nbr-par-carton').forEach(element => {
+            if(element.classList.contains('disabled')){
+              element.classList.remove('disabled')
+              document.getElementById('desactive').checked = false
+            }
+          })
+        }
+      })
+    </script>
+
   </x-slot>
 
 </x-app-layout>

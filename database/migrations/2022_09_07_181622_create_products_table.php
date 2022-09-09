@@ -19,6 +19,11 @@ return new class extends Migration
             $table->integer('qte_en_stock')->default(0);
             $table->integer('qte_stock_alert');
             $table->integer('prix_unitaire');
+            $table->integer('nbre_par_carton')->nullable();
+            $table->integer('reste_unites')->nullable();
+            $table->integer('poids')->nullable();
+            $table->integer('qte_en_littre')->nullable();
+            $table->enum('unite_mesure',['KG','L','G']);
             $table->string('image')->nullable();
             $table->string('nom');
             $table->string('type_approvionement')->default('carton');
