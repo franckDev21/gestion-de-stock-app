@@ -60,7 +60,7 @@
                       name="prix_unitaire" :value="old('prix_unitaire',$product->prix_unitaire)" required />
                   @error('prix_unitaire')
                       <span class="text-sm text-red-400 block">{{ $message }}</span>
-                  @enderror
+                  @enderror 
               </div>
             </div>
           </div>
