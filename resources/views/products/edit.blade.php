@@ -67,30 +67,51 @@
         </div>
         <div class="mt-2">
           <div class="flex pb-3 ">
-            <div class="mt-1 w-1/2 mr-1 ">
-                <x-label for="nbre_par_carton" :value="__('Nombre par carton (fut , packet, seau )')" class="inline-block nbr-par-carton {{ !$product->nbre_par_carton ? 'disabled':'' }}" />
-                <x-input placeholder="Combien d'élément par carton (fut, packet, seau) ?" id="nbre_par_carton" class="w-full placeholder:italic nbr-par-carton {{ !$product->nbre_par_carton ? 'disabled':'' }}" min='1' type="number"
-                    name="nbre_par_carton" :value="old('nbre_par_carton',$product->nbre_par_carton)" autofocus />
-
-                <label id="desactive-label" for="desactive" class="inline-flex cursor-pointer items-center justify-center mt-3">
-                  <span>Désactiver le champ ? </span> <input @checked(old('desactive',!$product->nbre_par_carton)) class="text-lg w-6 h-6 text-primary ring-0 border-2 focus:ring-0 focus:outline-none  inline-block ml-3" type="checkbox" name="desactive" id="desactive">
-                </label>
-
-                @error('nom')
-                    <span class="text-sm text-red-400 block">{{ $message }}</span>
-                @enderror
+            <div class="mt-1 w-1/2  mr-1 ">
+              <x-label for="unite" :value="__('Unité de mesure du produit')" class="inline-block" />
+                  <select name="unite_mesure" required class="w-full placeholder:italic rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="unite">
+                    <option value="">--- Choisissez une unité ---</option>
+                    <option @selected($product->unite_mesure == 'KG') value="KG">Kilogramme</option>
+                    <option @selected($product->unite_mesure == 'G') value="G">Gramme</option>
+                    <option @selected($product->unite_mesure == 'L') value="L">Littre</option>
+                  </select>
+              @error('unite_mesure')
+                  <span class="text-sm text-red-400 block">{{ $message }}</span>
+              @enderror
             </div>
-            <div class="mt-1 w-1/2 ml-1">
-                <x-label for="unite" :value="__('Unité de mesure du produit')" class="inline-block" />
-                    <select name="unite_mesure" required class="w-full placeholder:italic rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="unite">
-                      <option value="">--- Choisissez une unité ---</option>
-                      <option @selected($product->unite_mesure === 'KG') value="KG">Kilogramme</option>
-                      <option @selected($product->unite_mesure === 'G')  value="G">Gramme</option>
-                      <option @selected($product->unite_mesure === 'L')  value="L">Littre</option>
-                    </select>
-                @error('unite_mesure')
-                    <span class="text-sm text-red-400 block">{{ $message }}</span>
-                @enderror
+            <div class="mt-1 w-1/2 ml-1 {{ $product->qte_en_littre ? 'invisible':'' }}" id="choix-1"> 
+              <div class=" flex">
+                <div class="w-1/2 mr-1">
+                  <x-label for="nbre_par_carton" :value="__('Nombre par carton')" class="{{ !$product->nbre_par_carton ? 'disabled':'' }} inline-block nbre-par-carton" />
+                  <x-input placeholder="Combien par carton ?" id="nbre_par_carton" class="{{ !$product->nbre_par_carton ? 'disabled':'' }} w-full placeholder:italic nbre-par-carton" min='1' type="number"
+                      name="nbre_par_carton" :value="old('nbre_par_carton',$product->nbre_par_carton)" />
+
+                  <label id="desactive-label" for="desactive" class="inline-flex cursor-pointer items-center justify-center mt-1">
+                    <span>Désactiver le champ ? </span> <input {{ !$product->nbre_par_carton ? 'checked':'' }} class="text-lg w-6 h-6 text-primary ring-0 border-2 focus:ring-0 focus:outline-none  inline-block ml-3" type="checkbox" name="desactive" id="desactive">
+                  </label>
+
+                  @error('nbre_par_carton')
+                      <span class="text-sm text-red-400 block">{{ $message }}</span>
+                  @enderror
+                </div>
+                <div class="w-1/2 ml-1">
+                  <x-label for="poids" :value="__('Poids')" class="inline-block" />
+                  <x-input placeholder="poid en Kg ou g" id="poids" class="w-full placeholder:italic" min='1' type="number"
+                      name="poids" :value="old('poids',$product->poids)" />
+
+                  @error('poids')
+                      <span class="text-sm text-red-400 block">{{ $message }}</span>
+                  @enderror
+                </div>
+              </div>
+            </div>
+            <div class="mt-1 w-1/2 ml-1 {{ $product->qte_en_littre ? '':'invisible' }} " id="choix-2">
+              <x-label for="qte_en_littre" :value="__('Quantité en Littre')" class="inline-block" />
+              <x-input placeholder="Combien de littre par produit ?" id="qte_en_littre" class="w-full placeholder:italic" type="number"
+                  name="qte_en_littre" :value="old('qte_en_littre',$product->qte_en_littre)"   />
+              @error('qte_en_littre')
+                  <span class="text-sm text-red-400 block">{{ $message }}</span>
+              @enderror
             </div>
           </div>
 
@@ -161,40 +182,34 @@
         })
     </script>
 
-    <script defer>
-      document.getElementById('desactive').addEventListener('change', _ => {
-        document.querySelectorAll('.nbr-par-carton').forEach(element => {
-          element.classList.toggle('disabled')
-          if(element.classList.contains('disabled')){
-            if(element.name){
-              element.required = false
-            }
-          }else{
-            if(element.name){
-              element.required = true
-            }
-          }
-        })
-      })
+<script defer>
+  const choix_1 = document.getElementById('choix-1')
+  const choix_2 = document.getElementById('choix-2')
 
-      document.getElementById('unite').addEventListener('change',e =>{
-        if(e.target.value === 'L'){
-          document.querySelectorAll('.nbr-par-carton').forEach(element => {
-            if(!element.classList.contains('disabled')){
-              element.classList.add('disabled')
-              document.getElementById('desactive').checked = true
-            }
-          })
-        }else{
-          document.querySelectorAll('.nbr-par-carton').forEach(element => {
-            if(element.classList.contains('disabled')){
-              element.classList.remove('disabled')
-              document.getElementById('desactive').checked = false
-            }
-          })
-        }
-      })
-    </script>
+  document.getElementById('desactive').addEventListener('change', _ => {
+    document.querySelectorAll('.nbre-par-carton').forEach(element => {
+      element.classList.toggle('disabled')
+    })
+  })
+  
+  document.getElementById('unite').addEventListener('change',e =>{
+    if(e.target.value === 'G' || e.target.value === 'KG'){
+      if(choix_1.classList.contains('invisible')){
+        choix_1.classList.remove('invisible')
+      }
+      if(!choix_2.classList.contains('invisible')){
+        choix_2.classList.add('invisible')
+      }
+    }else{
+      if(choix_2.classList.contains('invisible')){
+        choix_2.classList.remove('invisible')
+      }
+      if(!choix_1.classList.contains('invisible')){
+        choix_1.classList.add('invisible')
+      }
+    }
+  })
+</script>
 
   </x-slot>
 

@@ -322,6 +322,14 @@ class ProductController extends Controller
         ];
 
         $nbre_par_carton = null;
+        $poids = null;
+        $qte_en_littre = null;
+
+        if($request->unite_mesure === 'KG' || $request->unite_mesure === 'G'){
+            $poids = $request->poids;
+        }else{
+            $qte_en_littre = $request->qte_en_littre;
+        }
 
         if (!$desactiveNbreParKilo) {
             $rules['nbre_par_carton'] = 'required';
@@ -343,13 +351,6 @@ class ProductController extends Controller
 
         $request->validate($rules);
 
-        $unite = $request->unite_mesure;
-        if (!$desactiveNbreParKilo && $request->unite_mesure === 'L') {
-            $unite = 'KG';
-        } elseif ($desactiveNbreParKilo && ($request->unite_mesure !== 'KG' || $request->unite_mesure !== 'G')) {
-            $unite = 'L';
-        }
-
         $product->update([
             'qte_stock_alert' => $request->qte_stock_alert,
             'prix_unitaire'   => $request->prix_unitaire,
@@ -360,7 +361,9 @@ class ProductController extends Controller
             'description'     => $request->description ?? null,
             'type_approvionement' => $request->type_approvionement,
             'nbre_par_carton'     => $nbre_par_carton,
-            'unite_mesure'        => $unite
+            'unite_mesure'        => $request->unite_mesure,
+            'poids'               => $poids,
+            'qte_en_littre'       => $qte_en_littre,
         ]);
 
         return back()->with('message', "le produit $product->nom a été mise à jour avec succès !");
