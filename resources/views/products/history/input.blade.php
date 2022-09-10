@@ -19,9 +19,9 @@
 
   <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 pb-4">
       <div class="flex items-center justify-start  mt-6">
-          <a target="_blank" href="{{ route('history.print') }}"
+          <a target="_blank" href="{{ route('history.print.int') }}"
               class="mr-4 px-6 py-1 shadow-md rounded-md bg-gray-500 border-4 hover:bg-gray-600 transition border-gray-600 text-white">
-              <i class="fa-solid fa-download mr-3"></i> Imprimer la l'historiques
+              <i class="fa-solid fa-download mr-3"></i> Imprimer les entrées
           </a>
 
           <a href="{{ route('history.input') }}"
@@ -34,7 +34,7 @@
               <i class="fa-solid fa-download mr-3"></i> historiques sortantes
           </a>
           
-          <a href="{{ route('history.index') }}"
+          <a href="{{ route('history.input') }}"
               class="px-6 py-1 shadow-md rounded-md bg-white bg-opacity-80 border-4 border-white ">
               <i class="fa-solid fa-arrows-rotate"></i> Réactualiser
           </a>

@@ -24,7 +24,12 @@
   </x-slot>
 
   <div class="max-w-5xl px-6 pb-6 pt-10 mt-4 bg-white mx-auto  rounded-md relative">
+    @if($product->is_stock)
+      <span class="absolute top-0 right-8 px-4 py-2 bg-green-500 inline-block text-white cursor-pointer">En stock </span>
+    @endif
+
     <a href="{{ route('products.show',$product) }}" class="absolute top-0 right-0 px-4 py-2 bg-primary inline-block text-white cursor-pointer"><i class="fa-solid text-sm fa-eye "></i></a>
+    
     @if(Session::has('errors'))
         <div x-data="{show: true}" x-init="setTimeout(() => show = false, 10000)" x-show="show" class="p-4 mb-2 bg-red-100 text-center text-red-500 font-bold">{{Session::get('errors')->first()}}</div>
     @endif
@@ -66,7 +71,7 @@
           </div>
         </div>
         <div class="mt-2">
-          <div class="flex pb-3 ">
+          <div class="flex pb-3 {{ $product->is_stock ? 'disabled disabled--cadre':'' }}">
             <div class="mt-1 w-1/2  mr-1 ">
               <x-label for="unite" :value="__('Unité de mesure du produit')" class="inline-block" />
                   <select name="unite_mesure" required class="w-full placeholder:italic rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="unite">

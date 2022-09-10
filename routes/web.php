@@ -32,6 +32,12 @@ Route::middleware(['auth'])->group(function(){
 
     // products
     Route::get('products/history',[ProductController::class,'historiques'])->name('history.index');
+    Route::get('products/history/inputs',[ProductController::class,'inputHistoriques'])->name('history.input');
+    Route::get('products/history/outputs',[ProductController::class,'outputHistoriques'])->name('history.output');
+    Route::get('products/history/print',[ProductController::class,'printHistoriques'])->name('history.print');
+    Route::get('products/history/print/out',[ProductController::class,'printOutHistoriques'])->name('history.print.out');
+    Route::get('products/history/print/int',[ProductController::class,'printIntHistoriques'])->name('history.print.int');
+    
     Route::get('products/print',[ProductController::class,'printProducts'])->name('printProducts');
     Route::resource('products',ProductController::class);
     Route::post('products/{product}/input',[ProductController::class,'addInput'])->name('products.addInput');

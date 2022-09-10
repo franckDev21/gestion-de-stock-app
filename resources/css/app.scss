@@ -7,6 +7,11 @@
   opacity: .5;
   pointer-events: none;
   user-select: none;
+  &--cadre{
+    border: 2px solid gray;
+    padding: 1rem !important;
+    border-radius: .2rem;
+  }
 }
 
 .invisible{

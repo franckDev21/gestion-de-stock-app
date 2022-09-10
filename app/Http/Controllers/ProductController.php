@@ -38,6 +38,26 @@ class ProductController extends Controller
         return view('products.history.index', compact('historiques'));
     }
 
+    public function inputHistoriques(){
+        $historiques = HistoriqueProduct::with(['product', 'user'])
+            ->orderBy('created_at', 'DESC')
+            ->filter(request(['tag', 'search']))
+            ->where('type','ENTRÉE')
+            ->paginate(5);
+
+        return view('products.history.input', compact('historiques'));
+    }
+
+    public function outputHistoriques(){
+        $historiques = HistoriqueProduct::with(['product', 'user'])
+            ->orderBy('created_at', 'DESC')
+            ->filter(request(['tag', 'search']))
+            ->where('type','SORTIE')
+            ->paginate(5);
+
+        return view('products.history.output', compact('historiques'));
+    }
+
     public function addInput(Request $request, Product $product)
     {
         $request->validate([
@@ -397,4 +417,58 @@ class ProductController extends Controller
 
         return $pdf->stream();
     }
+
+    public function printHistoriques(){
+        $pdf = App::make('dompdf.wrapper');
+
+        $historiques = HistoriqueProduct::with(['product', 'user'])
+            ->orderBy('created_at', 'DESC')
+            ->get();
+
+        $name = 'all';
+
+        $pdf->loadView('pdf.historique', compact(
+            'historiques',
+            'name'
+        ));
+
+        return $pdf->stream();
+    }
+
+    public function printOutHistoriques(){
+        $pdf = App::make('dompdf.wrapper');
+
+        $historiques = HistoriqueProduct::with(['product', 'user'])
+            ->orderBy('created_at', 'DESC')
+            ->where('type','SORTIE')
+            ->get();
+
+        $name = 'sortie';
+
+        $pdf->loadView('pdf.historique', compact(
+            'historiques',
+            'name'
+        ));
+
+        return $pdf->stream();
+    }
+
+    public function printIntHistoriques(){
+        $pdf = App::make('dompdf.wrapper');
+
+        $historiques = HistoriqueProduct::with(['product', 'user'])
+            ->orderBy('created_at', 'DESC')
+            ->where('type','ENTRÉE')
+            ->get();
+
+        $name = 'entree';
+
+        $pdf->loadView('pdf.historique', compact(
+            'historiques',
+            'name'
+        ));
+
+        return $pdf->stream();
+    }
+
 }
