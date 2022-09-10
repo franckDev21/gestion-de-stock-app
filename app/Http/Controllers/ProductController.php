@@ -28,6 +28,15 @@ class ProductController extends Controller
         return view('products.index', compact('products'));
     }
 
+    public function approvisionnement(){
+        $approvisionnements = Approvisionnement::orderBy('updated_at', 'DESC')
+            ->orderBy('created_at', 'DESC')
+            ->filter(request(['tag', 'search']))
+            ->paginate(5);
+
+        return view('approvisionnement.index', compact('approvisionnements'));
+    }
+
     public function historiques()
     {
         $historiques = HistoriqueProduct::with(['product', 'user'])
@@ -36,6 +45,38 @@ class ProductController extends Controller
             ->paginate(5);
 
         return view('products.history.index', compact('historiques'));
+    }
+
+    public function productHistoriques(Product $product){
+        $historiques = HistoriqueProduct::with(['product', 'user'])
+            ->orderBy('created_at', 'DESC')
+            ->filter(request(['tag', 'search']))
+            ->where('product_id',$product->id)
+            ->paginate(5);
+
+        return view('products.history.one', compact('historiques','product'));
+    }
+
+    public function productIntHistoriques(Product $product){
+        $historiques = HistoriqueProduct::with(['product', 'user'])
+            ->orderBy('created_at', 'DESC')
+            ->filter(request(['tag', 'search']))
+            ->where('product_id',$product->id)
+            ->where('type','ENTRÉE')
+            ->paginate(5);
+
+        return view('products.history.one', compact('historiques','product'));
+    }
+
+    public function productOutHistoriques(Product $product){
+        $historiques = HistoriqueProduct::with(['product', 'user'])
+            ->orderBy('created_at', 'DESC')
+            ->filter(request(['tag', 'search']))
+            ->where('product_id',$product->id)
+            ->where('type','SORTIE')
+            ->paginate(5);
+
+        return view('products.history.one', compact('historiques','product'));
     }
 
     public function inputHistoriques(){
@@ -102,61 +143,17 @@ class ProductController extends Controller
 
         if ($request->type === 'UNITE') {
 
-            // si c'est un produit non liquide dont on peut 
             if(($product->unite_mesure === 'KG' || $product->unite_mesure === 'G') && !$product->nbre_par_carton){
                 $nbreUnites =  ($product->qte_en_stock * $product->poids) + $product->reste_unites;
                 $newNbreUnites = $nbreUnites - (int)$request->qte;
                 $newNbreParCarton = intval($newNbreUnites / $product->poids);
                 $resteUnites = $newNbreUnites % $product->poids;
-
-                // on verifie que le nbre de seau($product->qte_en_stock) >= 1
-                    // si oui
-                        // on verifie que ce quil veux enlever soit < au poids d'un seau($request->qte < $product->new_poids) | on ne veux pas enlever tous le contenu du seau
-                            // on verifie qu'il y'a un reste pour le produit en BD $produit->reste_unites ($produit->reste_unites > 0)
-                                // si oui 
-                                    // $stepReste = $produit->reste_unites - $request->qte
-                                    // $old_reste = $produit->reste_unites
-                                    // on verifie si $stepReste < 0
-                                        // si oui  | xa veux dire que ce qu'on veux enlever est > ou = 0
-                                            // on met le reste en BD a 0 | $produit->reste_unites = 0
-                                            // on verifie la qte en stock > 1
-                                                // si oui
-                                                    // on decremente 1 unité sur la qte en stock en BD | $product->qte_en_stock = $product->qte_en_stock - 1
-                                                    // on calcule le newReste => $newPoidUnSeau = $product->new_poids - ($stepReste * (-1))
-                                                    // on met a jour le $produit->reste_unites en BD | $produit->reste_unites = $newPoidUnSeau + (($stepReste * (-1)) - $old_reste)
-                                                // sinon | xa veux dire qu'il reste 1 seul en stock
-                                                    //  on met 
-                                            // 
-                                        // sinon
-                                // sinon
-                                    // si oui 
-                                        // on decremente le poids d'un seau
-                                        // $newPoidUnSeau = $product->new_poids - $request->qte
-                                        // on verifie que $newPoidUnSeau est > 0
-                                            // si oui
-                                                // ont met a jour le stock . $product->qte_en_stock = $product->qte_en_stock - 1
-                                                // on met a jour la proriete reste_unites ($produit->reste_unites = $newPoidUnSeau)
-                                            // sinon
-                                                # j'amis on arrivera ici
-                                        // $request->new_poids = $new_poids
-                                    // sinon
-                                        // message d'erreur => vous ne pouvez pas enlever tous le contenu d'un seau
-                    // sinon 
-                        // message d'erreur => stock insuffisant
-
             }else if(($product->unite_mesure !== 'KG' || $product->unite_mesure !== 'G') && !$product->nbre_par_carton){
-                // dd($product,$request->all(),'liquide mais sans nombre par carton');
-
                 $nbreUnites =  ($product->qte_en_stock * $product->qte_en_littre) + $product->reste_unites;
                 $newNbreUnites = $nbreUnites - (int)$request->qte;
                 $newNbreParCarton = intval($newNbreUnites / $product->qte_en_littre);
                 $resteUnites = $newNbreUnites % $product->qte_en_littre;
-
-                // decremente la qte en littre du produit => $new_qte_en_littre = $request->qte_en_littre - $request->qte
-                // on garde xa comme nouvelle valeur en stock de la colonne $produit->qte_en_littre = $new_qte_en_littre
             }else{
-                // dd($product,$request->all(),'solide avec nombre par carton');
-
                 $nbreUnites =  ($product->qte_en_stock * $product->nbre_par_carton) + $product->reste_unites;
                 $newNbreUnites = $nbreUnites - (int)$request->qte;
                 $newNbreParCarton = intval($newNbreUnites / $product->nbre_par_carton);

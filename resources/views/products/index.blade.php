@@ -1,10 +1,16 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex items-center justify-between">
-            <h2 class="font-semibold text-xl text-gray-600 leading-tight">
-                {{ __('Gestion des produits') }}
-            </h2>
-            <form class="w-2/3 flex" method="GET">
+            <div class="flex items-center">
+                <h2 class="font-semibold text-xl text-gray-600 leading-tight">
+                    {{ __('Gestion des produits') }}
+                </h2>
+                <a href="{{ route('approvisionnement.index') }}"
+                    class="ml-4 px-4 py-1 shadow-md rounded-md bg-sky-900 bg-opacity-80 border-4 hover:bg-opacity-100 transition border-sky-900 text-white">
+                    <i class="fa-solid fa-right-left rotate-90 mr-2"></i> Hostorique approvisionnement
+                </a>
+            </div>
+            <form class="w-[50%] flex" method="GET">
                 <div class="relative w-[90%]">
                     <x-input class="w-full" placeholder='Réchercher un produit ...' type="text" name="search"
                         :value="request('search')" autofocus />
@@ -19,20 +25,21 @@
 
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 pb-4">
         <div class="flex items-center justify-start  mt-6">
+            
             <a href="{{ route('history.index') }}"
-                class="mr-4 px-6 py-1 shadow-md rounded-md bg-yellow-500 border-4 hover:bg-yellow-600 transition border-yellow-600 text-white">
-                <i class="fa-solid fa-right-left rotate-90 mr-3"></i> Hostorique d'entrée  / sortie
+                class="mr-4 px-4 py-1 shadow-md rounded-md bg-yellow-500  border-4 hover:bg-yellow-600 transition border-yellow-600 text-white">
+                <i class="fa-solid fa-right-left rotate-90 mr-2"></i> Hostorique d'entrée  / sortie
             </a>
             <a target="_blank" href="{{ route('printProducts') }}"
-                class="mr-4 px-6 py-1 shadow-md rounded-md bg-gray-500 border-4 hover:bg-gray-600 transition border-gray-600 text-white">
-                <i class="fa-solid fa-download mr-3"></i> Imprimer la liste des produits
+                class="mr-4 px-4 py-1 shadow-md rounded-md bg-gray-500 border-4 hover:bg-gray-600 transition border-gray-600 text-white">
+                <i class="fa-solid fa-download mr-2"></i> Imprimer la liste des produits
             </a>
             <a href="{{ route('products.create') }}"
-                class="px-6 py-1 mr-4 shadow-md rounded-md bg-green-500 border-4 hover:bg-green-600 transition border-green-600 text-white">
-                <i class="fa-solid fa-user-plus mr-3"></i> Ajouter un nouveau produit
+                class="px-4 py-1 mr-4 shadow-md rounded-md bg-green-500 border-4 hover:bg-green-600 transition border-green-600 text-white">
+                <i class="fa-solid fa-user-plus mr-2"></i> Ajouter un nouveau produit
             </a>
             <a href="{{ route('products.index') }}"
-                class="px-6 py-1 shadow-md rounded-md bg-white bg-opacity-80 border-4 border-white ">
+                class="px-4 py-1 shadow-md rounded-md bg-white bg-opacity-80 border-4 border-white ">
                 <i class="fa-solid fa-arrows-rotate"></i> Réactualiser
             </a>
 

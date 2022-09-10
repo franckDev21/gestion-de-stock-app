@@ -25,10 +25,10 @@
 
   <div class="max-w-5xl px-6 pb-6 pt-10 mt-4 bg-white mx-auto  rounded-md relative">
     @if($product->is_stock)
-      <span class="absolute top-0 right-8 px-4 py-2 bg-green-500 inline-block text-white cursor-pointer">En stock </span>
+      <span class="absolute top-0 right-12 px-4 py-2 bg-green-500 inline-block text-white">En stock </span>
     @endif
 
-    <a href="{{ route('products.show',$product) }}" class="absolute top-0 right-0 px-4 py-2 bg-primary inline-block text-white cursor-pointer"><i class="fa-solid text-sm fa-eye "></i></a>
+    <a href="{{ route('products.show',$product) }}" class="absolute top-0 right-0 px-4 py-2 bg-primary bg-opacity-70 hover:bg-opacity-100 transition inline-block text-white cursor-pointer"><i class="fa-solid text-sm fa-eye "></i></a>
     
     @if(Session::has('errors'))
         <div x-data="{show: true}" x-init="setTimeout(() => show = false, 10000)" x-show="show" class="p-4 mb-2 bg-red-100 text-center text-red-500 font-bold">{{Session::get('errors')->first()}}</div>

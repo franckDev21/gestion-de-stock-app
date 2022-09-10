@@ -19,4 +19,16 @@ class Approvisionnement extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+
+    public function scopeFilter($query,$filters){
+        if($filters['search'] ?? false){
+            $query
+                ->where('quantite','like','%'.strtolower($filters['search']).'%')
+                ->orWhere('prix_achat','like','%'.strtolower($filters['search']).'%');
+        }
+    }
+
+    public function product(){
+        return $this->belongsTo(Product::class);
+    }
 }

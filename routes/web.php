@@ -37,12 +37,18 @@ Route::middleware(['auth'])->group(function(){
     Route::get('products/history/print',[ProductController::class,'printHistoriques'])->name('history.print');
     Route::get('products/history/print/out',[ProductController::class,'printOutHistoriques'])->name('history.print.out');
     Route::get('products/history/print/int',[ProductController::class,'printIntHistoriques'])->name('history.print.int');
+    Route::get('products/history/{product}/all',[ProductController::class,'productHistoriques'])->name('history.index.product');
+    Route::get('products/history/{product}/input',[ProductController::class,'productIntHistoriques'])->name('history.input.product');
+    Route::get('products/history/{product}/output',[ProductController::class,'productOutHistoriques'])->name('history.output.product');
     
     Route::get('products/print',[ProductController::class,'printProducts'])->name('printProducts');
     Route::resource('products',ProductController::class);
     Route::post('products/{product}/input',[ProductController::class,'addInput'])->name('products.addInput');
     Route::post('products/{product}/output',[ProductController::class,'addOutput'])->name('products.addOutput');
     
+    // approvisionnement
+    Route::get('approvisionnement/all',[ProductController::class,'approvisionnement'])->name('approvisionnement.index');
+
     # admin routes
     Route::middleware('role:ADMIN')->group(function() {
         // users
