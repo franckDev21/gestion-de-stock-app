@@ -23,18 +23,22 @@
             
             <div class="pb-6 mt-4 px-6">
                <div class="mt-3 mb-6">
-                  <x-label for="qte" :value="__('Quantité')" class="inline-block text-white mb-1 text-lg" /> <span class="text-xs italic text-gray-400"></span>
+                  <x-label for="qte" :value="__('Quantité')" class="inline-block text-white mb-1 text-lg" /> <span class="text-xs italic text-gray-400">(En {{ $product->type_approvionement }})</span>
                   <x-input placeholder='Entrer la quantité a rétiré' id="qte" class="w-full placeholder:italic" min='1' max='100' type="number"
-                    name="qte" :value="old('qte')" required autofocus />
+                    name="qte" :value="old('qte')" required autofocus /> 
                </div>
 
-               <div class="mt-3 mb-6">
+               @if(!$product->vendu_par_piece)
+                <div class="mt-3 mb-6">
                     <x-label for="type" :value="__('Type de retrait')" class="inline-block text-white mb-1 text-lg" />
                     <select name="type" id="type" class="rounded-md w-full shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                         <option value="UNITE">Unité</option>
                         <option value="CARTON">{{ $product->type_approvionement }}</option>
                     </select>
                 </div>
+                @else
+                <input name="type" type="hidden" hidden value="CARTON">
+                @endif
 
                <div class="mt-3 mb-6">
                     <x-label for="motif" :value="__('Motif')" class="inline-block text-white mb-1 text-lg" />

@@ -24,7 +24,8 @@ class Product extends Model
         'nbre_par_carton',
         'reste_unites',
         'poids',
-        'qte_en_littre'
+        'qte_en_littre',
+        'vendu_par_piece'
     ];
 
     public function scopeFilter($query,$filters){

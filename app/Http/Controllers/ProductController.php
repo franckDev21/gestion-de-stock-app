@@ -28,6 +28,10 @@ class ProductController extends Controller
         return view('products.index', compact('products'));
     }
 
+    public function indexApi(){
+        return response()->json(Product::all());
+    }
+
     public function approvisionnement(){
         $approvisionnements = Approvisionnement::orderBy('updated_at', 'DESC')
             ->orderBy('created_at', 'DESC')
@@ -252,10 +256,15 @@ class ProductController extends Controller
         $nbre_par_carton = null;
         $poids = null;
         $qte_en_littre = null;
-
+        $vendu_par_piece = false;
 
         if($request->unite_mesure === 'KG' || $request->unite_mesure === 'G'){
+            $poids = $request->poids ? $request->poids : $request->poids2;
+        }elseif($request->unite_mesure === 'UNIQUE'){
             $poids = $request->poids;
+            $vendu_par_piece = true;
+            $request->unite_mesure = 'KG';
+            
         }else{
             $qte_en_littre = $request->qte_en_littre;
         }
@@ -286,6 +295,7 @@ class ProductController extends Controller
             'unite_mesure'        => $request->unite_mesure,
             'poids'               => $poids,
             'qte_en_littre'       => $qte_en_littre,
+            'vendu_par_piece'     => $vendu_par_piece
         ]);
 
         return to_route('products.index')->with("message", 'Votre produit a été ajouter avec succès !');
@@ -342,9 +352,15 @@ class ProductController extends Controller
         $nbre_par_carton = null;
         $poids = null;
         $qte_en_littre = null;
+        $vendu_par_piece = false;
 
         if($request->unite_mesure === 'KG' || $request->unite_mesure === 'G'){
+            $poids = $request->poids ? $request->poids : $request->poids2;
+        }elseif($request->unite_mesure === 'UNIQUE'){
             $poids = $request->poids;
+            $vendu_par_piece = true;
+            $request->unite_mesure = 'KG';
+            
         }else{
             $qte_en_littre = $request->qte_en_littre;
         }
@@ -382,6 +398,7 @@ class ProductController extends Controller
             'unite_mesure'        => $request->unite_mesure,
             'poids'               => $poids,
             'qte_en_littre'       => $qte_en_littre,
+            'vendu_par_piece'     => $vendu_par_piece
         ]);
 
         return back()->with('message', "le produit $product->nom a été mise à jour avec succès !");

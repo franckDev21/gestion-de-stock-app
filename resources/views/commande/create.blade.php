@@ -13,9 +13,8 @@
           </div>
           <form class="w-[40%] flex" method="GET">
               <div class="relative w-[90%]">
-                  <x-input class="w-full" placeholder='Réchercher un client ...' type="text" name="search"
+                  <x-input class="w-full" placeholder='Réchercher un client ...' type="date" name="search"
                       :value="request('search')" required autofocus />
-                  <i class="fa-solid fa-magnifying-glass absolute top-1/2 -translate-y-1/2 right-4 text-gray-500"></i>
               </div>
               
               <x-button class="ml-3">
@@ -25,6 +24,7 @@
       </div>
   </x-slot>
 
+    {{-- <a href="{{ asset('storage/img/users/default.jpg') }}" download=""{{ asset('storage/img/users/default.jpg') }}""  >image</a> --}}
     <div id="commande">
             
     </div>

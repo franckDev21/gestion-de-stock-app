@@ -12,7 +12,7 @@
 
         @viteReactRefresh
         <!-- Scripts -->
-        @vite(['resources/css/app.scss', 'resources/js/app.tsx'])
+        @vite(['resources/css/app.scss', 'resources/js/app.jsx'])
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

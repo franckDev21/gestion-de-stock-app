@@ -12,17 +12,17 @@ Alpine.start();
 
 // change type input
 Array.from(document.querySelectorAll(".eye-input")).forEach((parentInput) => {
-    parentInput.querySelector("i")?.addEventListener("click", (e: any) => {
+    parentInput.querySelector("i")?.addEventListener("click", (e) => {
         if (parentInput.querySelector("input")?.type === "text") {
-            (parentInput.querySelector("input") as HTMLInputElement).type = "password";
+            parentInput.querySelector("input").type = "password";
             e.target.classList.replace("fa-eye-slash", "fa-eye");
         } else {
-            (parentInput.querySelector("input") as HTMLInputElement).type = "text";
+            parentInput.querySelector("input").type = "text";
             e.target.classList.replace("fa-eye", "fa-eye-slash");
         }
     });
 });
 
 if (document.getElementById('commande')) { 
-  createRoot(document.getElementById('commande') as HTMLElement).render(<Commande />)
+  createRoot(document.getElementById('commande')).render(<Commande />)
 }

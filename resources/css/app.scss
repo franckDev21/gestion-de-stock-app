@@ -29,7 +29,7 @@ body{
     background-color: #3333 ;
   }
   &::-webkit-scrollbar-thumb{
-    background-color: #0b8baf7d;
+    background-color: #017e84;
     border-radius: 5px;
   }
 }
@@ -38,4 +38,8 @@ body{
   &::-webkit-scrollbar{
     width: 0;
   }
+}
+
+[modal-backdrop]{
+  background-color: rgba(128, 128, 128, 0.395) !important;
 }

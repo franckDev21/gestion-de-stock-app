@@ -79,6 +79,7 @@
                     <option @selected($product->unite_mesure == 'KG') value="KG">Kilogramme</option>
                     <option @selected($product->unite_mesure == 'G') value="G">Gramme</option>
                     <option @selected($product->unite_mesure == 'L') value="L">Littre</option>
+                    <option @selected($product->unite_mesure == 'KG' && $product->vendu_par_piece) value="UNIQUE">Produit vendu par pièce | KG</option>
                   </select>
               @error('unite_mesure')
                   <span class="text-sm text-red-400 block">{{ $message }}</span>
@@ -102,7 +103,7 @@
                 <div class="w-1/2 ml-1">
                   <x-label for="poids" :value="__('Poids')" class="inline-block" />
                   <x-input placeholder="poid en Kg ou g" id="poids" class="w-full placeholder:italic" min='1' type="number"
-                      name="poids" :value="old('poids',$product->poids)" />
+                      name="poids" :value="old('poids',(int)$product->poids)" />
 
                   @error('poids')
                       <span class="text-sm text-red-400 block">{{ $message }}</span>
@@ -117,6 +118,15 @@
               @error('qte_en_littre')
                   <span class="text-sm text-red-400 block">{{ $message }}</span>
               @enderror
+            </div>
+            <div class="mt-1 w-1/2 ml-1 invisible" id="choix-3">
+              <x-label for="poids2" :value="__('Poids')" class="inline-block" />
+                <x-input placeholder="poid en Kg ou g" id="poids2" class="w-full placeholder:italic" min='1' type="number"
+                  name="poids2" :value="old('poids2',(int)$product->poids)" />
+
+                @error('poids2')
+                  <span class="text-sm text-red-400 block">{{ $message }}</span>
+                @enderror
             </div>
           </div>
 
@@ -190,6 +200,7 @@
 <script defer>
   const choix_1 = document.getElementById('choix-1')
   const choix_2 = document.getElementById('choix-2')
+  const choix_3 = document.getElementById('choix-3')
 
   document.getElementById('desactive').addEventListener('change', _ => {
     document.querySelectorAll('.nbre-par-carton').forEach(element => {
@@ -205,12 +216,28 @@
       if(!choix_2.classList.contains('invisible')){
         choix_2.classList.add('invisible')
       }
+      if(!choix_3.classList.contains('invisible')){
+        choix_3.classList.add('invisible')
+      }
+    }else if(e.target.value === 'UNIQUE'){
+      if(choix_3.classList.contains('invisible')){
+        choix_3.classList.remove('invisible')
+      }
+      if(!choix_1.classList.contains('invisible')){
+        choix_1.classList.add('invisible')
+      }
+      if(!choix_2.classList.contains('invisible')){
+        choix_2.classList.add('invisible')
+      }
     }else{
       if(choix_2.classList.contains('invisible')){
         choix_2.classList.remove('invisible')
       }
       if(!choix_1.classList.contains('invisible')){
         choix_1.classList.add('invisible')
+      }
+      if(!choix_3.classList.contains('invisible')){
+        choix_3.classList.add('invisible')
       }
     }
   })

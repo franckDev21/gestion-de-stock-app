@@ -24,10 +24,10 @@
 
         @viteReactRefresh
         <!-- Scripts -->
-        @vite(['resources/css/app.scss', 'resources/js/app.tsx'])
+        @vite(['resources/css/app.scss', 'resources/js/app.jsx'])
 
     </head>
-    <body class="font-sans antialiased">
+    <body class="font-sans ">
 
         <!-- notification -->
         <x-flash-message />
