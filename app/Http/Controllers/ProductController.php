@@ -118,6 +118,7 @@ class ProductController extends Controller
             'prix_achat' => $request->prix,
             'quantite'   => $request->qte,
             'user_id'    => $request->user()->id,
+            'is_unite'   => false
         ]);
 
         // new historic

@@ -13,11 +13,11 @@
         <div>
             <a data-modal-toggle="popup-output" href="#"
               class="px-6 py-1 mr-3 shadow-md rounded-md bg-red-500 border-4 hover:bg-red-600 transition border-red-600 text-white">
-              -  Ajouter une sortie
+              <i class="fa-solid fa-minus text-white"></i>  Ajouter une sortie
             </a>
             <a data-modal-toggle="popup-input" href="#"
                 class="px-6 py-1 mr-3 shadow-md rounded-md bg-green-500 border-4 hover:bg-green-600 transition border-green-600 text-white">
-                + Ajouter une entrée
+                <i class="fa-solid fa-plus"></i> Ajouter une entrée
             </a>
             <a href="{{ route('history.index.product',$product->id) }}"
                 class="px-6 py-1 shadow-md rounded-md bg-yellow-500 border-4 hover:bg-yellow-600 transition border-yellow-600 text-white">

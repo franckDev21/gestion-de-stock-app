@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\CommandeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
@@ -48,6 +49,9 @@ Route::middleware(['auth'])->group(function(){
     
     // approvisionnement
     Route::get('approvisionnement/all',[ProductController::class,'approvisionnement'])->name('approvisionnement.index');
+
+    // commande
+    Route::resource('commandes',CommandeController::class);
 
     # admin routes
     Route::middleware('role:ADMIN')->group(function() {
