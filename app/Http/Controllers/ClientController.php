@@ -23,6 +23,24 @@ class ClientController extends Controller
         return view('clients.index',compact('clients'));
     }
 
+    public function indexApi(){
+        return response()->json(Client::all());
+    }
+
+    public function storeApi(Request $request){
+        Client::create([
+            'firstname' => $request->firstname,
+            'lastname' => $request->lastname,
+            'email' => $request->email,
+            'tel' => $request->tel,
+            'address' => $request->address,
+        ]);
+        
+        return response()->json([
+            'success' => 'Client enregistrer'
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

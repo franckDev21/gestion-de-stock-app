@@ -1,18 +1,34 @@
 import axios from "axios";
 import React, {useEffect, useState} from "react";
+import ClientForm from "../components/ClientForm";
+import { format_number } from "../utils/utils";
 
 const Commande = ({ }) => {
 
   const [products,setProducts] = useState([]);
+  const [clients,setClients] = useState([]);
+  const [client,setClient] = useState('');
+  const [desc,setDesc] = useState('');
   const [carts,setCarts] = useState([]);
   const [tabProductSearch,setTabProductSearch] = useState([]);
   const [filter,setFilter] = useState('');
+  const [showClientForm,setShowClientForm] = useState(false);
+  const [addNewClientState,setAddNewClientState] = useState(false);
 
   useEffect(() => {
     axios.get('/api/products').then(res => {
       setProducts(res.data);
     });
+    axios.get('/api/clients').then(res => {
+      setClients(res.data);
+    });
   },[]);
+
+  useEffect(() => {
+    axios.get('/api/clients').then(res => {
+      setClients(res.data);
+    }).catch(err => console.log(err));
+  },[addNewClientState]);
 
   const search = () => {
     if(filter !== ''){
@@ -36,9 +52,24 @@ const Commande = ({ }) => {
     let exist = carts.find(p => p.id === product.id) ? true : false
     let newProduct;
     if(!exist){
+      let nbreUnites;
+
+      if((product.unite_mesure === 'KG' || product.unite_mesure === 'G') && !product.nbre_par_carton){
+        if(product.vendu_par_piece){
+          nbreUnites = product.qte_en_stock;
+        }else{
+          nbreUnites =  (product.qte_en_stock * product.poids) + product.reste_unites;
+        }
+      } else if((product.unite_mesure !== 'KG' || product.unite_mesure !== 'G') && !product.nbre_par_carton){
+        nbreUnites =  (product.qte_en_stock * product.qte_en_littre) + product.reste_unites;
+      } else{
+        nbreUnites =  (product.qte_en_stock * product.nbre_par_carton) + product.reste_unites;
+      }
+
       newProduct = {
         ...product,
-        qte : 1
+        qte : 1,
+        max : nbreUnites
       }
       setCarts(state => [...state,newProduct])
     }else{
@@ -54,10 +85,15 @@ const Commande = ({ }) => {
 
   const isValid = () => {
     let som = 0
+    let prix = 0
     carts.forEach(product => {
       som += (parseInt(product.qte,10) || 0)
+      prix += ((parseInt(product.qte,10) || 0) * product.prix_unitaire)
     })
-    return som > 0
+    return {
+      som : som > 0,
+      prix : prix
+    }
   }
 
   const setQte = (id,value) => {
@@ -78,8 +114,18 @@ const Commande = ({ }) => {
     return carts.find(product => product.id === id)
   }
 
-  const commander = () => {
-    console.log(carts);
+  const commander = (e) => {
+
+    e.preventDefault();
+    let data = {
+      client,
+      carts,
+      desc,
+      totalCommande: isValid().prix
+    }
+
+
+    console.log(data);
   }
 
   useEffect(() => {
@@ -90,42 +136,53 @@ const Commande = ({ }) => {
     <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 pb-4">
       <div className="bg-white min-h-[450px] px-6 py-5 rounded-md mt-5 flex justify-between items-start">
         <div className="w-[50%] mr-2">
-          <div className="my-2 flex flex-col">
-            <h3 className="text-lg font-semibold text-gray-500 mb-3">
-              Client
-            </h3>
-            <div className="mt-1 flex justify-between items-center w-full">
-              <select className="px-6 w-[70%] py-2 border-2 bg-gray-100 rounded-md shadow-sm border-gray-500 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-gray-600 outline-none border-none">
-                <option value="">
-                  -- selectionnez un client --
-                </option>
-              </select>
-              <button className="px-4 py-2 ml-2 w-[30%] bg-primary bg-opacity-80 hover:bg-opacity-100 rounded-md text-white">
-                Nouveau client
-              </button>
-            </div>
-
-            <div className="my-2 flex flex-col mt-4">
+          {!showClientForm &&
+            <div className="my-2 flex flex-col">
               <h3 className="text-lg font-semibold text-gray-500 mb-3">
-                Description de la commande{" "}
-                <span className="text-gray-400 text-sm italic font-normal">
-                  (Facultatif)
-                </span>
+                Client
               </h3>
-              <div className="mt-1 flex justify-between items-center">
-                <textarea
-                  name=""
-                  className="px-6 w-full py-2 placeholder:italic bg-gray-100 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-gray-600 outline-none border-none"
-                  id=""
-                  cols="30"
-                  rows="4"
-                  placeholder="Entrez la description de la commande ici..."
-                ></textarea>
+              <div className="mt-1 flex justify-between items-center w-full">
+                <select value={client} onChange={(e) => setClient(e.target.value)} className="px-6 w-[70%] py-2 border-2 bg-gray-100 rounded-md shadow-sm border-gray-500 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-gray-600 outline-none border-none">
+                  <option value="">
+                    -- selectionnez un client --
+                  </option>
+                  {clients.map(client => (
+                    <option value={client.id} key={client.id}>{client.firstname} {client.lastname}</option>
+                  ))}
+                </select>
+                <button onClick={() => setShowClientForm(true)} className="px-4 py-2 ml-2 w-[30%] bg-primary bg-opacity-80 hover:bg-opacity-100 rounded-md text-white">
+                  Nouveau client
+                </button>
               </div>
-            </div>
-          </div>
+
+              <div className="my-2 flex flex-col mt-4">
+                <h3 className="text-lg font-semibold text-gray-500 mb-3">
+                  Description de la commande{" "}
+                  <span className="text-gray-400 text-sm italic font-normal">
+                    (Facultatif)
+                  </span>
+                </h3>
+                <div className="mt-1 flex justify-between items-center">
+                  <textarea
+                    value={desc}
+                    onChange={(e) => setDesc(e.target.value)}
+                    className="px-6 w-full py-2 placeholder:italic bg-gray-100 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-gray-600 outline-none border-none"
+                    id=""
+                    cols="30"
+                    rows="4"
+                    placeholder="Entrez la description de la commande ici..."
+                  ></textarea>
+                </div>
+              </div>
+            </div>}
+          {showClientForm && <>
+            <ClientForm addNewClient={(value) => {
+            setAddNewClientState(value);
+            setShowClientForm(false);
+            }} onClickCallback={(value) => setShowClientForm(value)} />
+          </>}
         </div>
-        <div className="w-[50%] ml-2">
+        <form onSubmit={commander} className="w-[50%] ml-2">
           <div className="relative z-50">
             <input type="text" value={filter} onChange={(e) => setFilter(e.target.value)} placeholder='Réchercher un produit ici' className='px-6 w-full py-2 bg-gray-100 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-gray-600 outline-none border-none' />
             <i className="fa-solid fa-magnifying-glass absolute top-1/2 -translate-y-1/2 right-4 text-gray-500"></i>
@@ -133,10 +190,12 @@ const Commande = ({ }) => {
             <div className="bg-gray-300 absolute w-full flex-col flex justify-start items-start top-full left-0 ring-0 rounded-b-md">
               {tabProductSearch.map(product => (
                 <div style={{ zIndex: 1000 }} onClick={() => addToCart(product)} key={product.id} className="w-full z-50 flex justify-start items-start mb-2 p-1 hover:bg-gray-200 transition cursor-pointer">
-                  <div className="w-10 h-10 bg-slate-50"></div>
+                  <div className="w-10 relative h-10 overflow-hidden">
+                    <img src={`${product.image ? `/storage/${product.image}` :'/static/img/product.png'}`} className=" absolute z-0 h-auto w-full object-cover" />
+                  </div>
                   <div className="ml-2 -translate-y-1">
                     <h2 className="font-semibold text-gray-600">{product.nom}</h2>
-                    <h2 className="font-semibold text-sm text-primary">prix unitaire : {product.prix_unitaire} FCFA 
+                    <h2 className="font-semibold text-sm text-primary">prix unitaire : {format_number(product.prix_unitaire)} 
                       {product.is_stock ?  <>
                         <span className="px-2 font-normal rounded-lg mx-2 py-1 text-xs bg-green-100 text-green-500">En stock</span> | {product.qte_en_stock} {product.type_approvionement}(s) {!product.vendu_par_piece && `et ${product.reste_unites || 0} unité(s)` }
                       </>: <span className="px-2 font-normal rounded-lg mx-2 py-1 text-xs bg-red-100 text-red-500">stock vide</span>}
@@ -161,9 +220,9 @@ const Commande = ({ }) => {
 
                     <div className="ml-2 -translate-y-1">
                       <h2 className="font-semibold text-gray-600">{product.nom}</h2>
-                      <h2 className="font-semibold text-sm text-primary">Prix unitaire : {product.prix_unitaire} FCFA  </h2> 
+                      <h2 className="font-semibold text-sm text-primary">Prix unitaire : {format_number(product.prix_unitaire)}  </h2> 
                       <div>
-                        <input value={findProduct(product.id).qte || 0} onChange={(e) => setQte(product.id,e.target.value)}  type="number" className="mt-1 appearance-none px-1 text-center font-bold w-20 py-1 bg-gray-100 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-gray-600 outline-none border-none" />
+                        <input min={0} max={product.max} value={findProduct(product.id).qte || 0} onChange={(e) => setQte(product.id,e.target.value)}  type="number" className="mt-1 appearance-none px-1 text-center font-bold w-20 py-1 bg-gray-100 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-gray-600 outline-none border-none" />
                       </div>
                     </div>
                   </div>
@@ -176,12 +235,17 @@ const Commande = ({ }) => {
                 <span className="text-base px-5">veillez réchercher le(s) et cliquez dessus pour les ajoutes dans la commande</span>
               </div>
             )}
-
+            <div className="my-4 border-y flex justify-end items-center">
+              <span className="text-3xl text-gray-500 font-bold py-3 inline-block">
+                <span className="text-secondary pr-2">Total : </span>
+                <span>{format_number(isValid().prix)}</span>
+              </span>
+            </div>
             <div className="py-3">
-              <button onClick={() => commander()} className={`bg-primary ${!isValid() && 'disabled'} border-2 border-primary transition text-white px-6 py-2 w-full rounded-md`}>Commander</button>
+              <button className={`bg-primary ${!isValid().som && 'disabled'} border-2 border-primary transition text-white px-6 py-2 w-full rounded-md`}>Commander</button>
             </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );
