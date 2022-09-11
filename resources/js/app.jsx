@@ -24,5 +24,6 @@ Array.from(document.querySelectorAll(".eye-input")).forEach((parentInput) => {
 });
 
 if (document.getElementById('commande')) { 
-  createRoot(document.getElementById('commande')).render(<Commande />)
+    const user_id = document.getElementById('commande').dataset.user
+    createRoot(document.getElementById('commande')).render(<Commande user_id={user_id} />)
 }

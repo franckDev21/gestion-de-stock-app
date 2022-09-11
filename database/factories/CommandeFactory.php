@@ -25,7 +25,6 @@ class CommandeFactory extends Factory
             'cout'          => rand(1000,5000),
             'etat'          => ['FACTURER','IMPAYER','PAYER'][rand(0,2)],
             'client_id'     => Client::inRandomOrder()->first()->id,
-            'product_id'    => Product::inRandomOrder()->first()->id,
             'user_id'       => User::inRandomOrder()->first()->id,
         ];
     }

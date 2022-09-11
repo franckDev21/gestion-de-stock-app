@@ -19,10 +19,10 @@ return new class extends Migration
             $table->bigInteger('reference');
             $table->integer('quantite');
             $table->integer('cout');
+            $table->text('desc')->nullable();
             $table->enum('etat',['FACTURER','IMPAYER','AVANCER','PAYER']);
             $table->integer('reduction')->nullable();
             $table->foreignId('client_id')->constrained()->onDelete('cascade');
-            $table->foreignId('product_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             
             $table->timestamps();

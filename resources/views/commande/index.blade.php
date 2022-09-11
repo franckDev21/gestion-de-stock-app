@@ -79,8 +79,7 @@
                 <thead>
                     <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                         <th class="py-3 px-4 text-left">reference</th>
-                        <th class="py-3 px-4 text-left">produit</th>
-                        <th class="py-3 px-4 text-left">quantite</th>
+                        <th class="py-3 px-4 text-left">quantite produits</th>
                         <th class="py-3 px-4 text-left">coût</th>
                         <th class="py-3 px-4 text-left">etat</th>
                         <th class="py-3 px-4 text-left">client</th>
@@ -95,26 +94,9 @@
                             <td class="py-3 px-4 text-left">
                                 <span class="font-semibold">#{{ $commande->reference }}</span>
                             </td>
-                            <td class="py-3 px-4 text-left whitespace-nowrap">
-                                <div class="flex items-center">
-                                    <div
-                                        class="mr-2 h-14 w-14 rounded-md overflow-hidden flex justify-center items-center ">
-                                        @if ($commande->product->image)
-                                            <img class=" h-14 w-14 "
-                                                src="{{ asset("storage/$commande->image") }}" alt="image">
-                                        @else
-                                            <i class="fa-solid text-2xl text-gray-400  fa-box-open "></i>
-                                        @endif
-                                    </div>
-                                    <div class="flex items-start flex-col justify-start">
-                                        <span class="font-bold">{{ ucfirst($commande->product->nom) }}</span>
-                                        @if($commande->product->nbre_par_carton) {{ $commande->product->nbre_par_carton }} Par {{ $commande->product->type_approvionement }} @endif
-                                    </div>
-                                </div>
-                            </td>
 
                             <td class="py-3 px-4 text-left">
-                                <span>{{ $commande->quantite }}</span>
+                                <span>{{ $commande->quantite }} Unité(s)</span>
                             </td>
 
                             <td class="py-3 px-4 text-left">

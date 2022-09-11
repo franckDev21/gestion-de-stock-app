@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import ClientForm from "../components/ClientForm";
 import { format_number } from "../utils/utils";
 
-const Commande = ({ }) => {
+const Commande = ({ user_id }) => {
 
   const [products,setProducts] = useState([]);
   const [clients,setClients] = useState([]);
@@ -14,6 +14,8 @@ const Commande = ({ }) => {
   const [filter,setFilter] = useState('');
   const [showClientForm,setShowClientForm] = useState(false);
   const [addNewClientState,setAddNewClientState] = useState(false);
+
+  const [load,setLoad] = useState(false);
 
   useEffect(() => {
     axios.get('/api/products').then(res => {
@@ -92,7 +94,8 @@ const Commande = ({ }) => {
     })
     return {
       som : som > 0,
-      prix : prix
+      prix : prix,
+      qte : som
     }
   }
 
@@ -117,13 +120,32 @@ const Commande = ({ }) => {
   const commander = (e) => {
 
     e.preventDefault();
+
+    setLoad(true);
+
     let data = {
+      user_id,
       client,
       carts,
       desc,
+      total_qte: isValid().qte,
       totalCommande: isValid().prix
     }
 
+    axios
+      .post('http://localhost:8000/api/commandes',data).then(res => {
+        console.log(res.data);
+
+        if(res.data.success){
+          
+        }
+
+        setLoad(false);
+      })
+      .catch(err => {
+        console.log(err);
+        setLoad(false);
+      });
 
     console.log(data);
   }
@@ -242,11 +264,14 @@ const Commande = ({ }) => {
               </span>
             </div>
             <div className="py-3">
-              <button className={`bg-primary ${!isValid().som && 'disabled'} border-2 border-primary transition text-white px-6 py-2 w-full rounded-md`}>Commander</button>
+              <button className={`bg-primary ${!isValid().som && 'disabled'} border-2 border-primary transition text-white px-6 py-2 w-full rounded-md`}>{load ? "Enregistrement en cours ...":"Commander"}</button>
             </div>
           </div>
         </form>
       </div>
+
+      
+    
     </div>
   );
 };

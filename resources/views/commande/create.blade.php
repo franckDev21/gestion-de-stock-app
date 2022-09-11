@@ -25,7 +25,7 @@
   </x-slot>
 
     {{-- <a href="{{ asset('storage/img/users/default.jpg') }}" download=""{{ asset('storage/img/users/default.jpg') }}""  >image</a> --}}
-    <div id="commande">
+    <div data-user="{{ auth()->user()->id }}" id="commande">
             
     </div>
 

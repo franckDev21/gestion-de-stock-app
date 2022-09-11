@@ -15,17 +15,21 @@ class Commande extends Model
         'cout',
         'etat' ,
         'client_id',
-        'product_id',
-        'user_id'  
+        'user_id'  ,
+        'desc'
     ];
 
     public function user(){
        return $this->belongsTo(User::class);
     }
 
-    public function product(){
-       return $this->belongsTo(Product::class);
-    }
+   //  public function product(){
+   //     return $this->belongsTo(Product::class);
+   //  }
+
+         public function commandeProducts(){
+          return $this->hasMany(CommandeProduct::class);
+       }
 
     public function client(){
        return $this->belongsTo(Client::class);
