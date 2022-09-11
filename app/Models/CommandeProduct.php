@@ -18,4 +18,8 @@ class CommandeProduct extends Model
     public function commande(){
         return $this->belongsTo(Commande::class);
     }
+
+    public function product(){
+        return $this->belongsTo(Product::class);
+    }
 }

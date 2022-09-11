@@ -79,7 +79,6 @@ class CommandeController extends Controller
                     $newNbreParCarton = intval($newNbreUnites / $cart['poids']);
                     $resteUnites = $newNbreUnites % $cart['poids'];
                 }
-                
             }else if(($cart['unite_mesure'] !== 'KG' || $cart['unite_mesure'] !== 'G') && !$cart['nbre_par_carton']){
                 $nbreUnites =  ($cart['qte_en_stock'] * $cart['qte_en_littre']) + $cart['reste_unites'];
                 $newNbreUnites = $nbreUnites - (int)$cart['qte'];
@@ -87,7 +86,7 @@ class CommandeController extends Controller
                 $resteUnites = $newNbreUnites % $cart['qte_en_littre'];
             }else{
                 $nbreUnites =  ($cart['qte_en_stock'] * $cart['nbre_par_carton']) + $cart['reste_unites'];
-                $newNbreUnites = $nbreUnites - (int)$request->qte;
+                $newNbreUnites = $nbreUnites - (int)$cart['qte'];
                 $newNbreParCarton = intval($newNbreUnites / $cart['nbre_par_carton']);
                 $resteUnites = $newNbreUnites % $cart['nbre_par_carton'];
             }
@@ -112,7 +111,7 @@ class CommandeController extends Controller
                     'motif'     => 'Commande',
                     'product_id'=> $cart['id'],
                     'user_id'   => $request->user_id,
-                    'is_unite'  => false
+                    'is_unite'  => true
                 ]);
 
             } else {
@@ -121,7 +120,7 @@ class CommandeController extends Controller
             
         }
 
-        return response()->json(["success", 'Votre commande a été rétiré avec succès !']);;
+        return response()->json(["success" =>  $commande->id]);;
 
     }
 
@@ -133,7 +132,12 @@ class CommandeController extends Controller
      */
     public function show(Commande $commande)
     {
-        //
+        $commande = Commande::with(['client','user','commandeProducts'])
+            ->where('id',$commande->id)->first();
+        
+            // dd($commande->commandeProducts,$commande->commandeProducts->first()->product);
+            
+        return view('commande.show',compact('commande'));
     }
 
     /**
