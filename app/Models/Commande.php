@@ -22,7 +22,7 @@ class Commande extends Model
     public function scopeFilter($query,$filters){
       if($filters['search'] ?? false){
           $query
-              ->where('etat','%'.$filters['search'].'%');
+              ->where('etat',$filters['search']);
       }
   }
 

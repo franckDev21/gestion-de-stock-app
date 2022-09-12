@@ -11,14 +11,17 @@ class CommandeMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $commande;
+    public $commandes;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($commande,$commandes)
     {
-        //
+        $this->commande = $commande;
+        $this->commandes = $commandes;
     }
 
     /**
@@ -28,6 +31,6 @@ class CommandeMail extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        return $this->view('pdf.facture');
     }
 }

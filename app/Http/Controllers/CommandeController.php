@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\CommandeMail;
 use App\Models\Caisse;
 use App\Models\CaisseTotal;
 use App\Models\Client;
@@ -11,6 +12,7 @@ use App\Models\HistoriqueProduct;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Mail;
 
 class CommandeController extends Controller
 {
@@ -176,10 +178,12 @@ class CommandeController extends Controller
        ]);
 
        $pdf = App::make('dompdf.wrapper');
-
-       
         
        $commandes = $commande->commandeProducts;
+
+       // on envoi un mail l'utilisateur
+       Mail::to($commande->client->email)
+       ->send(new CommandeMail($commande,$commandes));
 
         $pdf->loadView('pdf.facture', compact(
             'commandes',

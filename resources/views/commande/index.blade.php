@@ -42,26 +42,30 @@
             <div class="flex items-center text-gray-600 px-3 py-1 border-2 rounded-md bg-gray-50">
                 <span>Filter par : </span>
                 <div class="ml-3 flex items-center">
-                    <a href="/?search=PAYER" for="all" class="mr-2 flex items-center">
+                    <a href="{{ route('commandes.index') }}" for="all" class="mr-2 flex items-center">
                         <input type="radio"
+                            {{ !request('search') ? 'checked':null }}
                             class="border-2 mr-2 outline-none focus:border-none focus:outline-none focus:ring-0 inline-block h-5 w-5 text-secondary"
-                            checked name="statut" value="all" id="all"> Tous
+                             name="statut" value="all" id="all"> Tous
                     </a>
 
-                    <a href="/?search=PAYER" for="payer" class="mr-2 flex items-center">
+                    <a href="/commandes/?search=PAYER" for="payer" class="mr-2 flex items-center">
                         <input type="radio"
+                            {{ request('search') ? (request('search')==='PAYER' ? 'checked': null):null }}
                             class="border-2 mr-2 outline-none focus:border-none focus:outline-none focus:ring-0 inline-block h-5 w-5 text-green-500"
                             name="statut" value="payer" id="payer"> Payer
                     </a>
 
-                    <a href="/?search=IMPAYER" for="impayer" class="mr-2 flex items-center">
+                    <a href="/commandes/?search=IMPAYER" for="impayer" class="mr-2 flex items-center">
                         <input type="radio"
+                            {{ request('search') ? (request('search')==='IMPAYER' ? 'checked': null):null }}
                             class="border-2 mr-2 outline-none focus:border-none focus:outline-none focus:ring-0 inline-block h-5 w-5 text-red-500"
                             name="statut" value="impayer" id="impayer"> Impayer
                     </a>
 
-                    <a href="/?search=FACTURER" for="facturer" class="mr-2 flex items-center">
+                    <a href="/commandes/?search=FACTURER" for="facturer" class="mr-2 flex items-center">
                         <input type="radio"
+                            {{ request('search') ? (request('search')==='FACTURER' ? 'checked': null):null }}
                             class="border-2 mr-2 outline-none focus:border-none focus:outline-none focus:ring-0 inline-block h-5 w-5 text-primary"
                             name="statut" value="facturer" id="facturer"> Facturer
                     </a>
