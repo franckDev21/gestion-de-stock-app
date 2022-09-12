@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CaisseController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CommandeController;
 use App\Http\Controllers\HomeController;
@@ -53,6 +54,11 @@ Route::middleware(['auth'])->group(function(){
     // commande
     Route::resource('commandes',CommandeController::class);
 
+    // caisse
+    Route::get('caisse',[CaisseController::class,'index'])->name('caisse.index');
+    Route::post('caisse/store',[CaisseController::class,'store'])->name('caisse.store');
+    Route::post('caisse/sortie',[CaisseController::class,'sortie'])->name('caisse.sortie');
+    
     # admin routes
     Route::middleware('role:ADMIN')->group(function() {
         // users

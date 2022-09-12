@@ -28,6 +28,10 @@ class Product extends Model
         'vendu_par_piece'
     ];
 
+    public function getPrixUnitaireAttribute($value){
+        return number_format($value,0,',','.');
+    }
+
     public function scopeFilter($query,$filters){
         if($filters['search'] ?? false){
             $query
