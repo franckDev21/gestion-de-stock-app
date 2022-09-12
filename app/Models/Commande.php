@@ -19,6 +19,13 @@ class Commande extends Model
         'desc'
     ];
 
+    public function scopeFilter($query,$filters){
+      if($filters['search'] ?? false){
+          $query
+              ->where('etat','%'.$filters['search'].'%');
+      }
+  }
+
     public function user(){
        return $this->belongsTo(User::class);
     }
@@ -28,9 +35,9 @@ class Commande extends Model
     }
 
 
-         public function commandeProducts(){
-          return $this->hasMany(CommandeProduct::class);
-       }
+   public function commandeProducts(){
+      return $this->hasMany(CommandeProduct::class);
+   }
 
     public function client(){
        return $this->belongsTo(Client::class);

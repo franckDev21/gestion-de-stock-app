@@ -436,6 +436,50 @@
 
     <h3 style='text-decoration:underline; text-transform:uppercase;' class='text-center'>Etat de la caisse |
         {{ now() }}</h3>
+    
+        @unless(count($caisses) !== 0)
+        <div class="p-10 rounded-md bg-white text-3xl text-center font-bold text-primary opacity-80">
+            <i class="fa-solid fa-money-bill text-gray-400 text-8xl mb-3"></i> <br>
+            Aucune entrée ou sortie en caisse <br>
+        </div>
+    @else
+        <table class="min-w-max w-full table-auto">
+            <thead>
+                <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                    <th class="py-3 px-6 text-left">Date d'ajout</th>
+                    <th class="py-3 px-6 text-left">montant</th>
+                    <th class="py-3 px-6 text-left">type</th>
+                    <th class="py-3 px-6 text-left">utilisateur</th>
+                    <th class="py-3 px-6 text-left">Motif</th>
+                </tr>
+            </thead>
+            <tbody class="text-gray-800 text-sm font-light">
+                @foreach ($caisses as $caisse)
+                    <tr class="border-b border-gray-200 hover:bg-gray-100">
+                        <td class="py-3 px-6 text-left whitespace-nowrap">
+                            <span>{{ $caisse->created_at->format('d M Y à H\hi') }}</span>
+                        </td>
+
+                        <td class="py-3 px-6 text-left">
+                            <span class=" font-bold">{{ $caisse->montant }} f</span>
+                        </td>
+
+                        <td class="py-3 px-6 text-left">
+                            <span>{{ $caisse->type }}</span>
+                        </td>
+
+                        <td class="py-3 px-6 text-left">
+                            <span>{{ $caisse->user->firstname }} {{ $caisse->user->lastname }}</span>
+                        </td>
+
+                        <td class="py-3 px-6 text-left">
+                            <span> {{ $caisse->motif }}</span>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @endunless
 
 </body>
 

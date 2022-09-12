@@ -53,11 +53,15 @@ Route::middleware(['auth'])->group(function(){
 
     // commande
     Route::resource('commandes',CommandeController::class);
+    Route::post('commandes/payer/{commande}',[CommandeController::class,'payer'])->name('commandes.payer');
+    Route::get('commandes/{commande}/facture',[CommandeController::class,'facture'])->name('commandes.facture');
+
 
     // caisse
     Route::get('caisse',[CaisseController::class,'index'])->name('caisse.index');
     Route::post('caisse/store',[CaisseController::class,'store'])->name('caisse.store');
     Route::post('caisse/sortie',[CaisseController::class,'sortie'])->name('caisse.sortie');
+    Route::get('caisse/print',[CaisseController::class,'printCaisse'])->name('caisse.print');
     
     # admin routes
     Route::middleware('role:ADMIN')->group(function() {

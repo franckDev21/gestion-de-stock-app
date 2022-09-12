@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Caisse;
+use App\Models\CaisseTotal;
+use App\Models\Client;
 use App\Models\Commande;
 use App\Models\CommandeProduct;
 use App\Models\HistoriqueProduct;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 
 class CommandeController extends Controller
 {
@@ -18,9 +22,10 @@ class CommandeController extends Controller
     public function index()
     {
         $commandes = Commande::with(['user','client'])
-        ->orderBy('updated_at', 'DESC')
-        ->orderBy('created_at', 'DESC')
-        ->paginate(5);
+            ->filter(request(['search']))
+            ->orderBy('updated_at', 'DESC')
+            ->orderBy('created_at', 'DESC')
+            ->paginate(5);
 
         // dd($commandes);
         
@@ -121,6 +126,67 @@ class CommandeController extends Controller
         }
 
         return response()->json(["success" =>  $commande->id]);;
+
+    }
+
+    public function payer(Commande $commande){
+
+        if($commande->etat === 'PAYER'){
+            return back()->with('warning','Cette commande a déjà été payer');
+        }
+
+        // on met a jour l'etat de la commande
+        $commande->update([
+            'etat' => 'PAYER'
+        ]);
+
+        // on met a jour la caisse
+        Caisse::create([
+            'user_id' => auth()->user()->id,
+            'type' => 'ENTRER',
+            'montant' => (int)implode('',explode('.',$commande->cout)),
+            'commande_id' => $commande->id,
+            'motif'   => 'Paiement de la commande'
+        ]);
+
+        $caisse = CaisseTotal::first();
+
+        if(!$caisse){
+            $caisse = CaisseTotal::create([
+                'montant' => 0
+            ]);
+        }
+
+        $total = $caisse->sum('montant');
+
+        $caisse->update([
+            'montant' => (int)$total + (int)implode('',explode('.',$commande->cout))
+        ]);
+
+        return to_route('commandes.show',$commande->id)->with('message','La commande a été payer avec succès !');
+    }
+
+    public function facture(Request $request, Commande $commande){
+       if($request->payer){
+            $this->payer($commande);
+       }
+
+       $commande->update([
+            'etat' => 'FACTURER'
+       ]);
+
+       $pdf = App::make('dompdf.wrapper');
+
+       
+        
+       $commandes = $commande->commandeProducts;
+
+        $pdf->loadView('pdf.facture', compact(
+            'commandes',
+            'commande'
+        ));
+
+        return $pdf->stream();
 
     }
 
