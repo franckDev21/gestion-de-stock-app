@@ -241,6 +241,11 @@ class CommandeController extends Controller
      */
     public function destroy(Commande $commande)
     {
-        //
+        if($commande->statut !== 'PAYER'){
+            $commande->delete();
+            return to_route('commandes.index')->with('message',"la commande a été supprimer avec succès !");
+        }else{
+            return back();
+        }
     }
 }

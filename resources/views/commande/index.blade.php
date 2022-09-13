@@ -155,19 +155,19 @@
                                             </svg>
                                         </a>
 
-                                        <a href="{{ route('commandes.edit', $commande->id) }}"
+                                        {{-- <a href="{{ route('commandes.edit', $commande->id) }}"
                                             class="w-8 h-8 rounded bg-primary mr-1 transform text-white flex justify-center items-center hover:scale-110">
                                             <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
                                                 viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                     d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                                             </svg>
-                                        </a>
+                                        </a> --}}
 
                                         @if($commande->etat !== 'PAYER')
-                                            <div data-id="{{ $commande->id }}" data-mot="{{ $commande->nom }}"
-                                                data-modal-toggle="popup-payer"
-                                                class="w-8 h-8 rounded bg-red-400 disabled mr-1 cursor-pointer transform text-white flex justify-center items-center hover:scale-110 payer-btn">
+                                            <div data-id="{{ $commande->id }}" data-mot="{{ $commande->cout }}"
+                                                data-modal-toggle="popup-delete"
+                                                class="w-8 h-8 rounded bg-red-400 mr-1 cursor-pointer transform text-white flex justify-center items-center hover:scale-110 delete-btn">
                                                 <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
                                                     viewBox="0 0 24 24" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -222,6 +222,40 @@
         </div>
     </form>
 
+    <form method="POST" action="" id="popup-delete" tabindex="-1"
+        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full"
+        style="z-index: 1000">
+        @csrf
+        @method('DELETE')
+        <div class="relative p-4 w-full max-w-md h-full md:h-auto">
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <button type="button"
+                    class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+                    data-modal-toggle="popup-delete">
+                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+                <div class="p-6 text-center">
+                    
+                    <span class="mot text-primary font-bold text-4xl"></span>
+                    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Voulez vous vraiment
+                        supprimer la commande  ?</h3>
+                    <button type="submit" data-modal-toggle="popup-delete" type="button"
+                        class="text-white bg-red-400 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+                        Confirmer
+                    </button>
+                    <button data-modal-toggle="popup-delete" type="button"
+                        class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Annuler</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
     <!-- js -->
     <x-slot name="js">
         
@@ -231,6 +265,15 @@
                 const form = document.getElementById('popup-payer')
                 element.addEventListener('click',e => {
                     form.setAttribute('action',`/commandes/payer/${e.currentTarget.dataset.id}`)
+                    form.querySelector('.mot').textContent = `${e.currentTarget.dataset.mot} F`
+                })
+            })
+
+            // suppression de l'utilisateur
+            Array.from(document.querySelectorAll('.delete-btn')).forEach(element => {
+                const form = document.getElementById('popup-delete')
+                element.addEventListener('click',e => {
+                    form.setAttribute('action',`/commandes/${e.currentTarget.dataset.id}`)
                     form.querySelector('.mot').textContent = `${e.currentTarget.dataset.mot} F`
                 })
             })
