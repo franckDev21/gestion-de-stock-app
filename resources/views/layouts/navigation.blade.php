@@ -88,6 +88,10 @@
                                                 this.closest('form').submit();">
                                 {{ __('Se déconnecté') }}
                             </x-dropdown-link>
+
+                            <x-dropdown-link :href="route('profil.index')">
+                                {{ __('Options') }}
+                            </x-dropdown-link>
                         </form>
                     </x-slot>
                 </x-dropdown>
