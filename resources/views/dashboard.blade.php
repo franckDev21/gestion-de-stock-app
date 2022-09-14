@@ -4,9 +4,9 @@
             <h2 class="font-semibold text-xl text-gray-600 leading-tight">
                 {{ __('Tableau de bord') }}
             </h2>
-            <form class="w-2/3 flex">
+            <form class="w-2/3 flex disabled">
                 <div class="relative w-[90%]">
-                    <x-input class="w-full" placeholder='Search ...' type="text" name="search" :value="old('search')" required autofocus />
+                    <x-input class="w-full" placeholder='Search ...' type="text" name="search" :value="old('search')" required  />
                     <i class="fa-solid fa-magnifying-glass absolute top-1/2 -translate-y-1/2 right-4 text-gray-500"></i>
                 </div>
                 <x-button class="ml-3">
