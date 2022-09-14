@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class Product extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
     protected $fillable = [
         'qte_en_stock',
@@ -28,9 +29,9 @@ class Product extends Model
         'vendu_par_piece'
     ];
 
-    public function getPrixUnitaireAttribute($value){
-        return number_format($value,0,',','.');
-    }
+    // public function getPrixUnitaireAttribute($value){
+    //     return number_format($value,0,',','.');
+    // }
 
     public function scopeFilter($query,$filters){
         if($filters['search'] ?? false){

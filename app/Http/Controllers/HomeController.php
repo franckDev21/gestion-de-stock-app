@@ -13,6 +13,14 @@ class HomeController extends Controller
 {
     public function index(){
 
+        $products = Product::all();
+        $productNotifications = [];
+        foreach($products as $product){
+            foreach($product->unreadNotifications as $notification){
+                $productNotifications[] = "La quantité en stock du produit `".ucfirst($notification->data['name'])."` est insufissant";
+            }
+        }
+
         // total caisse
         $caisses = CaisseTotal::all();
         if(!$caisses->first()){
@@ -41,7 +49,8 @@ class HomeController extends Controller
             'totalUser',
             'totalProduct',
             'totalClient',
-            'totalCommande'
+            'totalCommande',
+            'productNotifications'
         ));
     }
 }

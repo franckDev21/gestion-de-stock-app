@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Fournisseur;
 use App\Models\HistoriqueProduct;
 use App\Models\Product;
+use App\Notifications\ProductStockDangerNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\File;
@@ -116,6 +117,15 @@ class ProductController extends Controller
             'is_stock'     => ((int)$product->qte_en_stock += (int)$request->qte) > 0
         ]);
 
+        // on recupere le produit et verificie si son stock est > au stock_alert
+        $product = Product::find($product->id);
+        if((int)$product->qte_en_stock > (int)$product->qte_stock_alert){
+            foreach($product->unreadNotifications as $notification){
+                $notification->markAsRead();
+            }
+        }
+
+
         // new approvisionnement
         Approvisionnement::create([
             'product_id' => $product->id,
@@ -175,6 +185,7 @@ class ProductController extends Controller
 
                 if ($newNbreParCarton <= $product->qte_stock_alert) {
                     // notification alert stock
+                    $product->notify(new ProductStockDangerNotification());
                 }
 
                 // new historic
@@ -202,6 +213,7 @@ class ProductController extends Controller
 
                 if ($newQteProduct <= $product->qte_stock_alert) {
                     // notification alert stock
+                    $product->notify(new ProductStockDangerNotification());
                 }
 
                 // new historic

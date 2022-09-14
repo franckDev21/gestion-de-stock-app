@@ -181,15 +181,17 @@ class CommandeController extends Controller
         
        $commandes = $commande->commandeProducts;
 
-       // on envoi un mail l'utilisateur
-       Mail::to($commande->client->email)
-       ->send(new CommandeMail($commande,$commandes));
+       if(isset($commande->client->email)){
+        // on envoi un mail l'utilisateur
+        Mail::to($commande->client->email)
+        ->send(new CommandeMail($commande,$commandes));
 
-        $pdf->loadView('pdf.facture', compact(
-            'commandes',
-            'commande'
-        ));
-
+        
+       }
+       $pdf->loadView('pdf.facture', compact(
+        'commandes',
+        'commande'
+    ));
         return $pdf->stream();
 
     }

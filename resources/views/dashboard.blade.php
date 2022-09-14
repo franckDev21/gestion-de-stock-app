@@ -17,6 +17,16 @@
     </x-slot>
 
     <div class="pt-5 pb-12">
+        @empty (!$productNotifications)
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mb-4 mt-6">
+            <div class="bg-red-100 text-red-600 p-4 rounded-md ">
+                @foreach ($productNotifications as $item)
+                    <h2>{{ $item }}</h2>
+                @endforeach
+            </div>
+        </div>
+        @endempty
+    
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mb-4 mt-6">
             <a href="{{ route('approvisionnement.index') }}"
                 class="px-4 mr-2 py-1 shadow-md rounded-md bg-sky-900 bg-opacity-80 border-4 hover:bg-opacity-100 transition border-sky-900 text-white">
