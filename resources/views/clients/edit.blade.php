@@ -28,7 +28,7 @@
                       @enderror
                   </div>
                   <div class="mt-1 w-1/2 ml-1">
-                      <x-label for="lastname" :value="__('Prénom du client')" />
+                      <x-label for="firstname" :value="__('Prénom du client')" />
                       <x-input placeholder='Entrer son prénom' id="firstname" class="w-full" type="text"
                           name="firstname" :value="old('firstname',$client->firstname)" required />
                       @error('firstname')

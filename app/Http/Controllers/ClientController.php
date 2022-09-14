@@ -16,7 +16,8 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = Client::orderBy('updated_at', 'DESC')
+        $clients = Client::with('commandes')
+            ->orderBy('updated_at', 'DESC')
             ->orderBy('created_at', 'DESC')
             ->filter(request(['tag','search']))
             ->paginate(5);
@@ -121,8 +122,8 @@ class ClientController extends Controller
             'tel' => $request->tel,
             'email' => $request->email,
             'address' => $request->email,
-            'firstname' => strtolower($request->email),
-            'lastname' => strtolower($request->email),
+            'firstname' => strtolower($request->firstname),
+            'lastname' => strtolower($request->lastname),
         ]));
 
         return to_route('clients.index')->with('message',"Votre client $client->lastname $client->firstname a été mise à jour avec succès !");

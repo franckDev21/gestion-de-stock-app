@@ -36,7 +36,7 @@
             </a>
             <a href="{{ route('products.create') }}"
                 class="px-4 py-1 mr-4 shadow-md rounded-md bg-green-500 border-4 hover:bg-green-600 transition border-green-600 text-white">
-                <i class="fa-solid fa-user-plus mr-2"></i> Ajouter un nouveau produit
+                <i class="fa-solid fa-plus mr-2"></i> Ajouter un nouveau produit
             </a>
             <a href="{{ route('products.index') }}"
                 class="px-4 py-1 shadow-md rounded-md bg-white bg-opacity-80 border-4 border-white ">

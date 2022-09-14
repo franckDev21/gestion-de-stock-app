@@ -33,17 +33,17 @@
       <div class="flex items-center justify-start  mt-6">
           <a target="_blank" href="{{ route('history.print') }}"
               class="mr-4 px-6 py-1 shadow-md rounded-md bg-gray-500 border-4 hover:bg-gray-600 transition border-gray-600 text-white">
-              <i class="fa-solid fa-download mr-3"></i> Imprimer la l'historiques
+              <i class="fa-solid fa-download mr-3"></i> Imprimer l'historiques
           </a>
 
           <a href="{{ route('history.input') }}"
               class="mr-4 px-6 py-1 shadow-md rounded-md bg-green-500 border-4 hover:bg-green-600 transition border-green-600 text-white">
-              <i class="fa-solid fa-download mr-3"></i> historiques entrantes
+                historiques entrantes
           </a>
 
           <a href="{{ route('history.output') }}"
               class="mr-4 px-6 py-1 shadow-md rounded-md bg-red-500 border-4 hover:bg-red-600 transition border-red-600 text-white">
-              <i class="fa-solid fa-download mr-3"></i> historiques sortantes
+                historiques sortantes
           </a>
           
           <a href="{{ route('history.index') }}"
@@ -126,7 +126,7 @@
 
                               <td class="py-3 px-4 text-left">
                                   <div class="flex item-center justify-center">
-                                      <a href="#"
+                                      <a href="{{ route('history.index.product',$history->product->id) }}" title="voir tous les entrées et sorties du {{ $history->product->nom }}"
                                           class="w-8 h-8 rounded bg-secondary mr-1 transform text-white flex justify-center items-center hover:scale-110">
                                           <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                               stroke="currentColor">
@@ -137,14 +137,14 @@
                                           </svg>
                                       </a>
 
-                                      <a href="#"
+                                      {{-- <a href="#"
                                           class="w-8 h-8 rounded bg-primary mr-1 transform text-white flex justify-center items-center hover:scale-110">
                                           <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                               stroke="currentColor">
                                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                   d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                                           </svg>
-                                      </a>
+                                      </a> --}}
                                       
                                       {{-- <div data-id="{{ $history->id }}"
                                           data-mot="{{ $history->nom }}"

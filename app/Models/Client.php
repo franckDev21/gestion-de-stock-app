@@ -28,6 +28,10 @@ class Client extends Model
                 ->orWhere('tel','like','%'.$filters['search'].'%');
         }
     }
+
+    public function commandes(){
+        return $this->hasMany(Commande::class);
+    }
     
 }
 

@@ -32,17 +32,17 @@
         <div class="flex items-center justify-start  mt-6">
             <a target="_blank" href="{{ route('history.print') }}"
                 class="mr-4 px-6 py-1 shadow-md rounded-md bg-gray-500 border-4 hover:bg-gray-600 transition border-gray-600 text-white">
-                <i class="fa-solid fa-download mr-3"></i> Imprimer la l'historiques
+                <i class="fa-solid fa-download mr-3"></i> Imprimer l'historiques
             </a>
 
             <a href="{{ route('history.input.product',$product->id) }}"
                 class="mr-4 px-6 py-1 shadow-md rounded-md bg-green-500 border-4 hover:bg-green-600 transition border-green-600 text-white">
-                <i class="fa-solid fa-download mr-3"></i> historiques entrantes
+                 historiques entrantes
             </a>
 
             <a href="{{ route('history.output.product',$product->id) }}"
                 class="mr-4 px-6 py-1 shadow-md rounded-md bg-red-500 border-4 hover:bg-red-600 transition border-red-600 text-white">
-                <i class="fa-solid fa-download mr-3"></i> historiques sortantes
+                 historiques sortantes
             </a>
 
             <a href="{{ route('history.index.product',$product->id) }}"
@@ -74,7 +74,6 @@
                             <th class="py-3 px-4 text-left">Auteur de la <br> transaction</th>
                             <th class="py-3 px-4 text-left">Type</th>
                             <th class="py-3 px-4 text-left">Motif</th>
-                            <th class="py-3 px-4 text-left">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="text-gray-600 text-sm font-light">
@@ -124,41 +123,6 @@
 
                                 <td class="py-3 px-4 text-left">
                                     {{ $history->motif }}
-                                </td>
-
-                                <td class="py-3 px-4 text-left">
-                                    <div class="flex item-center justify-center">
-                                        <a href="#"
-                                            class="w-8 h-8 rounded bg-secondary mr-1 transform text-white flex justify-center items-center hover:scale-110">
-                                            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                            </svg>
-                                        </a>
-
-                                        <a href="#"
-                                            class="w-8 h-8 rounded bg-primary mr-1 transform text-white flex justify-center items-center hover:scale-110">
-                                            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                                            </svg>
-                                        </a>
-
-                                        {{-- <div data-id="{{ $history->id }}"
-                                          data-mot="{{ $history->nom }}"
-                                          data-modal-toggle="popup-delete"
-                                          class="w-8 h-8 rounded bg-red-400 mr-1 cursor-pointer transform text-white flex justify-center items-center hover:scale-110 delete-btn">
-                                          <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                              stroke="currentColor">
-                                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                          </svg>
-                                      </div> --}}
-                                    </div>
                                 </td>
                             </tr>
                         @endforeach

@@ -57,7 +57,7 @@
                             </td>
 
                             <td class="py-3 px-6 text-left">
-                                <span class=" font-bold">{{ $caisse->montant }} f</span>
+                                <span class=" font-bold">{{ $caisse->montant }} F</span>
                             </td>
 
                             <td class="py-3 px-6 text-left">

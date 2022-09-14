@@ -1,19 +1,31 @@
 <x-app-layout>
   <x-slot name="header">
       <div class="flex items-center justify-between">
-          <h2 class="font-semibold text-xl text-gray-600 leading-tight">
-              {{ __('Gestion des produits') }}
-          </h2>
-          <form class="w-2/3 flex" method="GET">
-              <div class="relative w-[90%]">
-                  <x-input class="w-full" placeholder='Réchercher un produit ...' type="text" name="search"
-                      :value="request('search')" autofocus />
-                  <i class="fa-solid fa-magnifying-glass absolute top-1/2 -translate-y-1/2 right-4 text-gray-500"></i>
-              </div>
-              <x-button class="ml-3">
-                  {{ __('Rechercher') }}
-              </x-button>
-          </form>
+        <div class="flex items-center">
+            <h2 class="font-semibold text-xl text-gray-600 leading-tight">
+                {{ __('Gestion des produits') }}
+            </h2>
+            <span class="h-4 w-0.5 bg-gray-600 mx-2"></span>
+
+            <h2 class="font-semibold text-xl text-primary leading-tight mr-2">
+                {{ __('Historiques') }}
+            </h2>
+
+            <a href="{{ route('history.index') }}"
+                class="mr-4 px-4 py-1 shadow-md rounded-md bg-yellow-500  border-4 hover:bg-yellow-600 transition border-yellow-600 text-white">
+                <i class="fa-solid fa-right-left rotate-90 mr-2"></i> Hostorique d'entrée / sortie
+            </a>
+        </div>
+        <form class="w-[40%] flex disabled" method="GET">
+            <div class="relative w-[90%]">
+                <x-input class="w-full" placeholder='Réchercher un produit ...' type="text" name="search"
+                    :value="request('search')" />
+                <i class="fa-solid fa-magnifying-glass absolute top-1/2 -translate-y-1/2 right-4 text-gray-500"></i>
+            </div>
+            <x-button class="ml-3">
+                {{ __('Rechercher') }}
+            </x-button>
+        </form>
       </div>
   </x-slot>
 
@@ -26,12 +38,12 @@
 
           <a href="{{ route('history.input') }}"
               class="mr-4 px-6 py-1 shadow-md rounded-md bg-green-500 border-4 hover:bg-green-600 transition border-green-600 text-white">
-              <i class="fa-solid fa-download mr-3"></i> historiques entrantes
+               historiques entrantes
           </a>
 
           <a href="{{ route('history.output') }}"
               class="mr-4 px-6 py-1 shadow-md rounded-md bg-red-500 border-4 hover:bg-red-600 transition border-red-600 text-white">
-              <i class="fa-solid fa-download mr-3"></i> historiques sortantes
+               historiques sortantes
           </a>
           
           <a href="{{ route('history.input') }}"
@@ -114,7 +126,7 @@
 
                               <td class="py-3 px-4 text-left">
                                   <div class="flex item-center justify-center">
-                                      <a href="#"
+                                      <a href="{{ route('history.index.product',$history->product->id) }}" title="voir tous les entrées et sorties du {{ $history->product->nom }}"
                                           class="w-8 h-8 rounded bg-secondary mr-1 transform text-white flex justify-center items-center hover:scale-110">
                                           <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                               stroke="currentColor">
@@ -122,15 +134,6 @@
                                                   d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                   d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                          </svg>
-                                      </a>
-
-                                      <a href="#"
-                                          class="w-8 h-8 rounded bg-primary mr-1 transform text-white flex justify-center items-center hover:scale-110">
-                                          <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                              stroke="currentColor">
-                                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                  d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                                           </svg>
                                       </a>
                                       

@@ -63,7 +63,7 @@
                         <tr class="border-b border-gray-200 hover:bg-gray-100">
                             <td class="py-3 px-6 text-left whitespace-nowrap">
                                 <div class="flex items-start flex-col justify-start">
-                                    <span class="font-bold">{{ $user->lastname }} {{ $user->firstname }}</span>
+                                    <span class="font-bold">{{ ucfirst($user->lastname) }} {{ $user->firstname }}</span>
                                     @if ($user->email)
                                         <span>{{ $user->email }}</span>
                                     @else
@@ -77,7 +77,7 @@
                             </td>
 
                             <td class="py-3 px-6 text-left">
-                                <span>20 Commandes</span>
+                                <span>{{ $user->commandes->count() }} Commande(s)</span>
                             </td>
 
                             <td class="py-3 px-6 text-left">
