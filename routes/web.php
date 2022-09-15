@@ -25,7 +25,6 @@ require __DIR__.'/auth.php';
 Route::middleware(['auth'])->group(function(){
     // Route::get('/', [HomeController::class,'index'])->name('home');
     Route::get('/', [HomeController::class,'index'])->name('dashboard');
-    Route::get('/dashboard', [HomeController::class,'index'])->name('dashboard');
 
     // profil
     Route::post('mon-profil/photo',[UserController::class,'photo'])->name('profil.photo');
