@@ -22,7 +22,7 @@ const ClientForm = ({onClickCallback, addNewClient}) => {
       address
     };
 
-    axios.post('http://localhost:8000/api/clients',data).then(res => {
+    axios.post('https://stock.solumat-sarl.com/api/clients',data).then(res => {
       
       if(res.data.success){
         addNewClient(true);
