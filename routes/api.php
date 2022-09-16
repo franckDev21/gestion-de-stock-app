@@ -23,7 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::get('/products',[ProductController::class,'indexApi']);
-Route::get('/clients',[ClientController::class,'indexApi']);
-Route::post('/clients',[ClientController::class,'storeApi']);
-Route::post('/commandes',[CommandeController::class,'store']);
+Route::get('products',[ProductController::class,'indexApi']);
+Route::get('clients',[ClientController::class,'indexApi']);
+Route::post('clients',[ClientController::class,'storeApi']);
+Route::post('commandes',[CommandeController::class,'store']);
