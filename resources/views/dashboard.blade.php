@@ -14,12 +14,12 @@
                 </x-button>
             </form>
         </div>
-    </x-slot>
+    </x-slot> 
 
     <div class="pt-5 pb-12">
         @empty (!$productNotifications)
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mb-4 mt-6">
-            <div class="bg-red-100 text-red-600 p-4 rounded-md ">
+            <div class="bg-red-100 text-red-600 p-4 rounded-md">
                 @foreach ($productNotifications as $item)
                     <h2>{{ $item }}</h2>
                 @endforeach

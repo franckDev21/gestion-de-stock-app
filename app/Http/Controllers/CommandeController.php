@@ -169,13 +169,14 @@ class CommandeController extends Controller
     }
 
     public function facture(Request $request, Commande $commande){
-       if($request->payer){
-            $this->payer($commande);
-       }
 
        $commande->update([
             'etat' => 'FACTURER'
        ]);
+
+        if($request->payer){
+            $this->payer($commande);
+        }
 
        $pdf = App::make('dompdf.wrapper');
         
