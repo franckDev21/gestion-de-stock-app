@@ -12,7 +12,8 @@ class CommandeProduct extends Model
     protected $fillable = [
         'commande_id',
         'product_id',
-        'qte'
+        'qte',
+        'prix_de_vente'
     ];
 
     public function commande(){

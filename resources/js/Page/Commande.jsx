@@ -73,7 +73,8 @@ const Commande = ({ user_id }) => {
       newProduct = {
         ...product,
         qte : 1,
-        max : nbreUnites
+        max : nbreUnites,
+        prix_de_vente : product.prix_unitaire
       }
       setCarts(state => [...state,newProduct])
     }else{
@@ -92,7 +93,7 @@ const Commande = ({ user_id }) => {
     let prix = 0
     carts.forEach(product => {
       som += (parseInt(product.qte,10) || 0)
-      prix += ((parseInt(product.qte,10) || 0) * product.prix_unitaire)
+      prix += ((parseInt(product.qte,10) || 0) * product.prix_de_vente)
     })
     return {
       som : ((som > 0) && client !== ''),
@@ -105,6 +106,15 @@ const Commande = ({ user_id }) => {
     let copieCarts = carts;
     let produitFind = copieCarts.find(product => product.id === id);
     produitFind.qte = parseInt(value,10) || 0
+    copieCarts = carts.filter(product => product.id !== id)
+    copieCarts = [...copieCarts,produitFind]
+    setCarts(copieCarts)
+  }
+
+  const setPriceShop = (id,value) => {
+    let copieCarts  = carts;
+    let produitFind = copieCarts.find(product => product.id === id);
+    produitFind.prix_de_vente = parseInt(value,10) || 0
     copieCarts = carts.filter(product => product.id !== id)
     copieCarts = [...copieCarts,produitFind]
     setCarts(copieCarts)
@@ -264,6 +274,7 @@ const Commande = ({ user_id }) => {
                           <h2 className="font-semibold text-sm text-primary">Prix unitaire : {format_number(product.prix_unitaire)}  </h2> 
                           <div>
                             <input min={0} max={product.max} value={findProduct(product.id).qte || 0} onChange={(e) => setQte(product.id,e.target.value)}  type="number" className="mt-1 appearance-none px-1 text-center font-bold w-20 py-1 bg-gray-100 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-gray-600 outline-none border-none" />
+                            <input min={0} value={findProduct(product.id).prix_de_vente || 0} onChange={e => setPriceShop(product.id,e.target.value)} type="number" className="mt-1 appearance-none px-1 text-center font-bold ml-2 py-1 bg-gray-100 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-gray-600 outline-none border-none" />
                           </div>
                         </div>
                       </div>

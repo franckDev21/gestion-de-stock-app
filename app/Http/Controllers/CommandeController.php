@@ -67,7 +67,8 @@ class CommandeController extends Controller
             CommandeProduct::create([
                 'commande_id' => $commande->id,
                 'product_id'  => $cart['id'],
-                'qte'         => $cart['qte']
+                'qte'         => $cart['qte'],
+                'prix_de_vente' => $cart['prix_de_vente']
             ]);
         }
 
