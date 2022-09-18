@@ -31,14 +31,17 @@
         @foreach ($commande->commandeProducts as $item)
           <div class="mt-3 flex">
             @if($item->product->image)
-              <img width="100"  src="{{ asset('/storage/'.$item->product->image) }}" alt="">
+              <div class="w-28 h-40 overflow-hidden relative">
+                <img width="100" class=" absolute object-cover h-auto w-full"  src="{{ asset('/storage/'.$item->product->image) }}" alt="">
+              </div>
             @else
             <img width="100"  src="{{ asset('/static/img/product.png') }}" alt="">
             @endif
             
             <div class="ml-3">
-              <h2 class="text-2xl font-bold ">{{ ucfirst($item->product->nom) }}</h2>
+              <h2 class="text-2xl font-bold underline "><a href="{{ route('products.show',$item->product->id) }}">{{ ucfirst($item->product->nom) }}</a></h2>
               <h2 class="text-xl">Prix unitaire : <span class="text-primary font-bold {{ $item->prix_de_vente !== $item->product->prix_unitaire  ? 'line-through':''  }}">{{ $item->product->prix_unitaire }} F</span></h2>
+              <h2 class="text-xl">Type vente : <span class="px-4 py-0.5 bg-orange-100 text-orange-400 text-sm">{{ ['Detail',$item->product->type_approvionement][rand(0,1)] }}</span></h2>
               @if ($item->prix_de_vente !== $item->product->prix_unitaire)
                 <h2 class="text-xl">Prix de vente : <span class="text-primary font-bold">{{ $item->prix_de_vente }} F</span></h2>
               @endif

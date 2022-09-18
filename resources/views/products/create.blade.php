@@ -121,9 +121,9 @@
                 @enderror
             </div>
             <div class="mt-1 w-1/2 ml-1">
-                <x-label for="type_approvionement" :value="__('Type d\'approvionnement ')" class="inline-block" /> <span class="text-gray-400 text-xs italic inline-block ml-1">(NB: séparer chaque type par une virgule)</span>
+                <x-label for="type_approvionement" :value="__('Type d\'approvionnement ')" class="inline-block" /> <span class="text-gray-400 text-xs italic inline-block ml-1">(Par pièce, carton ,sac , seau, bidon ... )</span>
                 <x-input placeholder='Vous-vous approvionner en ...(Carton,Bidon,Sac)' id="type_approvionement" class="w-full placeholder:italic" type="text"
-                    name="type_approvionement" :value="old('type_approvionement')"  />
+                    name="type_approvionement" :value="old('type_approvionement')" required  />
 
                 @error('type_approvionement')
                     <span class="text-sm text-red-400 block">{{ $message }}</span>

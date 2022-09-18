@@ -41,11 +41,19 @@
         </div>
         <div class="bg-white shadow-md rounded-md overflow-hidden mt-2 mb-6">
             @unless(count($users) !== 0)
+                @if (request('search'))
                 <div class="p-10 rounded-md bg-white text-3xl text-center font-bold text-primary opacity-80"> 
                     <i class="fa-solid fa-folder-open text-gray-400 text-8xl mb-3"></i> <br>
-                    Aucun utilisateur ne correspond votre rechercher <br>
+                    Aucun utilisateur ne correspond votre recherche <br>
                     <span class="text-secondary my-2 inline-block">" {{ request('search') }} "</span>
                 </div>
+                @else
+                <div class="p-10 rounded-md bg-white text-3xl text-center font-bold text-primary opacity-80"> 
+                    <i class="fa-solid fa-folder-open text-gray-400 text-8xl mb-3"></i> <br>
+                    Aucun utilisateur <br>
+                </div>
+                @endif
+                
             @else
                 <table class="min-w-max w-full table-auto">
                     <thead>

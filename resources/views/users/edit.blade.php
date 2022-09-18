@@ -58,9 +58,7 @@
               </div>
 
               <div class="mt-1 w-1/2 ml-1">
-                  <x-label for="tel" :value="__('Téléphone ')" class="inline-block" /> <span
-                      class="italic text-sm text-gray-400">(
-                      facutatif )</span>
+                  <x-label for="tel" :value="__('Téléphone ')" class="inline-block" />
 
                   <x-input id="tel" placeholder="Entrer numéro de téléphone de l'utilisateur"
                       class="block w-full" type="tel" name="tel" :value="old('tel',$user->tel)" required />

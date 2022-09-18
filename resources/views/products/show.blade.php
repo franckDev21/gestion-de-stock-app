@@ -62,7 +62,7 @@
               <span class="inline-block ml-3 font-semibold text-primary">{{ $product->qte_en_stock }} {{ $product->type_approvionement }}(s) 
                 {{ !$product->vendu_par_piece ? 
                   ($product->nbre_par_carton && !$product->qte_en_littre ? 'de '.$product->nbre_par_carton : (
-                    $product->qte_en_littre ? 'de'.$product->qte_en_littre : 'de '.$product->poids.' '.$product->unite_mesure
+                    $product->qte_en_littre ? 'de '.$product->qte_en_littre.' '.$product->unite_mesure : 'de '.$product->poids.' '.$product->unite_mesure
                   ))
                   : null 
                 }}
@@ -117,10 +117,10 @@
               <span class="inline-block ml-3 font-semibold text-primary">{{ $product->created_at->format('d M Y') }}</span>
             </div>
 
-            <div class="flex justify-start text-gray-600 text-2xl mt-3">
+            {{-- <div class="flex justify-start text-gray-600 text-2xl mt-3">
               <span class="inline-block">Date du dernier approvionnement : </span>
               <span class="inline-block ml-3 font-semibold text-primary">{{ $product->created_at->format('d M Y') }}</span>
-            </div>
+            </div> --}}
         </div>
     </div>
   </div>

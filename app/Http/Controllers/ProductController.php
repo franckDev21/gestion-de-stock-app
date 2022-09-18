@@ -144,7 +144,7 @@ class ProductController extends Controller
             'user_id'   => $request->user()->id
         ]);
 
-        return back()->with("message", 'Votre approvisionnement a été ajouter avec succès !');
+        return back()->with("message", 'Votre approvisionnement a été ajouté avec succès !');
     }
 
     public function addOutput(Request $request, Product $product)
@@ -310,7 +310,7 @@ class ProductController extends Controller
             'vendu_par_piece'     => $vendu_par_piece
         ]);
 
-        return to_route('products.index')->with("message", 'Votre produit a été ajouter avec succès !');
+        return to_route('products.index')->with("message", 'Votre produit a été ajouté avec succès !');
     }
 
     /**
@@ -413,7 +413,7 @@ class ProductController extends Controller
             'vendu_par_piece'     => $vendu_par_piece
         ]);
 
-        return back()->with('message', "le produit $product->nom a été mise à jour avec succès !");
+        return back()->with('message', "le produit $product->nom a été mis à jour avec succès !");
     }
 
     /**

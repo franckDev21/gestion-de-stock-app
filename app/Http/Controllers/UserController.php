@@ -135,7 +135,7 @@ class UserController extends Controller
             ->send(new CreateUserMailNotif($userInfo));
 
 
-        return to_route('users.index')->with('message',"Votre utilisateur $user->lastname $user->firstname àété créer avec succès !");
+        return to_route('users.index')->with('message',"Votre utilisateur $user->lastname $user->firstname à été créé avec succès !");
     
     }
 
@@ -181,7 +181,7 @@ class UserController extends Controller
 
         $user->update(array_merge($request->all(),['active'=>$active]));
 
-        return to_route('users.show',$user->id)->with('message',"Les informations de l'utilisateur on été bien mise à jour !");
+        return to_route('users.show',$user->id)->with('message',"Les informations de l'utilisateur ont été bien mises à jour !");
         
     }
 
@@ -194,7 +194,7 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         if($user->delete()){
-            return to_route('clients.index')->with("message","L'utilisateur $user->firstnane $user->lastname à été supprimer avec succes !");
+            return to_route('clients.index')->with("message","L'utilisateur $user->firstnane $user->lastname à été supprimé avec succès !");
         }
         return back();
     }
@@ -204,12 +204,12 @@ class UserController extends Controller
             $user->update([
                 'active' => false
             ]);
-            return back()->with("message","L'utilisateur $user->firstnane $user->lastname à été désactiver avec succes !");
+            return back()->with("message","L'utilisateur $user->firstnane $user->lastname à été désactivé avec succès !");
         }else{
             $user->update([
                 'active' => true
             ]);
-            return back()->with("message","L'utilisateur $user->firstnane $user->lastname à été activer avec succes !");
+            return back()->with("message","L'utilisateur $user->firstnane $user->lastname à été activé avec succès !");
         }
     }
 

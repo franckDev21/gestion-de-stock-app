@@ -73,7 +73,7 @@ class ClientController extends Controller
 
         $client =  Client::create($data);
 
-        return to_route('clients.index')->with('message',"Votre client $client->lastname $client->firstname à été créer avec succès !");
+        return to_route('clients.index')->with('message',"Votre client $client->lastname $client->firstname à été créé avec succès !");
     }
 
     /**
@@ -126,7 +126,7 @@ class ClientController extends Controller
             'lastname' => strtolower($request->lastname),
         ]));
 
-        return to_route('clients.index')->with('message',"Votre client $client->lastname $client->firstname a été mise à jour avec succès !");
+        return to_route('clients.index')->with('message',"Votre client $client->lastname $client->firstname a été mis à jour avec succès !");
 
     }
 
@@ -139,7 +139,7 @@ class ClientController extends Controller
     public function destroy(Client $client)
     {
         if($client->delete()){
-            return to_route('clients.index')->with("message","Le client $client->firstnane $client->lastname à été supprimer avec succes !");
+            return to_route('clients.index')->with("message","Le client $client->firstnane $client->lastname à été supprimé avec succès!");
         }
         return back();
     }

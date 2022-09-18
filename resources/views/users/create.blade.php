@@ -42,7 +42,7 @@
             <!-- Email Address -->
             <div class="flex">
                 <div class="mt-1 w-1/2 mr-1 ">
-                    <x-label for="email" :value="__('Email de l\'utilisateur ')" />
+                    <x-label for="email" :value="__('Email de l\'utilisateur ')" class="inline-block" />
 
                     <x-input id="email" placeholder="Entrer l'addresse mail de l'utilisateur" class="block w-full"
                         type="email" name="email" :value="old('email')" required />
@@ -52,9 +52,7 @@
                 </div>
 
                 <div class="mt-1 w-1/2 ml-1">
-                    <x-label for="tel" :value="__('Téléphone ')" class="inline" /> <span
-                        class="italic text-sm text-gray-400">(
-                        facutatif )</span>
+                    <x-label for="tel" :value="__('Téléphone ')" class="inline-block" />
 
                     <x-input id="tel" placeholder="Entrer numéro de téléphone de l'utilisateur"
                         class="block w-full" type="tel" name="tel" :value="old('tel')" required />

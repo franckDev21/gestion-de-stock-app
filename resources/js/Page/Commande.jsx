@@ -173,8 +173,8 @@ const Commande = ({ user_id }) => {
         {success ? (
           <>
             <i className="fa-solid fa-check text-primary text-9xl inline-block mb-4"></i>
-            <h1 className="text-3xl px-10 w-1/2 text-center font-bold text-gray-500">La commande a été enregistrer <br /> avec success</h1>
-            <p className=" text-center my-2 w-1/2 text-sm text-gray-500">un Email a été envoyer a <span className="text-primary">Mme Nicole </span>pour facture de sa commande</p>
+            <h1 className="text-3xl px-10 w-1/2 text-center font-bold text-gray-500">La commande a été enregistrer <br /> avec succès</h1>
+            <p className=" text-center my-2 w-1/2 text-sm text-gray-500">un Email a été envoyer a <span className="text-primary font-bold">Mme Nicole </span>pour facture de sa commande</p>
             <div className="flex w-full items-center justify-center mt-6">
               <button onClick={() => {
                 window.location = `http://localhost:8000/commandes`
