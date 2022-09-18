@@ -88,7 +88,7 @@
             <div class="mt-1 w-1/2 ml-1 {{ $product->qte_en_littre ? 'invisible':'' }}" id="choix-1"> 
               <div class=" flex">
                 <div class="w-1/2 mr-1">
-                  <x-label for="nbre_par_carton" :value="__('Nombre par carton')" class="{{ !$product->nbre_par_carton ? 'disabled':'' }} inline-block nbre-par-carton" />
+                  <x-label for="nbre_par_carton" :value="__('Nombre par carton(ou par conteneur)')" class="{{ !$product->nbre_par_carton ? 'disabled':'' }} inline-block nbre-par-carton" />
                   <x-input placeholder="Combien par carton ?" id="nbre_par_carton" class="{{ !$product->nbre_par_carton ? 'disabled':'' }} w-full placeholder:italic nbre-par-carton" min='1' type="number"
                       name="nbre_par_carton" :value="old('nbre_par_carton',$product->nbre_par_carton)" />
 
@@ -102,7 +102,7 @@
                 </div>
                 <div class="w-1/2 ml-1">
                   <x-label for="poids" :value="__('Poids')" class="inline-block" />
-                  <x-input placeholder="poid en Kg ou g" id="poids" class="w-full placeholder:italic" min='1' type="number"
+                  <x-input {{ $product->qte_en_littre ? 'invisible':'' }} placeholder="poid en Kg ou g" id="poids" class="w-full placeholder:italic" min='1' type="number"
                       name="poids" :value="old('poids',(int)$product->poids)" />
 
                   @error('poids')
@@ -111,7 +111,7 @@
                 </div>
               </div>
             </div>
-            <div class="mt-1 w-1/2 ml-1 {{ $product->qte_en_littre ? '':'invisible' }} " id="choix-2">
+            <div class="mt-1 w-1/2 ml-1 {{ $product->qte_en_littre ? '':'disabled' }} " id="choix-2">
               <x-label for="qte_en_littre" :value="__('Quantité en Littre')" class="inline-block" />
               <x-input placeholder="Combien de littre par produit ?" id="qte_en_littre" class="w-full placeholder:italic" type="number"
                   name="qte_en_littre" :value="old('qte_en_littre',$product->qte_en_littre)"   />
@@ -121,7 +121,7 @@
             </div>
             <div class="mt-1 w-1/2 ml-1 invisible" id="choix-3">
               <x-label for="poids2" :value="__('Poids')" class="inline-block" />
-                <x-input placeholder="poid en Kg ou g" id="poids2" class="w-full placeholder:italic" min='1' type="number"
+                <x-input {{ $product->qte_en_littre ? '':'disabled' }} placeholder="poid en Kg ou g" id="poids2" class="w-full placeholder:italic" min='1' type="number"
                   name="poids2" :value="old('poids2',(int)$product->poids)" />
 
                 @error('poids2')
@@ -141,7 +141,7 @@
             </div>
             <div class="mt-1 w-1/2 ml-1">
                 <x-label for="type_approvionement" :value="__('Type d\'approvionnement ')" class="inline-block" /> <span class="text-gray-400 text-xs italic inline-block ml-1">(NB: séparer chaque type par une virgule)</span>
-                <x-input placeholder='Vous-vous approvionner en ...(Carton,Bidon)' id="type_approvionement" class="w-full placeholder:italic" type="text"
+                <x-input placeholder='Vous-vous approvionner en ...(Carton,Bidon,Sac)' id="type_approvionement" class="w-full placeholder:italic" type="text"
                     name="type_approvionement" :value="old('type_approvionement',$product->type_approvionement)"  />
 
                 @error('type_approvionement')

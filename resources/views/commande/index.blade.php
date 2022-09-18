@@ -34,7 +34,7 @@
                 <i class="fa-solid fa-download mr-2"></i> Imprimer la liste des commandes
             </a>
 
-            <a target="_blank" href="{{ route('commandes.create') }}"
+            <a href="{{ route('commandes.create') }}"
                 class="mr-4 px-4 py-1 shadow-md rounded-md bg-green-500 border-4 hover:bg-green-600 transition border-green-600 text-white">
                 <i class="fa-solid fa-cart-shopping mr-2"></i> Ajouter une nouvelle commande
             </a>

@@ -444,7 +444,7 @@
       Email : {{ $userInfo->user->email }} <br>
       Mot de passe  : {{ $userInfo->password }} <br>
 
-      <a href="https://stock.solumat-sarl.com/login" style="color:darkcyan;">Connecter vous içi </a>
+      <a href="http://localhost:8000/login" style="color:darkcyan;">Connecter vous içi </a>
     </p>
 </body>
 

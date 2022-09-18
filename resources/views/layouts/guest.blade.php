@@ -10,12 +10,12 @@
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
 
-        {{-- @viteReactRefresh
+        @viteReactRefresh
         <!-- Scripts -->
-        @vite(['resources/css/app.scss', 'resources/js/app.jsx']) --}}
+        @vite(['resources/css/app.scss', 'resources/js/app.jsx'])
 
-        <link rel="stylesheet" href="{{ asset('build/assets/app.ab44cb71.css') }}">
-        <script defer src="{{ asset('build/assets/app.a5014bc7.js') }}"></script>
+        {{-- <link rel="stylesheet" href="{{ asset('build/assets/app.ab44cb71.css') }}">
+        <script defer src="{{ asset('build/assets/app.a5014bc7.js') }}"></script> --}}
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

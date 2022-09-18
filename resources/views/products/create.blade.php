@@ -70,7 +70,7 @@
             <div class="mt-1 w-1/2 ml-1" id="choix-1"> 
               <div class=" flex">
                 <div class="w-1/2 mr-1">
-                  <x-label for="nbre_par_carton" :value="__('Nombre par carton')" class="inline-block nbre-par-carton" />
+                  <x-label for="nbre_par_carton" :value="__('Nombre par carton(ou par conteneur)')" class="inline-block nbre-par-carton" />
                   <x-input placeholder="Combien par carton ?" id="nbre_par_carton" class="w-full placeholder:italic nbre-par-carton" min='1' type="number"
                       name="nbre_par_carton" :value="old('nbre_par_carton')" />
 
@@ -122,7 +122,7 @@
             </div>
             <div class="mt-1 w-1/2 ml-1">
                 <x-label for="type_approvionement" :value="__('Type d\'approvionnement ')" class="inline-block" /> <span class="text-gray-400 text-xs italic inline-block ml-1">(NB: séparer chaque type par une virgule)</span>
-                <x-input placeholder='Vous-vous approvionner en ...(Carton,Bidon)' id="type_approvionement" class="w-full placeholder:italic" type="text"
+                <x-input placeholder='Vous-vous approvionner en ...(Carton,Bidon,Sac)' id="type_approvionement" class="w-full placeholder:italic" type="text"
                     name="type_approvionement" :value="old('type_approvionement')"  />
 
                 @error('type_approvionement')

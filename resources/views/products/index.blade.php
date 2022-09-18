@@ -75,7 +75,7 @@
                     <tbody class="text-gray-600 text-sm font-light">
                         @foreach ($products as $product)
                             <tr class="border-b border-gray-200 hover:bg-gray-100">
-                                <td class="py-3 px-4 text-left whitespace-nowrap">
+                                <td class="py-3 px-4 text-left whitespace-nowrap ">
                                     <div class="flex items-center">
                                         <div
                                             class="mr-2 h-14 w-14 rounded-md overflow-hidden flex justify-center items-center ">
@@ -86,7 +86,7 @@
                                                 <i class="fa-solid text-2xl text-gray-400  fa-box-open "></i>
                                             @endif
                                         </div>
-                                        <div class="flex items-start flex-col justify-start">
+                                        <div class="flex items-start flex-col justify-start py-1 {}scrollbar-none max-w-[150px] overflow-x-scroll">
                                             <span class="font-bold">{{ ucfirst($product->nom) }}</span>
                                             @if($product->nbre_par_carton) {{ $product->nbre_par_carton }} Par {{ $product->type_approvionement }} @endif
                                         </div>

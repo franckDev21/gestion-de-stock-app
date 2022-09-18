@@ -25,7 +25,7 @@ class ProductController extends Controller
         $products = Product::orderBy('updated_at', 'DESC')
             ->orderBy('created_at', 'DESC')
             ->filter(request(['tag', 'search']))
-            ->paginate(5);
+            ->paginate(10);
         return view('products.index', compact('products'));
     }
 

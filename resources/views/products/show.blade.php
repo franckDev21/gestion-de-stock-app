@@ -59,10 +59,17 @@
 
             <div class="flex justify-start text-gray-600 text-2xl mt-3">
               <span class="inline-block">Quantité en stock : </span>
-              <span class="inline-block ml-3 font-semibold text-primary">{{ $product->qte_en_stock }} {{ $product->type_approvionement }}(s) {{ $product->nbre_par_carton ? 'de '.$product->nbre_par_carton : null }}  </span>
+              <span class="inline-block ml-3 font-semibold text-primary">{{ $product->qte_en_stock }} {{ $product->type_approvionement }}(s) 
+                {{ !$product->vendu_par_piece ? 
+                  ($product->nbre_par_carton && !$product->qte_en_littre ? 'de '.$product->nbre_par_carton : (
+                    $product->qte_en_littre ? 'de'.$product->qte_en_littre : 'de '.$product->poids.' '.$product->unite_mesure
+                  ))
+                  : null 
+                }}
+              </span>
             </div>
 
-            @if($product->nbre_par_carton)
+            @if($product->nbre_par_carton && !$product->qte_en_littre)
               <div class="flex justify-start text-gray-600 text-2xl mt-3">
                 <span class="inline-block">Nombre unité restante  ({{ $product->unite_mesure }}) :  </span>
                 <span class="inline-block ml-3 font-semibold text-primary">{{ $product->reste_unites ?? 0 }} </span>

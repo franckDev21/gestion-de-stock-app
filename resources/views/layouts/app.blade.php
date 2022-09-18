@@ -22,13 +22,13 @@
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-        {{-- @viteReactRefresh
+        @viteReactRefresh
         <!-- Scripts -->
-        @vite(['resources/css/app.scss', 'resources/js/app.jsx']) --}}
+        @vite(['resources/css/app.scss', 'resources/js/app.jsx'])
 
         
-        <link rel="stylesheet" href="{{ asset('build/assets/app.ab44cb71.css') }}">
-        <script defer src="{{ asset('build/assets/app.a5014bc7.js') }}"></script>
+        {{-- <link rel="stylesheet" href="{{ asset('build/assets/app.ab44cb71.css') }}">
+        <script defer src="{{ asset('build/assets/app.a5014bc7.js') }}"></script> --}}
     </head>
     <body class="font-sans ">
 
