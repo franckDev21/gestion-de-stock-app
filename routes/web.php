@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 
 require __DIR__.'/auth.php';
 
-Route::middleware(['auth'])->group(function(){
+Route::middleware(['auth','active'])->group(function(){
     // Route::get('/', [HomeController::class,'index'])->name('home');
     Route::get('/', [HomeController::class,'index'])->name('dashboard');
 

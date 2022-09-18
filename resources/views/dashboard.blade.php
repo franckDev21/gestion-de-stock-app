@@ -38,7 +38,7 @@
             </a>
         </div>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 grid grid-cols-4 gap-4">
-            <a href="{{ route('users.index') }}" class="p-4 rounded-md bg-white flex items-start text-gray-500">
+            <a href="{{ route('users.index') }}" class="p-4  @can('isNotAdmin',auth()->user()) disabled @endcan rounded-md bg-white flex items-start text-gray-500">
                 <i class="fa-solid text-yellow-900 fa-user text-4xl mr-4"></i>
                 <div>
                     <span class="text-2xl text-primary font-bold">{{ $totalUser }} utilisateur(s)</span>
