@@ -78,7 +78,7 @@ const Commande = ({ user_id }) => {
         qte : 1,
         max : nbreUnites,
         prix_de_vente : product.vendu_par_piece ? product.prix_unitaire : null,
-        type_de_vente : "DETAIL"
+        type_de_vente : !product.vendu_par_piece ? "DETAIL":"PIECE"
       }
       setCarts(state => [...state,newProduct])
     
