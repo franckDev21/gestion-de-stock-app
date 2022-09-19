@@ -29,8 +29,6 @@ class CommandeController extends Controller
             ->orderBy('created_at', 'DESC')
             ->paginate(5);
 
-        // dd($commandes);
-        
         return view('commande.index',compact('commandes'));
     }
 
@@ -251,5 +249,17 @@ class CommandeController extends Controller
         }else{
             return back();
         }
+    }
+
+    public function print(){
+        $pdf = App::make('dompdf.wrapper');
+        
+        $commandes = Commande::all();
+
+        $pdf->loadView('pdf.commande', compact(
+            'commandes'
+        ));
+
+        return $pdf->stream();
     }
 }

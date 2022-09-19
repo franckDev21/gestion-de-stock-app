@@ -32,7 +32,7 @@
         }
 
         .line{
-            text-align: left;
+            text-align: right;
             padding: .6rem 1rem;
             margin: 0;
         }
@@ -62,14 +62,7 @@
 </head>
 
 <body>
-    <div>
-      <x-application-logo /> <br>
-      Tél : +237 690 50 45 94 <br>
-      Email : info@guefack-norbert.com <br>
-      Site internet : guefack-norbert-ets.com
-    </div>
-
-    <span style="width: 100%; height: 1px; background-color: gray; display: block; margin: 1rem 0;"></span>
+    <x-header-doc />
 
     <h3 class='text-center title'><span>Facture</span> | {{ now() }}</h3>
     <h3 class='text-center title-2'><span>Commande #</span> {{ $commande->reference }} </h3>
@@ -102,8 +95,8 @@
                 <tr>
                     <td class="bold">{{ ucfirst($commande->product->nom) }}</td>
                     <td>{{ $commande->qte }}</td>
-                    <td>{{ $commande->product->prix_unitaire }}</td>
-                    <td>{{ $commande->qte * (int)implode('',explode('.',$commande->product->prix_unitaire)) }}</td>
+                    <td>{{ $commande->prix_de_vente !== $commande->product->prix_unitaire ? $commande->prix_de_vente : $commande->product->prix_unitaire }}</td>
+                    <td>{{ $commande->qte * (int)implode('',explode('.',$commande->prix_de_vente !== $commande->product->prix_unitaire ? $commande->prix_de_vente : $commande->product->prix_unitaire)) }}</td>
                 </tr>
             @endforeach
         </tbody>

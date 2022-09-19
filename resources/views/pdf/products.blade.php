@@ -425,14 +425,7 @@
 </head>
 
 <body>
-    <div>
-      <x-application-logo /> <br>
-      Tél : +237 690 50 45 94 <br>
-      Email : info@guefack-norbert.com <br>
-      Site internet : guefack-norbert-ets.com
-    </div>
-
-    <span style="width: 100%; height: 1px; background-color: gray; display: block; margin: 1rem 0;"></span>
+    <x-header-doc />
 
     <h3 style='text-decoration:underline; text-transform:uppercase;' class='text-center'>Liste des produits |
         {{ now() }}</h3>

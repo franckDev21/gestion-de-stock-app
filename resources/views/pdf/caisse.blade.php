@@ -425,24 +425,18 @@
 </head>
 
 <body>
-    <div>
-      <x-application-logo /> <br>
-      Tél : +237 690 50 45 94 <br>
-      Email : info@guefack-norbert.com <br>
-      Site internet : guefack-norbert-ets.com
-    </div>
-
-    <span style="width: 100%; height: 1px; background-color: gray; display: block; margin: 1rem 0;"></span>
+    <x-header-doc />
 
     <h3 style='text-decoration:underline; text-transform:uppercase;' class='text-center'>Etat de la caisse |
         {{ now() }}</h3>
     
-        @unless(count($caisses) !== 0)
+    @unless(count($caisses) !== 0)
         <div class="p-10 rounded-md bg-white text-3xl text-center font-bold text-primary opacity-80">
             <i class="fa-solid fa-money-bill text-gray-400 text-8xl mb-3"></i> <br>
             Aucune entrée ou sortie en caisse <br>
         </div>
     @else
+        <span style="display: inline-block; padding: 1rem .7rem; background-color: #ccc; font-weight:bold; font-size:1.6rem; margin-left:0.5rem;">Total : {{ number_format($total, 0, ',', '.') }} F</span>
         <table class="min-w-max w-full table-auto">
             <thead>
                 <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
@@ -461,7 +455,7 @@
                         </td>
 
                         <td class="py-3 px-6 text-left">
-                            <span class=" font-bold">{{ $caisse->montant }} f</span>
+                            <span class=" font-bold">{{ $caisse->montant }} F</span>
                         </td>
 
                         <td class="py-3 px-6 text-left">

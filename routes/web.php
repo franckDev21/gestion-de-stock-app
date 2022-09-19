@@ -52,6 +52,7 @@ Route::middleware(['auth','active'])->group(function(){
     Route::get('approvisionnement/all',[ProductController::class,'approvisionnement'])->name('approvisionnement.index');
 
     // commande
+    Route::get('commandes/print',[CommandeController::class,'print'])->name('commandes.printCommande');
     Route::resource('commandes',CommandeController::class);
     Route::post('commandes/payer/{commande}',[CommandeController::class,'payer'])->name('commandes.payer');
     Route::get('commandes/{commande}/facture',[CommandeController::class,'facture'])->name('commandes.facture');

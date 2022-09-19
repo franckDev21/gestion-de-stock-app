@@ -29,7 +29,7 @@
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 pb-4">
         <div class="flex items-center justify-start  mt-6">
 
-            <a target="_blank" href="#"
+            <a target="_blank" href="{{ route('commandes.printCommande') }}"
                 class="mr-4 px-4 py-1 shadow-md rounded-md bg-gray-500 border-4 hover:bg-gray-600 transition border-gray-600 text-white">
                 <i class="fa-solid fa-download mr-2"></i> Imprimer la liste des commandes
             </a>

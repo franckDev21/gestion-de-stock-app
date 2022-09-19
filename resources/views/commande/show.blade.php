@@ -8,7 +8,7 @@
             <span class="h-4 w-0.5 bg-gray-600 mx-2"></span>
   
             <h2 class="font-semibold text-xl text-primary leading-tight">
-                Commande #{{ $commande->reference }} | {{ $commande->client->firstname }}{{ $commande->client->lastname }}
+                Commande #{{ $commande->reference }} | {{ $commande->client->firstname }} {{ $commande->client->lastname }}
             </h2>
           </div>
           

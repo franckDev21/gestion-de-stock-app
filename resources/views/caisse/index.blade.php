@@ -9,7 +9,7 @@
             </div>
 
             <div>
-                <a href="{{ route('caisse.print') }}"
+                <a target="_blank" href="{{ route('caisse.print') }}"
                     class="px-6 py-1 mr-3 shadow-md rounded-md cursor-pointer bg-gray-500 border-4 hover:bg-gray-600 transition border-gray-600 text-white">
                     <i class="fa-solid fa-print text-white mr-2"></i> Imprimerl'état de la caisse
                 </a>
