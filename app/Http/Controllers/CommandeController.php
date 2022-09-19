@@ -183,29 +183,62 @@ class CommandeController extends Controller
 
     public function facture(Request $request, Commande $commande){
 
-       $commande->update([
-            'etat' => 'FACTURER'
-       ]);
+        $commande->update([
+                'etat' => 'FACTURER'
+        ]);
 
         if($request->payer){
-            $this->payer($commande);
+            if($commande->etat === 'PAYER'){
+                return back()->with('warning','Cette commande a déjà été payer');
+            }
+    
+            // on met a jour l'etat de la commande
+            $commande->update([
+                'etat' => 'PAYER'
+            ]);
+    
+            // on met a jour la caisse
+            Caisse::create([
+                'user_id' => auth()->user()->id,
+                'type' => 'ENTRER',
+                'montant' => (int)implode('',explode('.',$commande->cout)),
+                'commande_id' => $commande->id,
+                'motif'   => 'Paiement de la commande'
+            ]);
+    
+            $caisse = CaisseTotal::first();
+    
+            if(!$caisse){
+                $caisse = CaisseTotal::create([
+                    'montant' => 0
+                ]);
+            }
+    
+            $total = $caisse->sum('montant');
+    
+            $caisse->update([
+                'montant' => (int)$total + (int)implode('',explode('.',$commande->cout))
+            ]);
         }
 
-       $pdf = App::make('dompdf.wrapper');
-        
-       $commandes = $commande->commandeProducts;
+        $pdf = App::make('dompdf.wrapper');
+            
+        $commandes = $commande->commandeProducts;
 
-       if(isset($commande->client->email)){
-        // on envoi un mail l'utilisateur
-        Mail::to($commande->client->email)
-        ->send(new CommandeMail($commande,$commandes));
+        $clientDeclare = $request->declare ? true : false;
 
-        
-       }
-       $pdf->loadView('pdf.facture', compact(
-        'commandes',
-        'commande'
-    ));
+        $pdf->loadView('pdf.facture',compact(
+            'clientDeclare',
+            'commandes',
+            'commande'
+        ));
+
+        if( isset($commande->client->email) ){
+            // on envoi un mail l'utilisateur
+            Mail::to($commande->client->email)
+            ->send(new CommandeMail($commande,$commandes));
+        }
+
         return $pdf->stream();
 
     }

@@ -62,7 +62,7 @@
 </head>
 
 <body>
-    <x-header-doc />
+    <x-header-doc :declare="$clientDeclare ?? false" />
 
     <h3 class='text-center title'><span>Facture</span> | {{ now() }}</h3>
     <h3 class='text-center title-2'><span>Commande #</span> {{ $commande->reference }} </h3>
