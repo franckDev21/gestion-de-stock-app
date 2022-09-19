@@ -4,6 +4,7 @@ use App\Http\Controllers\CaisseController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CommandeController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OptionController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Models\Client;
@@ -26,6 +27,13 @@ Route::middleware(['auth','active'])->group(function(){
     // Route::get('/', [HomeController::class,'index'])->name('home');
     Route::get('/', [HomeController::class,'index'])->name('dashboard');
 
+    // options
+    Route::get('/options',[OptionController::class,'index'])->name('options.home');
+    Route::get('/options/{category}/delete/category',[OptionController::class,'categorieDelete'])->name('options.categories.delete');
+    Route::post('/options/category/store',[OptionController::class,'categorieStore'])->name('options.categories.store');
+    Route::get('/options/{fournisseur}/delete/fournisseur',[OptionController::class,'fournisseurDelete'])->name('options.fournisseurs.delete');
+    Route::post('/options/fournisseur/store',[OptionController::class,'fournisseurStore'])->name('options.fournisseurs.store');
+ 
     // profil
     Route::post('mon-profil/photo',[UserController::class,'photo'])->name('profil.photo');
     Route::get('mon-profil',[UserController::class,'profil'])->name('profil.index');

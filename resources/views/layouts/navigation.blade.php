@@ -89,7 +89,7 @@
                                 {{ __('Se déconnecté') }}
                             </x-dropdown-link>
 
-                            <x-dropdown-link :href="route('profil.index')">
+                            <x-dropdown-link :href="route('options.home')">
                                 {{ __('Options') }}
                             </x-dropdown-link>
                         </form>

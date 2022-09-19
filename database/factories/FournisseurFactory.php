@@ -17,10 +17,10 @@ class FournisseurFactory extends Factory
     public function definition()
     {
         return [
-            'nom' => fake()->word(),
-            'email' => fake()->email(),
-            'address' => fake()->address(),
-            'tel' => fake()->phoneNumber()
+            'name' => fake()->word(5),
+            // 'email' => fake()->email(),
+            // 'address' => fake()->address(),
+            // 'tel' => fake()->phoneNumber()
         ];
     }
 }

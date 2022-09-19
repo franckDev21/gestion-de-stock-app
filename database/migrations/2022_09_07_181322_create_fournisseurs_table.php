@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('fournisseurs', function (Blueprint $table) {
             $table->id();
 
-            $table->string('nom');
-            $table->string('address')->nullable();
-            $table->string('tel')->nullable();
-            $table->string('email')->nullable();
+            $table->string('name');
+            // $table->string('address')->nullable();
+            // $table->string('tel')->nullable();
+            // $table->string('email')->nullable();
 
             $table->timestamps();
         });
