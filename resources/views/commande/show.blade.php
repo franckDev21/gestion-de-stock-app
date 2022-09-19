@@ -40,10 +40,10 @@
             
             <div class="ml-3">
               <h2 class="text-2xl font-bold underline "><a href="{{ route('products.show',$item->product->id) }}">{{ ucfirst($item->product->nom) }}</a></h2>
-              <h2 class="text-xl">Prix unitaire : <span class="text-primary font-bold {{ $item->prix_de_vente !== $item->product->prix_unitaire  ? 'line-through':''  }}">{{ $item->product->prix_unitaire }} F</span></h2>
-              <h2 class="text-xl">Type vente : <span class="px-4 py-0.5 bg-orange-100 text-orange-400 text-sm">{{ ['Detail',$item->product->type_approvionement][rand(0,1)] }}</span></h2>
+              <h2 class="text-lg">Prix unitaire : <span class="text-primary font-bold {{ $item->prix_de_vente !== $item->product->prix_unitaire  ? 'line-through':''  }}">{{ $item->product->prix_unitaire }} F</span></h2>
+              <h2 class="text-lg">Type vente : <span class="px-4 py-0.5 bg-orange-100 text-orange-400 text-sm">{{ ['PIECE' => $item->product->type_approvionement, 'DETAIL' => 'Détail'][$item->type_de_vente] }}</span></h2>
               @if ($item->prix_de_vente !== $item->product->prix_unitaire)
-                <h2 class="text-xl">Prix de vente : <span class="text-primary font-bold">{{ $item->prix_de_vente }} F</span></h2>
+                <h2 class="text-lg">Prix unitaire de vente : <span class="text-primary font-bold">{{ $item->prix_de_vente }} F</span></h2>
               @endif
               <h2 class="text-xl font-bold">Quantité commander : {{ $item->qte }} </h2>
             </div>

@@ -10,6 +10,7 @@ use App\Models\Commande;
 use App\Models\CommandeProduct;
 use App\Models\HistoriqueProduct;
 use App\Models\Product;
+use App\Notifications\ProductStockDangerNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Mail;
@@ -66,7 +67,8 @@ class CommandeController extends Controller
                 'commande_id' => $commande->id,
                 'product_id'  => $cart['id'],
                 'qte'         => $cart['qte'],
-                'prix_de_vente' => $cart['prix_de_vente']
+                'prix_de_vente' => $cart['prix_de_vente'],
+                'type_de_vente' => $cart['type_de_vente']
             ]);
         }
 
@@ -84,22 +86,34 @@ class CommandeController extends Controller
                     $newNbreUnites = $nbreUnites - (int)$cart['qte'];
                     $newNbreParCarton = intval($newNbreUnites / $cart['poids']);
                     $resteUnites = $newNbreUnites % $cart['poids'];
+                    if($cart['type_de_vente'] === 'PIECE'){
+                        $resteUnites =  $nbreUnites %  $cart['poids'];
+                    }
                 }
             }else if(($cart['unite_mesure'] !== 'KG' || $cart['unite_mesure'] !== 'G') && !$cart['nbre_par_carton']){
                 $nbreUnites =  ($cart['qte_en_stock'] * $cart['qte_en_littre']) + $cart['reste_unites'];
                 $newNbreUnites = $nbreUnites - (int)$cart['qte'];
                 $newNbreParCarton = intval($newNbreUnites / $cart['qte_en_littre']);
                 $resteUnites = $newNbreUnites % $cart['qte_en_littre'];
+                if($cart['type_de_vente'] === 'PIECE'){
+                    $resteUnites =  $nbreUnites %  $cart['qte_en_littre'];
+                }
             }else{
                 $nbreUnites =  ($cart['qte_en_stock'] * $cart['nbre_par_carton']) + $cart['reste_unites'];
                 $newNbreUnites = $nbreUnites - (int)$cart['qte'];
                 $newNbreParCarton = intval($newNbreUnites / $cart['nbre_par_carton']);
                 $resteUnites = $newNbreUnites % $cart['nbre_par_carton'];
+                if($cart['type_de_vente'] === 'PIECE'){
+                    $resteUnites =  $nbreUnites %  $cart['nbre_par_carton'];
+                }
             }
 
             if ($newNbreUnites >= 0) {
                 // increment qte product
                 $product = Product::find($cart['id']);
+                if($cart['type_de_vente'] === 'PIECE'){
+                    $newNbreParCarton = (int)$cart['qte_en_stock'] - (int)$cart['qte'];
+                }
                 $product->update([
                     'qte_en_stock' => $newNbreParCarton,
                     'is_stock'     => $newNbreUnites > 0,
@@ -107,7 +121,7 @@ class CommandeController extends Controller
                 ]);
 
                 if ($newNbreParCarton <= $product->qte_stock_alert) {
-                    // notification alert stock
+                    $product->notify(new ProductStockDangerNotification());
                 }
 
                 // new historic

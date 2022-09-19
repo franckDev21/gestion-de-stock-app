@@ -2,6 +2,7 @@ import axios from "axios";
 import React, {useEffect, useState} from "react";
 import ClientForm from "../components/ClientForm";
 import { format_number } from "../utils/utils";
+import { NumericFormat } from 'react-number-format';
 
 const Commande = ({ user_id }) => {
 
@@ -53,7 +54,9 @@ const Commande = ({ user_id }) => {
 
   const addToCart = (product) => {
     if(!product.is_stock) return
+    
     let exist = carts.find(p => p.id === product.id) ? true : false
+    // let olt_type_de_vente = carts.find(p => p.id === product.id)?.type_de_vente
     let newProduct;
     if(!exist){
       let nbreUnites;
@@ -74,9 +77,11 @@ const Commande = ({ user_id }) => {
         ...product,
         qte : 1,
         max : nbreUnites,
-        prix_de_vente : product.prix_unitaire
+        prix_de_vente : product.vendu_par_piece ? product.prix_unitaire : null,
+        type_de_vente : "DETAIL"
       }
       setCarts(state => [...state,newProduct])
+    
     }else{
       let copieCarts = carts;
       let produitFind = copieCarts.find(p => p.id === product.id);
@@ -105,7 +110,7 @@ const Commande = ({ user_id }) => {
   const setQte = (id,value) => {
     let copieCarts = carts;
     let produitFind = copieCarts.find(product => product.id === id);
-    produitFind.qte = parseInt(value,10) || 0
+    produitFind.qte = parseInt(value,10) || null
     copieCarts = carts.filter(product => product.id !== id)
     copieCarts = [...copieCarts,produitFind]
     setCarts(copieCarts)
@@ -127,6 +132,34 @@ const Commande = ({ user_id }) => {
 
   const findProduct = (id) => {
     return carts.find(product => product.id === id)
+  }
+
+  const setTypeDeVente = (id,value) => {
+    let copieCarts  = carts;
+    let produitFind = copieCarts.find(product => product.id === id);
+    let nbreUnites
+    if(value === 'DETAIL'){
+      produitFind.prix_de_vente = null
+      if((produitFind.unite_mesure === 'KG' || produitFind.unite_mesure === 'G') && !produitFind.nbre_par_carton){
+        if(produitFind.vendu_par_piece){
+          nbreUnites = produitFind.qte_en_stock;
+        }else{
+          nbreUnites =  (produitFind.qte_en_stock * produitFind.poids) + produitFind.reste_unites;
+        }
+      } else if((produitFind.unite_mesure !== 'KG' || produitFind.unite_mesure !== 'G') && !produitFind.nbre_par_carton){
+        nbreUnites =  (produitFind.qte_en_stock * produitFind.qte_en_littre) + produitFind.reste_unites;
+      } else{
+        nbreUnites =  (produitFind.qte_en_stock * produitFind.nbre_par_carton) + produitFind.reste_unites;
+      }
+    } else {
+      produitFind.prix_de_vente = produitFind.prix_unitaire
+      nbreUnites = produitFind.qte_en_stock
+    }
+    produitFind.max = nbreUnites
+    produitFind.type_de_vente = value
+    copieCarts = carts.filter(product => product.id !== id)
+    copieCarts = [...copieCarts,produitFind]
+    setCarts(copieCarts)
   }
 
   const commander = (e) => {
@@ -265,16 +298,22 @@ const Commande = ({ user_id }) => {
                     {carts.map((product,i) => (
                       <div key={`${product.id}-${i}`} className="w-full flex justify-start items-start mb-2 p-1 relative z-10 ">
                         <i onClick={() => deleteProduct(product.id)} className="fa-solid fa-times absolute right-2 cursor-pointer hover:bg-red-100 p-2 top-2 text-red-500 z-50"></i>
+                        
+                        { !product.vendu_par_piece && <select onChange={e => setTypeDeVente(product.id,e.target.value)} className="absolute right-10 top-2 appearance-none px-8 text-sm text-center font-bold ml-2 py-0.5 bg-gray-100 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-gray-600 outline-none border-none">
+                          <option value="DETAIL">Detail</option>
+                          <option value="PIECE">{product.type_approvionement}</option>
+                        </select>}
+
                         <div className="w-24 h-24 relative overflow-hidden z-10">
                           <img src={`${product.image ? `/storage/${product.image}` :'/static/img/product.png'}`} className=" z-0 h-auto w-full object-cover" />
                         </div>
 
                         <div className="ml-2 -translate-y-1">
                           <h2 className="font-semibold text-gray-600">{product.nom}</h2>
-                          <h2 className="font-semibold text-sm text-primary">Prix unitaire : {format_number(product.prix_unitaire)}  </h2> 
+                          <h2 className="font-semibold text-sm text-primary">Prix unitaire {product.type_approvionement} : {format_number(product.prix_unitaire)}  </h2> 
                           <div>
-                            <input min={0} max={product.max} value={findProduct(product.id).qte || 0} onChange={(e) => setQte(product.id,e.target.value)}  type="number" className="mt-1 appearance-none px-1 text-center font-bold w-20 py-1 bg-gray-100 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-gray-600 outline-none border-none" />
-                            <input min={0} value={findProduct(product.id).prix_de_vente || 0} onChange={e => setPriceShop(product.id,e.target.value)} type="number" className="mt-1 appearance-none px-1 text-center font-bold ml-2 py-1 bg-gray-100 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-gray-600 outline-none border-none" />
+                            <input min={0} max={product.max} value={findProduct(product.id).qte || 0} onChange={(e) => setQte(product.id,e.target.value)}  type="number" className="mt-1 appearance-none px-1 text-center font-bold w-20 py-1 bg-gray-100 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-gray-600 outline-none border-none" required />
+                            <input min={0} placeholder='prix de vente' value={findProduct(product.id).prix_de_vente || ''} onChange={e => setPriceShop(product.id,e.target.value)} type="number" className="mt-1 appearance-none pl-2 pr-1 font-bold ml-2 py-1 bg-gray-100 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-gray-600 outline-none border-none" required />
                           </div>
                         </div>
                       </div>

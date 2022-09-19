@@ -13,7 +13,8 @@ class CommandeProduct extends Model
         'commande_id',
         'product_id',
         'qte',
-        'prix_de_vente'
+        'prix_de_vente',
+        'type_de_vente'
     ];
 
     public function commande(){
