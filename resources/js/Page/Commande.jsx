@@ -20,17 +20,19 @@ const Commande = ({ user_id }) => {
 
   const [load,setLoad] = useState(false);
 
+  const BaseUrl = "https://stock.solumat-sarl.com";
+
   useEffect(() => {
-    axios.get('http://localhost:8000/api/products').then(res => {
+    axios.get(`${BaseUrl}/api/products`).then(res => {
       setProducts(res.data);
     });
-    axios.get('http://localhost:8000/api/clients').then(res => {
+    axios.get(`${BaseUrl}/api/clients`).then(res => {
       setClients(res.data);
     });
   },[]);
 
   useEffect(() => {
-    axios.get('http://localhost:8000/api/clients').then(res => {
+    axios.get(`${BaseUrl}/api/clients`).then(res => {
       setClients(res.data);
     }).catch(err => console.log(err));
   },[addNewClientState]);
@@ -178,7 +180,7 @@ const Commande = ({ user_id }) => {
     }
 
     axios
-      .post('http://localhost:8000/api/commandes',data).then(res => {
+      .post('https://stock.solumat-sarl.com/api/commandes',data).then(res => {
 
       console.log(res.data);
         if(res.data.success){
@@ -210,10 +212,10 @@ const Commande = ({ user_id }) => {
             <p className=" text-center my-2 w-1/2 text-sm text-gray-500">un Email a été envoyer a <span className="text-primary font-bold">Mme Nicole </span>pour facture de sa commande</p>
             <div className="flex w-full items-center justify-center mt-6">
               <button onClick={() => {
-                window.location = `http://localhost:8000/commandes`
+                window.location = `https://stock.solumat-sarl.com/commandes`
               }} className="px-5 py-3 w-[22%] uppercase bg-opacity-80 transition hover:bg-opacity-100 active:scale-95 bg-secondary rounded-md text-white ml-4">liste des commande</button>
               <button onClick={() => {
-                window.location = `http://localhost:8000/commandes/${commadeId}`
+                window.location = `https://stock.solumat-sarl.com/commandes/${commadeId}`
               }} className="px-5 py-3 w-[22%] uppercase bg-opacity-80 transition hover:bg-opacity-100 active:scale-95 bg-primary rounded-md text-white ml-4">voir la commande créée</button>
             </div>
           </>

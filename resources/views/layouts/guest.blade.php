@@ -15,7 +15,7 @@
         @vite(['resources/css/app.scss', 'resources/js/app.jsx']) --}}
 
         <link rel="stylesheet" href="{{ asset('build/assets/app.03c58976.css') }}">
-        <script defer src="{{ asset('build/assets/app.0b136691.js') }}"></script>
+        <script defer src="{{ asset('build/assets/app.9cce9989.js') }}"></script>
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

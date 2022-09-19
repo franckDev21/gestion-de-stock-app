@@ -36,7 +36,7 @@
 
         
         <link rel="stylesheet" href="{{ asset('build/assets/app.03c58976.css') }}">
-        <script defer src="{{ asset('build/assets/app.0b136691.js') }}"></script>
+        <script defer src="{{ asset('build/assets/app.9cce9989.js') }}"></script>
     </head>
     <body class="font-sans ">
 

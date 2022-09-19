@@ -9,6 +9,8 @@ const ClientForm = ({onClickCallback, addNewClient}) => {
 
   const [load,setLoad] = useState(false);
 
+  const BaseUrl = "https://stock.solumat-sarl.com";
+
   const handleSubmitForm = (e) => {
     e.preventDefault()
 
@@ -22,7 +24,7 @@ const ClientForm = ({onClickCallback, addNewClient}) => {
       address
     };
 
-    axios.post('http://localhost:8000/api/clients',data).then(res => {
+    axios.post(`${BaseUrl}/api/clients`,data).then(res => {
       
       if(res.data.success){
         addNewClient(true);
