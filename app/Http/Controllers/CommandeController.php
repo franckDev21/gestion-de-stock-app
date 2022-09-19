@@ -28,7 +28,7 @@ class CommandeController extends Controller
             ->filter(request(['search']))
             ->orderBy('updated_at', 'DESC')
             ->orderBy('created_at', 'DESC')
-            ->paginate(5);
+            ->paginate(15);
 
         return view('commande.index',compact('commandes'));
     }

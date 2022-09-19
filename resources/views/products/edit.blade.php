@@ -89,7 +89,7 @@
               <div class=" flex">
                 <div class="w-1/2 mr-1">
                   <x-label for="nbre_par_carton" :value="__('Nombre par carton(ou par conteneur)')" class="{{ !$product->nbre_par_carton ? 'disabled':'' }} inline-block nbre-par-carton" />
-                  <x-input {{ $product->qte_en_littre ? 'disabled':'' }} placeholder="Combien par carton ?" id="nbre_par_carton" class="{{ !$product->nbre_par_carton ? 'disabled':'' }} w-full placeholder:italic nbre-par-carton" min='1' type="number"
+                  <x-input  placeholder="Combien par carton ?" id="nbre_par_carton" class="{{ !$product->nbre_par_carton ? 'disabled':'' }} w-full placeholder:italic nbre-par-carton" type="number"
                       name="nbre_par_carton" :value="old('nbre_par_carton',$product->nbre_par_carton)" />
 
                   <label id="desactive-label" for="desactive" class="inline-flex cursor-pointer items-center justify-center mt-1">
@@ -102,7 +102,7 @@
                 </div>
                 <div class="w-1/2 ml-1">
                   <x-label for="poids" :value="__('Poids')" class="inline-block" />
-                  <x-input {{ $product->qte_en_littre ? 'invisible':'' }} placeholder="poid en Kg ou g" id="poids" class="w-full placeholder:italic" min='1' type="number"
+                  <x-input  placeholder="poid en Kg ou g" id="poids" class="w-full placeholder:italic" min='1' type="number"
                       name="poids" :value="old('poids',(int)$product->poids)" />
 
                   @error('poids')
@@ -111,7 +111,7 @@
                 </div>
               </div>
             </div>
-            <div class="mt-1 w-1/2 ml-1 {{ $product->qte_en_littre ? '':'disabled' }} " id="choix-2">
+            <div class="mt-1 w-1/2 ml-1 {{ $product->qte_en_littre ? '':'invisible' }} " id="choix-2">
               <x-label for="qte_en_littre" :value="__('Quantité en Littre')" class="inline-block" />
               <x-input placeholder="Combien de littre par produit ?" id="qte_en_littre" class="w-full placeholder:italic" type="number"
                   name="qte_en_littre" :value="old('qte_en_littre',$product->qte_en_littre)"   />
@@ -121,7 +121,7 @@
             </div>
             <div class="mt-1 w-1/2 ml-1 invisible" id="choix-3">
               <x-label for="poids2" :value="__('Poids')" class="inline-block" />
-                <x-input {{ $product->qte_en_littre ? '':'disabled' }} placeholder="poid en Kg ou g" id="poids2" class="w-full placeholder:italic" min='1' type="number"
+                <x-input placeholder="poid en Kg ou g" id="poids2" class="w-full placeholder:italic" min='1' type="number"
                   name="poids2" :value="old('poids2',(int)$product->poids)" />
 
                 @error('poids2')
@@ -141,8 +141,8 @@
             </div>
             <div class="mt-1 w-1/2 ml-1">
                 <x-label for="type_approvionement" :value="__('Type d\'approvionnement ')" class="inline-block" /> <span class="text-gray-400 text-xs italic inline-block ml-1">(Par pièce, carton ,sac , seau, bidon ... )</span>
-                <x-input placeholder='Vous-vous approvionner en ...(Carton,Bidon,Sac)' id="type_approvionement" class="w-full placeholder:italic" type="text"
-                    name="type_approvionement" :value="old('type_approvionement',$product->type_approvionement)" required />
+                <x-input placeholder='Vous-vous approvionner en ...(Carton,Bidon)' id="type_approvionement" class="w-full placeholder:italic" type="text"
+                    name="type_approvionement" :value="old('type_approvionement',$product->type_approvionement)" required  />
 
                 @error('type_approvionement')
                     <span class="text-sm text-red-400 block">{{ $message }}</span>
@@ -166,7 +166,7 @@
                 <x-label for="fournisseur_id" :value="__('Choisissez votre fournisseur')" class="inline-block" />
                 <select name="fournisseur_id" required class="w-full placeholder:italic rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="">
                   @foreach ($fournisseurs as $item )
-                      <option @selected($item->id === old('fournisseur_id',$product->fournisseur_id))  value="{{ $item->id }}">{{ $item->nom }}</option>
+                      <option @selected($item->id === old('fournisseur_id',$product->fournisseur_id))  value="{{ $item->id }}">{{ $item->name }}</option>
                   @endforeach
                 </select>
                 @error('fournisseur_id')

@@ -147,7 +147,7 @@
                 <x-label for="fournisseur_id" :value="__('Choisissez votre fournisseur')" class="inline-block" />
                 <select name="fournisseur_id" required class="w-full placeholder:italic rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="">
                   @foreach ($fournisseurs as $item )
-                      <option value="{{ $item->id }}">{{ $item->nom }}</option>
+                      <option value="{{ $item->id }}">{{ $item->name }}</option>
                   @endforeach
                 </select>
                 @error('fournisseur_id')
