@@ -43,4 +43,8 @@ class Commande extends Model
        return $this->belongsTo(Client::class);
     }
 
+    public function facture(){
+      return $this->hasOne(Facture::class);
+   }
+
 }

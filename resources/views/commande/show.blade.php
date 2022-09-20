@@ -12,6 +12,9 @@
             </h2>
           </div>
           
+          <a href="{{ route('factures.index') }}" type="submit" type="button" class="text-white bg-secondary focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+            Liste de toutes les factures client
+          </a>
       </div>
   </x-slot>
 

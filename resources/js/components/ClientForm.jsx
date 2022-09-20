@@ -9,7 +9,8 @@ const ClientForm = ({onClickCallback, addNewClient}) => {
 
   const [load,setLoad] = useState(false);
 
-  const BaseUrl = "https://stock.solumat-sarl.com";
+  // const BaseUrl = "https://logiciel.solumat-sarl.com";
+  const BaseUrl = "http://localhost:8000";
 
   const handleSubmitForm = (e) => {
     e.preventDefault()

@@ -3,6 +3,7 @@
 use App\Http\Controllers\CaisseController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CommandeController;
+use App\Http\Controllers\FactureController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OptionController;
 use App\Http\Controllers\ProductController;
@@ -65,6 +66,9 @@ Route::middleware(['auth','active'])->group(function(){
     Route::post('commandes/payer/{commande}',[CommandeController::class,'payer'])->name('commandes.payer');
     Route::get('commandes/{commande}/facture',[CommandeController::class,'facture'])->name('commandes.facture');
 
+    // facture
+    Route::get('facturations',[FactureController::class,'index'])->name('factures.index');
+    Route::get('facturations/{facture}/facture',[FactureController::class,'show'])->name('factures.show');
 
     // caisse
     Route::get('caisse',[CaisseController::class,'index'])->name('caisse.index');
@@ -78,11 +82,11 @@ Route::middleware(['auth','active'])->group(function(){
         Route::get('users/print',[UserController::class,'printUsers'])->name('printUsers');
         Route::post('users/toggle-active/{user}',[UserController::class,'toggleActive']);
         Route::resource('users',UserController::class);
-
-        // clients
-        Route::get('clients/print',[ClientController::class,'printClients'])->name('printClients');
-        Route::resource('clients',ClientController::class);
     });
+
+    // clients
+    Route::get('clients/print',[ClientController::class,'printClients'])->name('printClients');
+    Route::resource('clients',ClientController::class);
 });
 
 

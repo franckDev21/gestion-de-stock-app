@@ -83,6 +83,7 @@
         $total =  $commande->cout;
     @endphp
 
+    <span>N&deg;{{ $commande->facture->id }} /{{ date('m / Y') }}</span>
     <table>
         <thead>
             <th>Nom du produit</th>

@@ -32,6 +32,9 @@ class Client extends Model
     public function commandes(){
         return $this->hasMany(Commande::class);
     }
-    
+
+    public function factures(){
+        return $this->hasMany(Facture::class);
+    }
 }
 

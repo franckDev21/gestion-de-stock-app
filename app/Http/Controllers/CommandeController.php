@@ -8,6 +8,7 @@ use App\Models\CaisseTotal;
 use App\Models\Client;
 use App\Models\Commande;
 use App\Models\CommandeProduct;
+use App\Models\Facture;
 use App\Models\HistoriqueProduct;
 use App\Models\Product;
 use App\Notifications\ProductStockDangerNotification;
@@ -60,6 +61,12 @@ class CommandeController extends Controller
             'client_id' => $request->client,
             'user_id'   => $request->user_id,
             'etat'      => 'IMPAYER'
+        ]);
+
+        // on créé la facture
+        Facture::create([
+            'client_id'     => $request->client,
+            'commande_id'   => $commande->id
         ]);
 
         foreach($request->carts as $cart){
