@@ -6,7 +6,7 @@
   <span style="display: inline-block; margin-bottom:7px;">B.P : 7754 Douala-Bonapriso</span><br>
   <span style="display: inline-block; margin-bottom:7px;">Email : solumatgn@gmail.com </span><br>
   <span style="display: inline-block; margin-bottom:7px;">Site internet : https://solumat-sarl.com</span> <br>
-  @if ($declare)
+  @if (isset($declare) && $declare)
   <span style="display: inline-block; margin-bottom:7px;">RC/DLA/2016/B/669</span> <br>
   <span style="display: inline-block; margin-bottom:7px;">NUI:M021612486003U</span>
   @endif

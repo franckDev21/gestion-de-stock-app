@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex items-center justify-start">
             <h2 class="font-semibold text-xl text-gray-600 leading-tight">
-                {{ __('Factures factures') }}
+                {{ __('Factures') }}
             </h2>
             <span class="h-4 w-0.5 bg-gray-600 mx-2"></span>
 
@@ -53,6 +53,7 @@
                                 <td class="py-3 text-left">
                                     <div class="flex item-center justify-center">
                                         <a
+                                        target="_blank"
                                             href="{{ route('factures.show',$facture->id) }}"
                                             class="w-8 h-8 rounded bg-secondary mr-1 transform text-white flex justify-center items-center hover:scale-110">
                                             <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
