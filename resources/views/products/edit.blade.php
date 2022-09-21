@@ -103,7 +103,7 @@
                 <div class="w-1/2 ml-1">
                   <x-label for="poids" :value="__('Poids')" class="inline-block" />
                   <x-input  placeholder="poid en Kg ou g" id="poids" class="w-full placeholder:italic" min='1' type="number"
-                      name="poids" :value="old('poids',(int)$product->poids)" />
+                      name="poids" {{ $product->qte_en_littre ? 'disabled':'' }} :value="old('poids',(int)$product->poids)" />
 
                   @error('poids')
                       <span class="text-sm text-red-400 block">{{ $message }}</span>
@@ -122,7 +122,7 @@
             <div class="mt-1 w-1/2 ml-1 invisible" id="choix-3">
               <x-label for="poids2" :value="__('Poids')" class="inline-block" />
                 <x-input placeholder="poid en Kg ou g" id="poids2" class="w-full placeholder:italic" min='1' type="number"
-                  name="poids2" :value="old('poids2',(int)$product->poids)" />
+                  name="poids2" {{ $product->qte_en_littre ? 'disabled':'' }} :value="old('poids2',(int)$product->poids)" />
 
                 @error('poids2')
                   <span class="text-sm text-red-400 block">{{ $message }}</span>
