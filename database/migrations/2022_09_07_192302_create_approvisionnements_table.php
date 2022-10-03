@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('product_id')->constrained()->onDelete('cascade');
             $table->integer('prix_achat');
             $table->integer('quantite');
+            $table->boolean('is_unite')->default(false);
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
 
             $table->timestamps();
