@@ -334,6 +334,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
+        // dd($product);
         $fournisseurs = Fournisseur::all();
         $categories   = Category::all();
         return view('products.edit', compact('product', 'categories', 'fournisseurs'));

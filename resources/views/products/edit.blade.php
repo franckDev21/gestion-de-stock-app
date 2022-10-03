@@ -101,9 +101,9 @@
                   @enderror
                 </div>
                 <div class="w-1/2 ml-1">
-                  <x-label for="poids" :value="__('Poids')" class="inline-block" />
-                  <x-input  placeholder="poid en Kg ou g" id="poids" class="w-full placeholder:italic" min='1' type="number"
-                      name="poids" {{ $product->qte_en_littre ? 'disabled':'' }} :value="old('poids',(int)$product->poids)" />
+                  <x-label for="poids" :value="__('Poids 2')" class="inline-block" />
+                  <x-input  placeholder="poid en Kg ou g" id="poids" class="w-full {{ $product->qte_en_littre ? 'disabled':'' }}  placeholder:italic" min='1' type="number"
+                      name="poids" :value="old('poids',(int)$product->poids)" />
 
                   @error('poids')
                       <span class="text-sm text-red-400 block">{{ $message }}</span>
