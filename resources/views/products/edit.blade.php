@@ -76,10 +76,10 @@
               <x-label for="unite" :value="__('Unité de mesure du produit')" class="inline-block" />
                   <select name="unite_mesure" required class="w-full placeholder:italic rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="unite">
                     <option value="">--- Choisissez une unité ---</option>
-                    <option @selected($product->unite_mesure == 'KG') value="KG">Kilogramme</option>
-                    <option @selected($product->unite_mesure == 'G') value="G">Gramme</option>
-                    <option @selected($product->unite_mesure == 'L') value="L">Littre</option>
-                    <option @selected($product->unite_mesure == 'KG' && $product->vendu_par_piece) value="UNIQUE">Produit vendu par pièce | KG</option>
+                    <option @selected($product->unite_mesure === 'KG') value="KG">Kilogramme</option>
+                    <option @selected($product->unite_mesure === 'G') value="G">Gramme</option>
+                    <option @selected($product->unite_mesure === 'L') value="L">Littre</option>
+                    <option @selected($product->unite_mesure === 'KG' && $product->vendu_par_piece) value="UNIQUE">Produit vendu par pièce | KG</option>
                   </select>
               @error('unite_mesure')
                   <span class="text-sm text-red-400 block">{{ $message }}</span>
@@ -102,7 +102,7 @@
                 </div>
                 <div class="w-1/2 ml-1">
                   <x-label for="poids" :value="__('Poids 2')" class="inline-block" />
-                  <x-input  placeholder="poid en Kg ou g" id="poids" class="w-full {{ $product->qte_en_littre ? 'disabled':'' }}  placeholder:italic" min='1' type="number"
+                  <x-input  placeholder="poid en Kg ou g" id="poids" class="w-full {{ $product->qte_en_littre ? 'disabled':'' }}  placeholder:italic" min='0' type="number"
                       name="poids" :value="old('poids',(int)$product->poids)" />
 
                   @error('poids')
@@ -121,8 +121,8 @@
             </div>
             <div class="mt-1 w-1/2 ml-1 invisible" id="choix-3">
               <x-label for="poids2" :value="__('Poids')" class="inline-block" />
-                <x-input placeholder="poid en Kg ou g" id="poids2" class="w-full placeholder:italic" min='1' type="number"
-                  name="poids2" {{ $product->qte_en_littre ? 'disabled':'' }} :value="old('poids2',(int)$product->poids)" />
+                <x-input placeholder="poid en Kg ou g" id="poids2" class="w-full placeholder:italic " min='0' type="number"
+                  name="poids2" :value="old('poids2',(int)$product->poids)" />
 
                 @error('poids2')
                   <span class="text-sm text-red-400 block">{{ $message }}</span>

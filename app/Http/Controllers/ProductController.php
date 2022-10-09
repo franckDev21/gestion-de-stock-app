@@ -337,6 +337,7 @@ class ProductController extends Controller
         // dd($product);
         $fournisseurs = Fournisseur::all();
         $categories   = Category::all();
+        // dd($product->unite_mesure == 'L');
         return view('products.edit', compact('product', 'categories', 'fournisseurs'));
     }
 
